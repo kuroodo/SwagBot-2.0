@@ -1,6 +1,7 @@
 package kuroodo.swagbot.config;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class BotConfig {
 	public static final String BOTNAME = "SwagBot";
@@ -10,6 +11,10 @@ public class BotConfig {
 
 	public BotConfig(JDA jda) {
 		this.jda = jda;
+	}
+
+	public void addEventListener(ListenerAdapter event) {
+		jda.addEventListener(event);
 	}
 
 	public JDA getJDA() {

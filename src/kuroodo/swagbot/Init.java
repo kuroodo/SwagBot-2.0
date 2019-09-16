@@ -13,6 +13,18 @@ import net.dv8tion.jda.api.entities.Activity;
 
 public class Init {
 	public static void main(String[] args) {
+
+		initializeBot();
+		startShutdownHook();
+		startInputThread();
+
+		SwagBot.setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
+		SwagBot.getConfig().addEventListener(new ChatListener());
+		System.out.println("Set up complete");
+		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
+	}
+
+	private static void initializeBot() {
 		// Attempt to get JDA
 		JDA jda = makeJDA();
 		if (jda == null) {
@@ -23,13 +35,6 @@ public class Init {
 		// Set up the bot's configuration for normal operation
 		BotConfig config = new BotConfig(jda);
 		SwagBot.setConfig(config);
-
-		startShutdownHook();
-		startInputThread();
-
-		SwagBot.setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
-		System.out.println("Set up complete");
-		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
 	}
 
 	private static JDA makeJDA() {
