@@ -47,7 +47,6 @@ public class GuildSettings {
 		this.rolePermission2 = rolePermission2;
 	}
 
-// TODO: Create Reader class, and Read JSON files and values (just print to console)
 // TODO: Create Writer class, and Write JSON files and values
 // TODO: Store the values here
 // TODO: Decide if this class or GuildManager class calls the writer for writing

@@ -5,8 +5,11 @@ import java.util.Scanner;
 import javax.security.auth.login.LoginException;
 
 import kuroodo.swagbot.config.BotConfig;
-import kuroodo.swagbot.json.JSONKeys;
+import kuroodo.swagbot.config.GuildSettings;
+import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.json.ConfigReader;
+import kuroodo.swagbot.json.GuildSettingsReader;
+import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -22,6 +25,11 @@ public class Init {
 		SwagBot.getConfig().addEventListener(new ChatListener());
 		System.out.println("Set up complete");
 		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
+		
+		// Testing reading
+		GuildSettings settings = GuildSettingsReader.loadSettingsFile((110609816610709504L));
+		GuildManager.addGuild(settings);
+		GuildManager.getTextChannel(settings.guildID, 155780162254929921L).sendMessage("AHA!").queue();
 	}
 
 	private static void initializeBot() {
@@ -39,10 +47,10 @@ public class Init {
 
 	private static JDA makeJDA() {
 		try {
-			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build();
+			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build().awaitReady();
 			System.out.println("JDA build succesful");
 			return jda;
-		} catch (LoginException e) {
+		} catch (InterruptedException | LoginException e) {
 			e.printStackTrace();
 		}
 		return null;
