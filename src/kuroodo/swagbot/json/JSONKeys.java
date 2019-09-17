@@ -7,6 +7,8 @@ public class JSONKeys {
 
 	// Guild Settings
 	public static final String SETTINGS_TEMPLATE_NAME = "_TEMPLATE.json";
+	public static final String SETT_GUILD_ID = "guildid";
+	public static final String SETTINGS_GUILD_NAME = "guildname";
 	public static final String SETTINGS_ENABLE_WELCOME = "enablewelcome";
 	public static final String SETTINGS_WELCOME_CHANNEL = "welcomechannel";
 	public static final String SETTINGS_WELCOME_MESSAGE = "welcomemessage";

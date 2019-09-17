@@ -1,0 +1,15 @@
+{
+	"guildid": "ID",
+	"guildname": "NAME",
+    "enablewelcome": "true",
+	"welcomechannel": "ID",
+    "welcomemessage": "Welcome!",
+	"enablewelcomerole": "true",
+	"welcomerole": "ID",
+	"logchannel": "ID",
+	"muterole": "ID",	
+	"mutechannel": "ID",
+	"rolepermission0": "ID",
+	"rolepermission1": "ID",
+	"rolepermission2": "ID"
+}
