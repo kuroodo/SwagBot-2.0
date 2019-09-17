@@ -6,7 +6,7 @@ public class JSONKeys {
 	public static final String CONFIG_BOT_TOKEN = "bottoken";
 
 	// Guild Settings
-	public static final String SETTINGS_TEMPLATE_NAME = "_TEMPLATE.json";
+	public static final String SETTINGS_PATH = "guildsettings/";
 	public static final String SETT_GUILD_ID = "guildid";
 	public static final String SETTINGS_ENABLE_WELCOME = "enablewelcome";
 	public static final String SETTINGS_WELCOME_CHANNEL = "welcomechannel";
