@@ -18,13 +18,13 @@ public class JSONReader {
 
 		Reader reader;
 		try {
-			reader = new FileReader(ConfigKeys.CONFIG_FILE_NAME);
+			reader = new FileReader(JSONKeys.CONFIG_FILE_NAME);
 			JsonObject object = Json.parse(reader).asObject();
 
 			retrievedValue = object.get(key).asString();
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not get key: " + key + "\nEnsure that the key or the file "
-					+ ConfigKeys.CONFIG_FILE_NAME + " exist");
+					+ JSONKeys.CONFIG_FILE_NAME + " exist");
 		}
 
 		return retrievedValue;
