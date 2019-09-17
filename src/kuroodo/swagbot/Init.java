@@ -6,7 +6,7 @@ import javax.security.auth.login.LoginException;
 
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.json.JSONKeys;
-import kuroodo.swagbot.json.JSONReader;
+import kuroodo.swagbot.json.ConfigReader;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -39,7 +39,7 @@ public class Init {
 
 	private static JDA makeJDA() {
 		try {
-			JDA jda = new JDABuilder(JSONReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build();
+			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build();
 			System.out.println("JDA build succesful");
 			return jda;
 		} catch (LoginException e) {

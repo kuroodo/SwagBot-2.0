@@ -12,7 +12,7 @@ import java.io.Reader;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-public class JSONReader {
+public class ConfigReader {
 	public static String getConfigValue(String key) {
 		String retrievedValue = "";
 
