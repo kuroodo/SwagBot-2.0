@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Guild;
 public class GuildSettings {
 	public Guild guild;
 	public long guildID = -1;
-	public String guildName = "";
 	public boolean enableWelcome = false;
 	public long welcomeChannel = -1;
 	public String welcomeMessage = "";
@@ -14,6 +13,7 @@ public class GuildSettings {
 	public long welcomeRole = -1;
 	public long logChannel = -1;
 	public long muteRole = -1;
+	public long muteChannel = -1;
 	public long rolePermission0 = -1;
 	public long rolePermission1 = -1;
 	public long rolePermission2 = -1;
@@ -29,12 +29,11 @@ public class GuildSettings {
 		this(SwagBot.getJDA().getGuildById(guildID));
 	}
 
-	public GuildSettings(Guild guild, long guildID, String guildName, boolean enableWelcome, long welcomeChannel,
-			String welcomeMessage, boolean enableWelcomeRole, long welcomeRole, long logChannel, long muteRole,
+	public GuildSettings(Guild guild, long guildID, boolean enableWelcome, long welcomeChannel,
+			String welcomeMessage, boolean enableWelcomeRole, long welcomeRole, long logChannel, long muteRole, long muteChannel,
 			long rolePermission0, long rolePermission1, long rolePermission2) {
 		this.guild = guild;
 		this.guildID = guildID;
-		this.guildName = guildName;
 		this.enableWelcome = enableWelcome;
 		this.welcomeChannel = welcomeChannel;
 		this.welcomeMessage = welcomeMessage;
@@ -42,6 +41,7 @@ public class GuildSettings {
 		this.welcomeRole = welcomeRole;
 		this.logChannel = logChannel;
 		this.muteRole = muteRole;
+		this.muteChannel = muteChannel;
 		this.rolePermission0 = rolePermission0;
 		this.rolePermission1 = rolePermission1;
 		this.rolePermission2 = rolePermission2;
