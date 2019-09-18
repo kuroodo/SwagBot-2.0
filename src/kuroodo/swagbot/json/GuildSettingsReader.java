@@ -45,12 +45,12 @@ public class GuildSettingsReader {
 		return null;
 	}
 
-	public static String getSettingsValue(String guildID, String key) {
+	public static String getSettingsValue(long guildID, String key) {
 		String retrievedValue = "";
 
 		Reader reader;
 		try {
-			reader = new FileReader(guildID + ".json");
+			reader = new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json");
 			JsonObject object = Json.parse(reader).asObject();
 
 			retrievedValue = object.get(key).asString();
