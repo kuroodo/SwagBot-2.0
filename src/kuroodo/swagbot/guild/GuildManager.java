@@ -2,7 +2,6 @@ package kuroodo.swagbot.guild;
 
 import java.util.HashMap;
 
-import kuroodo.swagbot.config.GuildSettings;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 

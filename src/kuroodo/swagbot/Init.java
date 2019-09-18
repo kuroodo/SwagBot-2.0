@@ -5,8 +5,8 @@ import java.util.Scanner;
 import javax.security.auth.login.LoginException;
 
 import kuroodo.swagbot.config.BotConfig;
-import kuroodo.swagbot.config.GuildSettings;
 import kuroodo.swagbot.guild.GuildManager;
+import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.ConfigReader;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;

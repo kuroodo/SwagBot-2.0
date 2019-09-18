@@ -7,7 +7,7 @@ import java.io.Reader;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 
-import kuroodo.swagbot.config.GuildSettings;
+import kuroodo.swagbot.guild.GuildSettings;
 
 public class GuildSettingsReader {
 

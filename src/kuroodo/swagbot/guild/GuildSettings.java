@@ -1,4 +1,4 @@
-package kuroodo.swagbot.config;
+package kuroodo.swagbot.guild;
 
 import kuroodo.swagbot.SwagBot;
 import net.dv8tion.jda.api.entities.Guild;
