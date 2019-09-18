@@ -17,7 +17,7 @@ public class Init {
 		initializeBot();
 
 		System.out.println("Set up complete");
-		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
+		System.out.println("Hello I am " + BotConfig.BOTNAME + " v" + BotConfig.BOTVERSION);
 	}
 
 	private static void initializeBot() {

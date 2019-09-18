@@ -10,7 +10,7 @@ public class CommandHelp extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-		
+
 		if (commandParams.length == 1) {
 			sendHelpOverview();
 		} else if (commandParams.length == 2) {
@@ -19,12 +19,11 @@ public class CommandHelp extends ChatCommand {
 	}
 
 	private void sendHelpOverview() {
-		// TODO: Paste URL to command file on github
-		System.out.println("Overivew");
+		sendMessage(event.getAuthor().getAsMention() + " https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt");
 	}
 
 	private void sendCommandHelp() {
-		
+
 		Command command = CommandRegistry.getCommand(commandParams[1]);
 		sendMessage(BotUtility.codifyText(command.commandDescription()));
 	}
