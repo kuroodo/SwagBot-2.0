@@ -6,6 +6,7 @@ import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.listeners.ChatListener;
+import kuroodo.swagbot.listeners.ServerListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
@@ -16,8 +17,9 @@ public class SwagBot {
 	public static void initializeFresh() {
 		loadGuilds();
 
-		setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
+		setToDefaultActivity();
 		config.addEventListener(new ChatListener());
+		config.addEventListener(new ServerListener());
 	}
 
 	private static void loadGuilds() {
@@ -44,6 +46,10 @@ public class SwagBot {
 
 	public static void setActivity(Activity activity) {
 		getJDA().getPresence().setActivity(activity);
+	}
+
+	public static void setToDefaultActivity() {
+		setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
 	}
 
 	public static BotConfig getConfig() {
