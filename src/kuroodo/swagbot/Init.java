@@ -17,7 +17,6 @@ import net.dv8tion.jda.api.entities.Activity;
 
 public class Init {
 	public static void main(String[] args) {
-
 		startShutdownHook();
 		startInputThread();
 		initializeBot();
@@ -30,15 +29,6 @@ public class Init {
 		// Testing reading and writing
 		GuildSettingsWriter.createNewFile(new GuildSettings(SwagBot.getJDA().getGuilds().get(0)));
 		GuildSettings settings = GuildSettingsReader.loadSettingsFile(SwagBot.getJDA().getGuilds().get(0).getIdLong());
-
-		settings.enableWelcome = true;
-		settings.welcomeMessage = "Suh homofag";
-		settings.enableWelcomeRole = true;
-		settings.welcomeChannel = 155780162254929921L;
-		settings.welcomeRole = 110624804536614912L;
-		settings.commandPrefix = "-";
-
-		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.addGuild(settings);
 
 	}
