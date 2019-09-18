@@ -16,6 +16,7 @@ public class ChatListener extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		super.onMessageReceived(event);
 
+		if(event.getAuthor().isFake() || event.getAuthor().isBot()){return;}
 		HandleCommandRequest(event);
 		// TODO: LogChat or any other functionality()
 	}
