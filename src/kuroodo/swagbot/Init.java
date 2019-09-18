@@ -18,9 +18,9 @@ import net.dv8tion.jda.api.entities.Activity;
 public class Init {
 	public static void main(String[] args) {
 
-		initializeBot();
 		startShutdownHook();
 		startInputThread();
+		initializeBot();
 
 		SwagBot.setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
 		SwagBot.getConfig().addEventListener(new ChatListener());
@@ -39,14 +39,15 @@ public class Init {
 
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.addGuild(settings);
-		
+
 	}
 
 	private static void initializeBot() {
 		// Attempt to get JDA
-		JDA jda = makeJDA();
+		JDA jda = initializeJDA();
 		if (jda == null) {
-			System.err.println("ERROR: Could not get JDA. Exitting program");
+			System.err.println("ERROR: Could not get JDA");
+			exitApplication(-1);
 			return;
 		}
 
@@ -55,7 +56,7 @@ public class Init {
 		SwagBot.setConfig(config);
 	}
 
-	private static JDA makeJDA() {
+	private static JDA initializeJDA() {
 		try {
 			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build().awaitReady();
 			System.out.println("JDA build succesful");
@@ -77,7 +78,7 @@ public class Init {
 
 					if (ConsoleInputKeys.isExitKey(input.toLowerCase())) {
 						scanner.close();
-						System.exit(0);
+						exitApplication(0);
 					}
 				}
 			}
@@ -88,8 +89,16 @@ public class Init {
 	private static void startShutdownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-				System.out.println("Shutdown Hook is running !");
+				try {
+					SwagBot.getJDA().shutdown();
+				} catch (NullPointerException e) {
+				}
+				System.out.println("Shutting down");
 			}
 		});
+	}
+
+	private static void exitApplication(int exitCode) {
+		System.exit(exitCode);
 	}
 }
