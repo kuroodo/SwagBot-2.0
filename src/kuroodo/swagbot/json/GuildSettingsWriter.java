@@ -18,13 +18,25 @@ public class GuildSettingsWriter {
 
 	public static void createNewFile(GuildSettings guild) {
 		try {
-			Reader reader;
 			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
-			File settingsFile = new File(path);
 
 			// Create a new settings folder from template
 			// TODO: Check if template file doesn't exist
-			FileUtils.copyFile(new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME), settingsFile);
+			FileUtils.copyFile(new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME), new File(path));
+			writeSettings(guild);
+			
+		} catch (IOException e) {
+			System.err.println("ERROR: Error trying to create new file : " + guild.guildID
+					+ ".json\nEnsure that the corresponding files exist");
+		}
+	}
+
+	
+	public static void writeSettings(GuildSettings guild) {
+		try {
+			Reader reader;
+			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
+			File settingsFile = new File(path);
 
 			// Read and store the contents of the file into a JsonObject
 			reader = new FileReader(settingsFile);
@@ -50,11 +62,12 @@ public class GuildSettingsWriter {
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
-			System.err.println("ERROR: Error trying to create new file : " + guild.guildID
+			System.err.println("ERROR: Error trying to write to file : " + guild.guildID
 					+ ".json\nEnsure that the corresponding keys or files exist");
 		}
 	}
-
+	
+	
 	public static void writeSetting(long guildID, String key, String value) {
 		try {
 			Reader reader;
