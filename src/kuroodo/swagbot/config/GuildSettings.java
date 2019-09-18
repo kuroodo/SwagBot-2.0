@@ -47,9 +47,6 @@ public class GuildSettings {
 		this.rolePermission2 = rolePermission2;
 	}
 
-// TODO: Create Writer class, and Write JSON files and values
-// TODO: Store the values here
-// TODO: Decide if this class or GuildManager class calls the writer for writing
 // TODO: Have bot send a hello message and assign a role to a joining user
 // TODO: Implement command system to allow value manipulation (writing)
 

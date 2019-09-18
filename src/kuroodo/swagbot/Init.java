@@ -9,6 +9,7 @@ import kuroodo.swagbot.config.GuildSettings;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.json.ConfigReader;
 import kuroodo.swagbot.json.GuildSettingsReader;
+import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -25,11 +26,20 @@ public class Init {
 		SwagBot.getConfig().addEventListener(new ChatListener());
 		System.out.println("Set up complete");
 		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
-		
-		// Testing reading
-		GuildSettings settings = GuildSettingsReader.loadSettingsFile((110609816610709504L));
+
+		// Testing reading and writing
+		GuildSettingsWriter.createNewFile(new GuildSettings(SwagBot.getJDA().getGuilds().get(0)));
+		GuildSettings settings = GuildSettingsReader.loadSettingsFile(SwagBot.getJDA().getGuilds().get(0).getIdLong());
+
+		settings.enableWelcome = true;
+		settings.welcomeMessage = "Suh homofag";
+		settings.enableWelcomeRole = true;
+		settings.welcomeChannel = 155780162254929921L;
+		settings.welcomeRole = 110624804536614912L;
+
+		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.addGuild(settings);
-		GuildManager.getTextChannel(settings.guildID, 155780162254929921L).sendMessage("AHA!").queue();
+
 	}
 
 	private static void initializeBot() {
