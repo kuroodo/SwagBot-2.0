@@ -1,9 +1,9 @@
 {
 	"guildid": "0",
-    "enablewelcome": "true",
+    "enablewelcome": "false",
 	"welcomechannel": "0",
-    "welcomemessage": "Welcome!",
-	"enablewelcomerole": "true",
+    "welcomemessage": "",
+	"enablewelcomerole": "false",
 	"welcomerole": "0",
 	"logchannel": "0",
 	"muterole": "0",	
