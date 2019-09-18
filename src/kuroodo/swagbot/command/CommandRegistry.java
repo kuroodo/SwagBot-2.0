@@ -2,7 +2,6 @@ package kuroodo.swagbot.command;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.command.chatcommand.CommandFlipCoin;
-import kuroodo.swagbot.command.chatcommand.CommandKeys;
 
 public class CommandRegistry {
 	public static Command getCommand(String command) {
