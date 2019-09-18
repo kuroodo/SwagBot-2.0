@@ -47,7 +47,7 @@ public class GuildSettingsWriter {
 			object.set(JSONKeys.SETTINGS_ENABLE_WELCOME, Boolean.toString(guild.enableWelcome));
 			object.set(JSONKeys.SETTINGS_WELCOME_CHANNEL, Long.toString(guild.welcomeChannel));
 			object.set(JSONKeys.SETTINGS_WELCOME_MESSAGE, guild.welcomeMessage);
-			object.set(JSONKeys.SETTINGS_ENABLE_WLECOME_ROLE, Boolean.toString(guild.enableWelcomeRole));
+			object.set(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE, Boolean.toString(guild.enableWelcomeRole));
 			object.set(JSONKeys.SETTINGS_WELCOME_ROLE, Long.toString(guild.welcomeRole));
 			object.set(JSONKeys.SETTINGS_LOG_CHANNEL, Long.toString(guild.logChannel));
 			object.set(JSONKeys.SETTINGS_MUTE_ROLE, Long.toString(guild.muteRole));

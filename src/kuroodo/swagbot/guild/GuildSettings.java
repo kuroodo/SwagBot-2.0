@@ -22,8 +22,6 @@ public class GuildSettings {
 	public GuildSettings(Guild guild) {
 		this.guild = guild;
 		guildID = guild.getIdLong();
-		// TODO: Call 3rd constructor or method that sets up all values from guild file
-		// if exists
 	}
 
 	public GuildSettings(long guildID) {

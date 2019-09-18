@@ -13,7 +13,7 @@ public class JSONKeys {
 	public static final String SETTINGS_ENABLE_WELCOME = "enablewelcome";
 	public static final String SETTINGS_WELCOME_CHANNEL = "welcomechannel";
 	public static final String SETTINGS_WELCOME_MESSAGE = "welcomemessage";
-	public static final String SETTINGS_ENABLE_WLECOME_ROLE = "enablewelcomerole";
+	public static final String SETTINGS_ENABLE_WELCOME_ROLE = "enablewelcomerole";
 	public static final String SETTINGS_WELCOME_ROLE = "welcomerole";
 	public static final String SETTINGS_LOG_CHANNEL = "logchannel";
 	public static final String SETTINGS_MUTE_ROLE = "muterole";

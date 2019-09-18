@@ -48,7 +48,7 @@ public class CommandSetup extends ChatCommand {
 		case JSONKeys.SETTINGS_WELCOME_MESSAGE:
 			updateWelcomeMessage();
 			return;
-		case JSONKeys.SETTINGS_ENABLE_WLECOME_ROLE:
+		case JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE:
 			updateEnableWelcomeRole();
 			return;
 		case JSONKeys.SETTINGS_WELCOME_ROLE:
@@ -179,7 +179,7 @@ public class CommandSetup extends ChatCommand {
 			if (GuildManager.getRole(settings.guildID, roleID) != null) {
 				settings.welcomeRole = roleID;
 			} else {
-				printTextChannelErrorMessage();
+				printRoleErrorMessage();
 				return;
 			}
 
@@ -231,7 +231,7 @@ public class CommandSetup extends ChatCommand {
 			if (GuildManager.getRole(settings.guildID, roleID) != null) {
 				settings.muteRole = roleID;
 			} else {
-				printTextChannelErrorMessage();
+				printRoleErrorMessage();
 				return;
 			}
 
@@ -283,7 +283,7 @@ public class CommandSetup extends ChatCommand {
 			if (GuildManager.getRole(settings.guildID, roleID) != null) {
 				settings.rolePermission0 = roleID;
 			} else {
-				printTextChannelErrorMessage();
+				printRoleErrorMessage();
 				return;
 			}
 
@@ -309,7 +309,7 @@ public class CommandSetup extends ChatCommand {
 			if (GuildManager.getRole(settings.guildID, roleID) != null) {
 				settings.rolePermission1 = roleID;
 			} else {
-				printTextChannelErrorMessage();
+				printRoleErrorMessage();
 				return;
 			}
 
@@ -335,7 +335,7 @@ public class CommandSetup extends ChatCommand {
 			if (GuildManager.getRole(settings.guildID, roleID) != null) {
 				settings.rolePermission2 = roleID;
 			} else {
-				printTextChannelErrorMessage();
+				printRoleErrorMessage();
 				return;
 			}
 

@@ -21,7 +21,7 @@ public class GuildSettingsReader {
 			// booleans
 			settings.enableWelcome = Boolean.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WELCOME).asString());
 			settings.enableWelcomeRole = Boolean
-					.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WLECOME_ROLE).asString());
+					.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE).asString());
 
 			// Strings
 			settings.commandPrefix = object.get(JSONKeys.SETTINGS_COMMAND_PREFIX).asString();
