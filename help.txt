@@ -1,0 +1,35 @@
+List of commands for SwagBot
+Bot owner: Kuroodo#5126
+Source Code: https://github.com/kuroodo/SwagBot-2.0
+
+Default/Initial Command Prefix: !
+<prefix> = Whatever prefix is set up for the server. Default prefix is !. Therefore flipcoin would be used as !flipcoin
+
+---
+Be sure to set up the bot using the setuphelp (i.e !setuphelp) command
+---
+
+[FUN COMMANDS]
+	1. flipcoin	- Flips a coin and see if it lands on heads or tails
+		Usage: <prefix>flipcoin
+		
+		
+[MISC]
+	1. setup - Configure a setting related to how the bot interacts with your guild. Use the setuphelp command for more info
+		Usage: <prefix>setup <key> <value>
+		Keys: 
+			commandprefix		Value = Text with no spaces
+			enablewelcome		Value = true or false
+			welcomemessage		Value = Any text
+			enablewelcomerole	Value = true or false
+			welcomerole			Value = Role ID
+			logchannel			Value = Text Channel ID
+			muterole			Value = Role ID
+			mutechannel			Value = Voice Channel ID
+			rolepermission0		Value = Role ID
+			rolepermission1		Value = Role ID
+			rolepermission2		Value = Role ID
+	2. help - Gives information on how to use certain commands
+		Usage: <prefix>help
+		Usage: <prefix>help <commandname>
+			
