@@ -2,17 +2,28 @@ package kuroodo.swagbot.guild;
 
 import java.util.HashMap;
 
+import kuroodo.swagbot.json.GuildSettingsReader;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
 
-	public static final void addGuild(long guildID) {
+	public static void reloadGuildSettings(long guildID) {
+		if (GUILDS.containsKey(guildID)) {
+			GUILDS.replace(guildID, GuildSettingsReader.loadSettingsFile(guildID));
+		} else {
+			System.err.println("Cannot reload Guild " + guildID + " it does not exist in the map");
+		}
+
+	}
+
+	public static void addGuild(long guildID) {
 		addGuild(new GuildSettings(guildID));
 	}
 
-	public static final void addGuild(GuildSettings guild) {
+	public static void addGuild(GuildSettings guild) {
 		if (!GUILDS.containsKey(guild.guildID)) {
 			GUILDS.put(guild.guildID, guild);
 		} else {
@@ -54,4 +65,14 @@ public class GuildManager {
 		System.out.println("ERROR: Guild " + guildID + " does not exist in map");
 		return null;
 	}
+
+	public static GuildSettings getGuild(Guild guild) {
+		if (GUILDS.containsKey(guild.getIdLong())) {
+			return GUILDS.get(guild.getIdLong());
+		}
+
+		System.out.println("ERROR: Guild " + guild.getIdLong() + " does not exist in map");
+		return null;
+	}
+
 }
