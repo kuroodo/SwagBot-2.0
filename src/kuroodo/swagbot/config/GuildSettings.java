@@ -5,18 +5,18 @@ import net.dv8tion.jda.api.entities.Guild;
 
 public class GuildSettings {
 	public Guild guild;
-	public long guildID = -1;
+	public long guildID = 0;
 	public boolean enableWelcome = false;
-	public long welcomeChannel = -1;
+	public long welcomeChannel = 0;
 	public String welcomeMessage = "";
 	public boolean enableWelcomeRole = false;
-	public long welcomeRole = -1;
-	public long logChannel = -1;
-	public long muteRole = -1;
-	public long muteChannel = -1;
-	public long rolePermission0 = -1;
-	public long rolePermission1 = -1;
-	public long rolePermission2 = -1;
+	public long welcomeRole = 0;
+	public long logChannel = 0;
+	public long muteRole = 0;
+	public long muteChannel = 0;
+	public long rolePermission0 = 0;
+	public long rolePermission1 = 0;
+	public long rolePermission2 = 0;
 
 	public GuildSettings(Guild guild) {
 		this.guild = guild;
