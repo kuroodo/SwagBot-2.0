@@ -8,6 +8,8 @@ import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandSetup extends ChatCommand {
+	GuildSettings settings;
+
 	public CommandSetup() {
 		isPermission0 = true;
 	}
@@ -21,12 +23,18 @@ public class CommandSetup extends ChatCommand {
 			sendNoPermissionsMessage();
 			return;
 		} else if (commandParams.length != expectedParamsLength) {
-			sendMessage(BotUtility.quotifyText("Parameters incorrect.\nCorrect format: " + commandPrefix + "setup <param> <value> OR enter "
-					+ commandPrefix + "setuphelp for more information"));
+			sendMessage(BotUtility.quotifyText("Parameters incorrect.\nCorrect format: " + commandPrefix
+					+ "setup <param> <value> OR enter " + commandPrefix + "setuphelp for more information"));
 			return;
 		}
-		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 
+		settings = GuildManager.getGuild(event.getGuild());
+		modifyGuildSettings();
+		updateGuildSettings();
+		sendMessage(BotUtility.codifyText("Command prefix has been set to " + settings.commandPrefix));
+	}
+
+	private GuildSettings modifyGuildSettings() {
 		switch (commandParams[1].toLowerCase()) {
 		case JSONKeys.SETTINGS_COMMAND_PREFIX:
 			if (commandParams[2].equals("-1")) {
@@ -36,12 +44,13 @@ public class CommandSetup extends ChatCommand {
 			}
 			break;
 		default:
-
 		}
+		return settings;
+	}
 
+	private void updateGuildSettings() {
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.reloadGuildSettings(settings.guildID);
-		sendMessage(BotUtility.codifyText("Command prefix has been set to " + settings.commandPrefix));
 	}
 
 	@Override
