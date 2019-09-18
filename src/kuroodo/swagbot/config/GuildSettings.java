@@ -46,11 +46,4 @@ public class GuildSettings {
 		this.rolePermission1 = rolePermission1;
 		this.rolePermission2 = rolePermission2;
 	}
-
-// TODO: Have bot send a hello message and assign a role to a joining user
-// TODO: Implement command system to allow value manipulation (writing)
-
 }
-
-// Channels and roles are their ID
-// JSON Values listen as blank will be ignored/set as disabled

@@ -39,7 +39,7 @@ public class Init {
 
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.addGuild(settings);
-
+		// TODO: Exception and error checking
 	}
 
 	private static void initializeBot() {
