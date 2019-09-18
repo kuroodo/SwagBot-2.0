@@ -28,7 +28,7 @@ public class ChatCommand extends Command {
 
 	@Override
 	public String commandDescription() {
-		return "";
+		return "ERROR: Command not found or no description";
 	}
 
 	protected void sendMessage(String message) {

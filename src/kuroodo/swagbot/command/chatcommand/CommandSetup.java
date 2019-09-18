@@ -373,7 +373,6 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		// TODO Auto-generated method stub
-		return super.commandDescription();
+		return "Use this command to set up your server configuration with the bot.\nUse !setuphelp for help and usage";
 	}
 }
