@@ -89,4 +89,16 @@ public class GuildManager {
 		return null;
 	}
 
+	public static void removeGuild(Guild guild) {
+		if (GUILDS.containsKey(guild.getIdLong())) {
+			GUILDS.remove(guild.getIdLong());
+		}
+	}
+
+	public static void removeGuild(long guildID) {
+		if (GUILDS.containsKey(guildID)) {
+			GUILDS.remove(guildID);
+		}
+	}
+
 }
