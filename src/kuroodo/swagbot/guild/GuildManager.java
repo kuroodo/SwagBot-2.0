@@ -6,6 +6,7 @@ import kuroodo.swagbot.json.GuildSettingsReader;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
@@ -38,6 +39,19 @@ public class GuildManager {
 				return channel;
 			}
 			System.err.print("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
+		}
+
+		System.err.print("ERROR: Could not find Guild " + guildID);
+		return null;
+	}
+
+	public static VoiceChannel getVoiceChannel(long guildID, long channelID) {
+		if (GUILDS.containsKey(guildID)) {
+			VoiceChannel channel = GUILDS.get(guildID).guild.getVoiceChannelById(channelID);
+			if (channel != null) {
+				return channel;
+			}
+			System.err.print("ERROR: Could not find VoiceChannel " + channelID + " in guild " + guildID);
 		}
 
 		System.err.print("ERROR: Could not find Guild " + guildID);
