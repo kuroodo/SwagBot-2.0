@@ -3,6 +3,7 @@ package kuroodo.swagbot.guild;
 import java.util.HashMap;
 
 import kuroodo.swagbot.config.GuildSettings;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class GuildManager {
@@ -26,10 +27,32 @@ public class GuildManager {
 			if (channel != null) {
 				return channel;
 			}
-			System.err.print("ERROR: Could not find TextChannel " + channelID);
+			System.err.print("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
 		}
 
 		System.err.print("ERROR: Could not find Guild " + guildID);
+		return null;
+	}
+
+	public static Role getRole(long guildID, long roleID) {
+		if (GUILDS.containsKey(guildID)) {
+			Role role = GUILDS.get(guildID).guild.getRoleById(roleID);
+			if (role != null) {
+				return role;
+			}
+			System.err.print("ERROR: Could not find Role " + roleID + " in guild " + guildID);
+		}
+
+		System.err.print("ERROR: Could not find Guild " + guildID);
+		return null;
+	}
+
+	public static GuildSettings getGuild(long guildID) {
+		if (GUILDS.containsKey(guildID)) {
+			return GUILDS.get(guildID);
+		}
+
+		System.out.println("ERROR: Guild " + guildID + " does not exist in map");
 		return null;
 	}
 }
