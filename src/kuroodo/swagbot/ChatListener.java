@@ -1,8 +1,10 @@
 package kuroodo.swagbot;
 
+import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
-import net.dv8tion.jda.api.entities.ChannelType;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -14,15 +16,18 @@ public class ChatListener extends ListenerAdapter {
 	public void onMessageReceived(MessageReceivedEvent event) {
 		super.onMessageReceived(event);
 
-		String msg = event.getMessage().getContentRaw();
-		if (event.isFromGuild()) {
-			if (msg.equals("!ping")) {
-				event.getChannel().sendMessage("PONG!").queue();
-			}
-		} else if (event.isFromType(ChannelType.PRIVATE)) {
-			event.getChannel().sendMessage("PING PANG PONG").queue();
-		}
+		HandleCommandRequest(event);
+		// TODO: LogChat or any other functionality()
+	}
 
+	private void HandleCommandRequest(MessageReceivedEvent event) {
+		String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
+
+		if (commandParams[0].startsWith(".")) {
+			String commandName = BotUtility.removePrefix(commandParams[0]);
+			Command command = CommandRegistry.getCommand(commandName);
+			command.executeCommand(commandParams, event);
+		}
 	}
 
 	// Just a test. This functionality should stay here or go to server listener
@@ -33,8 +38,10 @@ public class ChatListener extends ListenerAdapter {
 		if (guild.enableWelcome) {
 			GuildManager.getTextChannel(guild.guildID, guild.welcomeChannel).sendMessage(guild.welcomeMessage).queue();
 			if (guild.enableWelcomeRole) {
-				event.getGuild().addRoleToMember(event.getMember(),
-						GuildManager.getRole(guild.guildID, guild.welcomeRole)).queue();;
+				event.getGuild()
+						.addRoleToMember(event.getMember(), GuildManager.getRole(guild.guildID, guild.welcomeRole))
+						.queue();
+				;
 			}
 		}
 	}

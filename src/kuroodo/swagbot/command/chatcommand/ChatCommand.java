@@ -14,6 +14,7 @@ public class ChatCommand extends Command {
 	protected MessageReceivedEvent event;
 	protected String[] commandParams;
 
+	protected boolean isPrivateMessageCommand = false;
 	protected boolean isPermission0 = false, isPermission1 = false, isPermission2 = false;
 
 	@Override
