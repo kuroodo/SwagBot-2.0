@@ -5,11 +5,7 @@ import java.util.Scanner;
 import javax.security.auth.login.LoginException;
 
 import kuroodo.swagbot.config.BotConfig;
-import kuroodo.swagbot.guild.GuildManager;
-import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.ConfigReader;
-import kuroodo.swagbot.json.GuildSettingsReader;
-import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,12 +18,6 @@ public class Init {
 
 		System.out.println("Set up complete");
 		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
-
-		// Testing reading and writing
-		GuildSettingsWriter.createNewFile(new GuildSettings(SwagBot.getJDA().getGuilds().get(0)));
-		GuildSettings settings = GuildSettingsReader.loadSettingsFile(SwagBot.getJDA().getGuilds().get(0).getIdLong());
-		GuildManager.addGuild(settings);
-
 	}
 
 	private static void initializeBot() {

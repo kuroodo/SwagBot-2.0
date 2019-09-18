@@ -1,5 +1,6 @@
 package kuroodo.swagbot.json;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -61,5 +62,10 @@ public class GuildSettingsReader {
 		}
 
 		return retrievedValue;
+	}
+
+	public static boolean settingsFileExists(long guildID) {
+		String path = JSONKeys.SETTINGS_PATH + guildID + ".json";
+		return new File(path).exists();
 	}
 }
