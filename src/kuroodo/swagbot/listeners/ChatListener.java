@@ -1,4 +1,4 @@
-package kuroodo.swagbot;
+package kuroodo.swagbot.listeners;
 
 import kuroodo.swagbot.command.Command;
 import kuroodo.swagbot.command.CommandRegistry;

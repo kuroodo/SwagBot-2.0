@@ -13,7 +13,6 @@ import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
 
 public class Init {
 	public static void main(String[] args) {
@@ -21,8 +20,6 @@ public class Init {
 		startInputThread();
 		initializeBot();
 
-		SwagBot.setActivity(Activity.listening(BotConfig.DEFAULT_GAMEMESSAGE));
-		SwagBot.getConfig().addEventListener(new ChatListener());
 		System.out.println("Set up complete");
 		System.out.println("Hello I am " + BotConfig.BOTNAME + "v" + BotConfig.BOTVERSION);
 
@@ -45,6 +42,7 @@ public class Init {
 		// Set up the bot's configuration for normal operation
 		BotConfig config = new BotConfig(jda);
 		SwagBot.setConfig(config);
+		SwagBot.initializeFresh();
 	}
 
 	private static JDA initializeJDA() {
