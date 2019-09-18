@@ -23,8 +23,10 @@ public class ChatListener extends ListenerAdapter {
 	private void HandleCommandRequest(MessageReceivedEvent event) {
 		String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
 
-		if (commandParams[0].startsWith(".")) {
-			String commandName = BotUtility.removePrefix(commandParams[0]);
+		// TODO: Check if not from a guild
+		GuildSettings guild = GuildManager.getGuild(event.getGuild().getIdLong());
+		if (commandParams[0].startsWith(guild.commandPrefix)) {
+			String commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
 			Command command = CommandRegistry.getCommand(commandName);
 			command.executeCommand(commandParams, event);
 		}

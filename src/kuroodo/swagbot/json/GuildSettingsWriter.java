@@ -43,6 +43,7 @@ public class GuildSettingsWriter {
 			JsonObject object = Json.parse(reader).asObject();
 
 			object.set(JSONKeys.SETTINGS_GUILD_ID, Long.toString(guild.guildID));
+			object.set(JSONKeys.SETTINGS_COMMAND_PREFIX, guild.commandPrefix);
 			object.set(JSONKeys.SETTINGS_ENABLE_WELCOME, Boolean.toString(guild.enableWelcome));
 			object.set(JSONKeys.SETTINGS_WELCOME_CHANNEL, Long.toString(guild.welcomeChannel));
 			object.set(JSONKeys.SETTINGS_WELCOME_MESSAGE, guild.welcomeMessage);

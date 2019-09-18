@@ -9,6 +9,7 @@ public class JSONKeys {
 	public static final String SETTINGS_PATH = "guildsettings/";
 	public static final String TEMPLATE_NAME = "_TEMPLATE.json";
 	public static final String SETTINGS_GUILD_ID = "guildid";
+	public static final String SETTINGS_COMMAND_PREFIX = "commandprefix";
 	public static final String SETTINGS_ENABLE_WELCOME = "enablewelcome";
 	public static final String SETTINGS_WELCOME_CHANNEL = "welcomechannel";
 	public static final String SETTINGS_WELCOME_MESSAGE = "welcomemessage";

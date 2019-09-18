@@ -1,5 +1,6 @@
 {
 	"guildid": "0",
+	"commandprefix": "!",
     "enablewelcome": "false",
 	"welcomechannel": "0",
     "welcomemessage": "",

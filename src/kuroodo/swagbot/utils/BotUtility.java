@@ -5,7 +5,7 @@ public class BotUtility {
 		return string.split("\\s+");
 	}
 	
-	public static String removePrefix(String string) {
-		return string.substring(1);
+	public static String removePrefix(String prefix, String message) {
+		return message.substring(prefix.length());
 	}
 }

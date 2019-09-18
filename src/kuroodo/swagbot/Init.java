@@ -36,6 +36,7 @@ public class Init {
 		settings.enableWelcomeRole = true;
 		settings.welcomeChannel = 155780162254929921L;
 		settings.welcomeRole = 110624804536614912L;
+		settings.commandPrefix = "-";
 
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.addGuild(settings);

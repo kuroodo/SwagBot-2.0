@@ -24,6 +24,7 @@ public class GuildSettingsReader {
 					.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WLECOME_ROLE).asString());
 
 			// Strings
+			settings.commandPrefix = object.get(JSONKeys.SETTINGS_COMMAND_PREFIX).asString();
 			settings.welcomeMessage = object.get(JSONKeys.SETTINGS_WELCOME_MESSAGE).asString();
 
 			// Longs

@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Guild;
 public class GuildSettings {
 	public Guild guild;
 	public long guildID = 0;
+	public String commandPrefix = "!";
 	public boolean enableWelcome = false;
 	public long welcomeChannel = 0;
 	public String welcomeMessage = "";
@@ -29,11 +30,12 @@ public class GuildSettings {
 		this(SwagBot.getJDA().getGuildById(guildID));
 	}
 
-	public GuildSettings(Guild guild, long guildID, boolean enableWelcome, long welcomeChannel,
+	public GuildSettings(Guild guild, long guildID, String commandPrefix, boolean enableWelcome, long welcomeChannel,
 			String welcomeMessage, boolean enableWelcomeRole, long welcomeRole, long logChannel, long muteRole, long muteChannel,
 			long rolePermission0, long rolePermission1, long rolePermission2) {
 		this.guild = guild;
 		this.guildID = guildID;
+		this.commandPrefix = commandPrefix;
 		this.enableWelcome = enableWelcome;
 		this.welcomeChannel = welcomeChannel;
 		this.welcomeMessage = welcomeMessage;
