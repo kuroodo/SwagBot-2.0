@@ -1,15 +1,14 @@
 {
-	"guildid": "ID",
-	"guildname": "NAME",
+	"guildid": "0",
     "enablewelcome": "true",
-	"welcomechannel": "ID",
+	"welcomechannel": "0",
     "welcomemessage": "Welcome!",
 	"enablewelcomerole": "true",
-	"welcomerole": "ID",
-	"logchannel": "ID",
-	"muterole": "ID",	
-	"mutechannel": "ID",
-	"rolepermission0": "ID",
-	"rolepermission1": "ID",
-	"rolepermission2": "ID"
+	"welcomerole": "0",
+	"logchannel": "0",
+	"muterole": "0",	
+	"mutechannel": "0",
+	"rolepermission0": "0",
+	"rolepermission1": "0",
+	"rolepermission2": "0"
 }
