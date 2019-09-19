@@ -7,6 +7,7 @@ import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.utils.BotUtility;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandSetup extends ChatCommand {
@@ -17,9 +18,17 @@ public class CommandSetup extends ChatCommand {
 	}
 
 	@Override
+	protected void setCommandPermissiosn() {
+		requiredPermissions.add(Permission.MESSAGE_WRITE);
+	}
+
+	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
+		if (!selfHasPermissions()) {
+			return;
+		}
 		int expectedParamsLength = 3;
 		if (!memberHasPermissions(GuildManager.getGuild(event.getGuild().getIdLong()), event.getMember())) {
 			sendNoPermissionsMessage();

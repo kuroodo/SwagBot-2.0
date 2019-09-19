@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand;
 
 import java.util.Random;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandFlipCoin extends ChatCommand {
@@ -12,8 +13,17 @@ public class CommandFlipCoin extends ChatCommand {
 	}
 
 	@Override
+	protected void setCommandPermissiosn() {
+		requiredPermissions.add(Permission.MESSAGE_WRITE);
+	}
+
+	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+
+		if (!selfHasPermissions()) {
+			return;
+		}
 		rand.setSeed(System.nanoTime());
 		int x = rand.nextInt(2);
 

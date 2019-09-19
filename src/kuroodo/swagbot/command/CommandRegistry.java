@@ -1,7 +1,7 @@
 package kuroodo.swagbot.command;
 
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.command.chatcommand.CommandAvatar;
+import kuroodo.swagbot.command.chatcommand.CommandBlank;
 import kuroodo.swagbot.command.chatcommand.CommandFlipCoin;
 import kuroodo.swagbot.command.chatcommand.CommandHelp;
 import kuroodo.swagbot.command.chatcommand.CommandLaser;
@@ -39,7 +39,7 @@ public class CommandRegistry {
 
 		default:
 			// Return empty command
-			return new ChatCommand();
+			return new CommandBlank();
 		}
 	}
 }

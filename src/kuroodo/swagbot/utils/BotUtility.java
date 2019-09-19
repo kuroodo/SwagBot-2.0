@@ -1,9 +1,38 @@
 package kuroodo.swagbot.utils;
 
+import java.util.List;
+
+import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.guild.GuildManager;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 
 public class BotUtility {
+
+	public static boolean hasPermission(Permission permission, TextChannel channel, Member member) {
+		return member.getPermissions(channel).contains(permission);
+	}
+
+	public static boolean hasPermissions(List<Permission> permissions, TextChannel channel, Member member) {
+		for (Permission perm : permissions) {
+			if (!member.getPermissionsExplicit(channel).contains(perm)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static User getSelfUser() {
+		return SwagBot.getJDA().getSelfUser();
+	}
+
+	public static Member getSelfMember(Guild guild) {
+		return guild.getMember(getSelfUser());
+	}
+
 	public static String[] splitString(String string) {
 		return string.split("\\s+");
 	}

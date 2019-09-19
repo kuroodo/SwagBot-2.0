@@ -5,6 +5,8 @@ Source Code: https://github.com/kuroodo/SwagBot-2.0
 Default/Initial Command Prefix: !
 <prefix> = Whatever prefix is set up for the server. Default prefix is !. Therefore flipcoin would be used as !flipcoin
 
+Be sure to at least give the bot the following Permissions: Embed Links and Send Messages
+
 ---------
 SETUP
 ---------

@@ -1,8 +1,14 @@
 package kuroodo.swagbot.command.chatcommand;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandSlap extends ChatCommand {
+	@Override
+	protected void setCommandPermissiosn() {
+		requiredPermissions.add(Permission.MESSAGE_WRITE);
+	}
+
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);

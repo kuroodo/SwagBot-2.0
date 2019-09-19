@@ -3,12 +3,19 @@ package kuroodo.swagbot.command.chatcommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandSetupHelp extends ChatCommand {
+
+	@Override
+	protected void setCommandPermissiosn() {
+		requiredPermissions.add(Permission.MESSAGE_WRITE);
+		requiredPermissions.add(Permission.MESSAGE_EMBED_LINKS);
+	}
 
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {

@@ -19,8 +19,17 @@ public class CommandRoulette extends ChatCommand {
 	private final String DEATHROLENAME = "RIP";
 
 	@Override
+	protected void setCommandPermissiosn() {
+		requiredPermissions.add(Permission.MESSAGE_WRITE);
+	}
+
+	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+
+		if (!selfHasPermissions()) {
+			return;
+		}
 
 		createDeathRole();
 		playRoulette();
