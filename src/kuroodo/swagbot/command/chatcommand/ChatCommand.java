@@ -1,6 +1,5 @@
 package kuroodo.swagbot.command.chatcommand;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.command.Command;
@@ -18,13 +17,10 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public abstract class ChatCommand extends Command {
 	protected MessageReceivedEvent event;
 	protected String[] commandParams;
-	protected ArrayList<Permission> requiredPermissions = new ArrayList<Permission>();
 
 	protected String commandPrefix = "";
 	protected boolean isPrivateMessageCommand = false;
 	protected boolean isPermission0 = false, isPermission1 = false, isPermission2 = false;
-
-	protected abstract void setCommandPermissiosn();
 
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
