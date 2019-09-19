@@ -9,6 +9,9 @@ public class CommandKeys {
 	public static final String COMMAND_FLIPCOIN = "flipcoin";
 	public static final String COMMAND_AVATAR = "avatar";
 	public static final String COMMAND_USERINFO = "userinfo";
+	public static final String COMMAND_POKE = "poke";
+	public static final String COMMAND_LASER = "laser";
+	public static final String COMMAND_SLAP = "slap";
 	
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";
