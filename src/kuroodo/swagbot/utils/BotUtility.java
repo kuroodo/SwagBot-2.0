@@ -30,10 +30,14 @@ public class BotUtility {
 
 	public static void addRoleToMember(Guild guild, Role role, Member member) {
 		if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
-			System.out.println("Has permission");
 			guild.addRoleToMember(member, role).queue();
 		}
-		System.out.println("exit");
+	}
+
+	public static void removeRoleFromMember(Guild guild, Role role, Member member) {
+		if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
+			guild.removeRoleFromMember(member, role).queue();
+		}
 	}
 
 	public static boolean hasPermission(Permission permission, TextChannel channel, Member member) {
