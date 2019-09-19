@@ -22,17 +22,20 @@ public class GuildSettingsWriter {
 			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
 
 			// Create a new settings folder from template
-			// TODO: Check if template file doesn't exist
-			FileUtils.copyFile(new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME), new File(path));
-			writeSettings(guild);
-			
+			File templateFile = new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME);
+			if (templateFile.exists()) {
+				FileUtils.copyFile(templateFile, new File(path));
+				writeSettings(guild);
+			} else {
+				System.err.println("***************\nERROR: TEMPLATE FILE DOES NOT EXIST\n***************");
+			}
+
 		} catch (IOException e) {
 			System.err.println("ERROR: Error trying to create new file : " + guild.guildID
 					+ ".json\nEnsure that the corresponding files exist");
 		}
 	}
 
-	
 	public static void writeSettings(GuildSettings guild) {
 		try {
 			Reader reader;
@@ -69,8 +72,7 @@ public class GuildSettingsWriter {
 					+ ".json\nEnsure that the corresponding keys or files exist");
 		}
 	}
-	
-	
+
 	public static void writeSetting(long guildID, String key, String value) {
 		try {
 			Reader reader;
@@ -94,5 +96,9 @@ public class GuildSettingsWriter {
 			System.err.println("ERROR: Error trying to write to file " + guildID + ".json\nEnsure that key " + key
 					+ "or file exists");
 		}
+	}
+
+	public static boolean isTemplateExist() {
+		return new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME).exists();
 	}
 }

@@ -4,6 +4,7 @@ import com.eclipsesource.json.ParseException;
 
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.utils.BotUtility;
@@ -29,6 +30,14 @@ public class CommandSetup extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		if (!GuildSettingsReader.settingsFileExists(event.getGuild().getIdLong())) {
+			sendMessage(BotUtility.codifyText("Error finding this server's configuration file."));
+			if (!GuildSettingsWriter.isTemplateExist()) {
+				sendMessage(BotUtility.quotifyText("There is an issue managing server configuration. A fix is being worked on."));
+			}
+			return;
+		}
+
 		int expectedParamsLength = 3;
 		if (!memberHasPermissions(GuildManager.getGuild(event.getGuild().getIdLong()), event.getMember())) {
 			sendNoPermissionsMessage();

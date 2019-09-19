@@ -13,9 +13,13 @@ public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
 
 	public static void verifyGuildIntegrity(long guildID) {
-		if (!GUILDS.containsKey(guildID)) {
-			if (!GuildSettingsReader.settingsFileExists(guildID)) {
-				GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
+		if (!GuildSettingsReader.settingsFileExists(guildID)) {
+			GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
+		}
+
+		if (!containsGuild(guildID)) {
+			if (GuildSettingsWriter.isTemplateExist()) {
+				addGuild(guildID);
 			}
 		}
 	}
@@ -108,6 +112,10 @@ public class GuildManager {
 		if (GUILDS.containsKey(guildID)) {
 			GUILDS.remove(guildID);
 		}
+	}
+
+	public static boolean containsGuild(long guildID) {
+		return GUILDS.containsKey(guildID);
 	}
 
 }
