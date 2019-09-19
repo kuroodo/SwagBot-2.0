@@ -7,6 +7,7 @@ public class CommandKeys {
 		
 	// FUN commands
 	public static final String COMMAND_FLIPCOIN = "flipcoin";
+	public static final String COMMAND_AVATAR = "avatar";
 	
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";
