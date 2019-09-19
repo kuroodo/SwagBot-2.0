@@ -20,27 +20,15 @@ public class SwagBot {
 	private static BotConfig config;
 
 	public static void initializeFresh() {
+		verifyGuildTemplateFile();
 		loadGuilds();
-
 		setToDefaultActivity();
+		
 		config.addEventListener(new ChatListener());
 		config.addEventListener(new ServerListener());
 	}
 
 	private static void loadGuilds() {
-		
-		if (!GuildSettingsWriter.isTemplateExist()) {
-			// Send a message to the bot owner
-			getJDA().getUserById(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER)).openPrivateChannel()
-					.queue(new Consumer<PrivateChannel>() {
-
-						@Override
-						public void accept(PrivateChannel t) {
-							t.sendMessage("THE _TEMPLATE.json FILE IS MISSING. CANNOT CREATE GUILDSETTINGS. FIX THIS ASAP").queue();
-						}
-					});
-		}
-
 		int newGuilds = 0;
 		int oldGuilds = 0;
 		for (Guild guild : getJDA().getGuilds()) {
@@ -60,6 +48,22 @@ public class SwagBot {
 
 		System.out.println("Loaded " + oldGuilds + " guild configurations and generated " + newGuilds
 				+ " new guild configurations");
+	}
+
+	private static void verifyGuildTemplateFile() {
+		if (!GuildSettingsWriter.isTemplateExist()) {
+			// Send a message to the bot owner
+			getJDA().getUserById(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER)).openPrivateChannel()
+					.queue(new Consumer<PrivateChannel>() {
+
+						@Override
+						public void accept(PrivateChannel t) {
+							t.sendMessage(
+									"THE _TEMPLATE.json FILE IS MISSING. CANNOT CREATE GUILDSETTINGS. FIX THIS ASAP")
+									.queue();
+						}
+					});
+		}
 	}
 
 	public static void setActivity(Activity activity) {

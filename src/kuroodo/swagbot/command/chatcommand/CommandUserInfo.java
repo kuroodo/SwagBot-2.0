@@ -19,11 +19,12 @@ public class CommandUserInfo extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
+		// If no parameters
 		if (commandParams.length == 1) {
 			sendEmbed(makeEmbed(event.getMember()));
 		} else if (!event.getMessage().getMentionedMembers().isEmpty()) {
 			sendEmbed(makeEmbed(event.getMessage().getMentionedMembers().get(0)));
-		} else {
+		} else { // Else check if entered a user ID
 			Member member = null;
 			// Check if entered valid long ID
 			try {

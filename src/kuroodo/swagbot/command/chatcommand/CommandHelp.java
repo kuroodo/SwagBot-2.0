@@ -21,8 +21,10 @@ public class CommandHelp extends ChatCommand {
 			return;
 		}
 
+		// If no parameters
 		if (commandParams.length == 1) {
 			sendHelpOverview();
+			// If asking for help with specific command
 		} else if (commandParams.length == 2) {
 			sendCommandHelp();
 		}
@@ -33,7 +35,6 @@ public class CommandHelp extends ChatCommand {
 	}
 
 	private void sendCommandHelp() {
-
 		Command command = CommandRegistry.getCommand(commandParams[1]);
 		sendMessage(BotUtility.codifyText(command.commandDescription()));
 	}

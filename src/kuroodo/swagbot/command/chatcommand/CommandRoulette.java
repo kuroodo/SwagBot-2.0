@@ -30,38 +30,35 @@ public class CommandRoulette extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-
+		// Create death role if doesn't already exist
 		createDeathRole();
 		playRoulette();
 	}
 
 	private void playRoulette() {
-		startFirstPrompt();
+		sendMessage(event.getMember().getAsMention() + " raises a revolver to their head");
 
 		Timer timer = new Timer();
 
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				startSecondPrompt();
+				runResults();
 			}
 		}, TRANSITION_TIME * 1000);
 	}
 
-	private void startFirstPrompt() {
-		sendMessage(event.getMember().getAsMention() + " raises a revolver to their head");
-	}
-
-	private void startSecondPrompt() {
+	private void runResults() {
 		Random rand = new Random(System.nanoTime());
 		int randomNumber = rand.nextInt(TOTALSHOTS);
 
+		// Lose
 		if (randomNumber == 1) {
 			sendMessage(event.getAuthor().getAsMention()
 					+ " pulls the trigger and BAM! Their brain splatters all over the place!");
 			addDeathRoleToUser();
 			startCoolDownTimer();
-		} else {
+		} else { // Win
 			sendMessage(event.getAuthor().getAsMention() + " pulls the trigger and survives to tell the tale!");
 		}
 	}
@@ -107,7 +104,7 @@ public class CommandRoulette extends ChatCommand {
 		Guild guild = event.getGuild();
 		if (BotUtility.doesRoleExist(guild, DEATHROLENAME)) {
 			Role role = guild.getRolesByName(DEATHROLENAME, true).get(0);
-			event.getGuild().addRoleToMember(event.getMember(), role).queue();
+			BotUtility.addRoleToMember(guild, role, event.getMember());
 		}
 
 	}
@@ -115,7 +112,8 @@ public class CommandRoulette extends ChatCommand {
 	private void removeDeathRoleFromUser() {
 		Guild guild = event.getGuild();
 		if (BotUtility.doesRoleExist(guild, DEATHROLENAME)) {
-			guild.removeRoleFromMember(event.getMember(), guild.getRolesByName(DEATHROLENAME, true).get(0)).queue();
+			Role role = guild.getRolesByName(DEATHROLENAME, true).get(0);
+			BotUtility.removeRoleFromMember(guild, role, event.getMember());
 		}
 	}
 }

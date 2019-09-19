@@ -23,11 +23,14 @@ public class CommandAvatar extends ChatCommand {
 			return;
 		}
 
+		// If no parameters
 		if (commandParams.length == 1) {
+			// Send the message author's avatar
 			sendEmbed(makeEmbed(event.getMember()));
 		} else if (!event.getMessage().getMentionedUsers().isEmpty()) {
 			sendEmbed(makeEmbed(event.getMessage().getMentionedMembers().get(0)));
-		} else {
+
+		} else { // Else check if entered a user ID
 			Member member = null;
 			// Check if entered valid long ID
 			try {

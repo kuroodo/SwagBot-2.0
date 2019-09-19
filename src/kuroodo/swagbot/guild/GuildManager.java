@@ -13,10 +13,12 @@ public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
 
 	public static void verifyGuildIntegrity(long guildID) {
+		// If file for guild doesn't exist
 		if (!GuildSettingsReader.settingsFileExists(guildID)) {
 			GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
 		}
 
+		// Add missing guild to manager if the template file exists
 		if (!containsGuild(guildID)) {
 			if (GuildSettingsWriter.isTemplateExist()) {
 				addGuild(guildID);
@@ -52,9 +54,9 @@ public class GuildManager {
 				return channel;
 			}
 			System.err.println("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
+		} else {
+			System.err.println("ERROR: Could not find Guild " + guildID);
 		}
-
-		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 
@@ -65,9 +67,9 @@ public class GuildManager {
 				return channel;
 			}
 			System.err.println("ERROR: Could not find VoiceChannel " + channelID + " in guild " + guildID);
+		} else {
+			System.err.println("ERROR: Could not find Guild " + guildID);
 		}
-
-		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 
@@ -78,9 +80,9 @@ public class GuildManager {
 				return role;
 			}
 			System.err.println("ERROR: Could not find Role " + roleID + " in guild " + guildID);
+		} else {
+			System.err.println("ERROR: Could not find Guild " + guildID);
 		}
-
-		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 

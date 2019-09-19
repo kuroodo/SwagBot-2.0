@@ -24,8 +24,10 @@ public class CommandFlipCoin extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		
+		int sides = 2;
 		rand.setSeed(System.nanoTime());
-		int x = rand.nextInt(2);
+		int x = rand.nextInt(sides);
 
 		if (x == 0) {
 			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on tails\n```");
