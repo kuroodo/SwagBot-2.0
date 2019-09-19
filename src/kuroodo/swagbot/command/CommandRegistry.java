@@ -6,6 +6,7 @@ import kuroodo.swagbot.command.chatcommand.CommandFlipCoin;
 import kuroodo.swagbot.command.chatcommand.CommandHelp;
 import kuroodo.swagbot.command.chatcommand.CommandLaser;
 import kuroodo.swagbot.command.chatcommand.CommandPoke;
+import kuroodo.swagbot.command.chatcommand.CommandRoulette;
 import kuroodo.swagbot.command.chatcommand.CommandSetup;
 import kuroodo.swagbot.command.chatcommand.CommandSetupHelp;
 import kuroodo.swagbot.command.chatcommand.CommandSlap;
@@ -29,11 +30,13 @@ public class CommandRegistry {
 			return new CommandLaser();
 		case CommandKeys.COMMAND_SLAP:
 			return new CommandSlap();
+		case CommandKeys.COMMAND_ROULETTE:
+			return new CommandRoulette();
 		case CommandKeys.COMMAND_SETUP:
 			return new CommandSetup();
 		case CommandKeys.COMMAND_SETUPHELP:
 			return new CommandSetupHelp();
-	
+
 		default:
 			// Return empty command
 			return new ChatCommand();
