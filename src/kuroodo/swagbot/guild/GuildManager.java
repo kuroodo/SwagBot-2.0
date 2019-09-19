@@ -3,6 +3,7 @@ package kuroodo.swagbot.guild;
 import java.util.HashMap;
 
 import kuroodo.swagbot.json.GuildSettingsReader;
+import kuroodo.swagbot.json.GuildSettingsWriter;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -10,6 +11,14 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
+
+	public static void verifyGuildIntegrity(long guildID) {
+		if (!GUILDS.containsKey(guildID)) {
+			if (!GuildSettingsReader.settingsFileExists(guildID)) {
+				GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
+			}
+		}
+	}
 
 	public static void reloadGuildSettings(long guildID) {
 		if (GUILDS.containsKey(guildID)) {

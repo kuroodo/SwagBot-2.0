@@ -1,5 +1,6 @@
 package kuroodo.swagbot.json;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -39,7 +40,7 @@ public class GuildSettingsWriter {
 			File settingsFile = new File(path);
 
 			// Read and store the contents of the file into a JsonObject
-			reader = new FileReader(settingsFile);
+			reader = new BufferedReader(new FileReader(settingsFile));
 			JsonObject object = Json.parse(reader).asObject();
 
 			object.set(JSONKeys.SETTINGS_GUILD_ID, Long.toString(guild.guildID));
@@ -62,6 +63,7 @@ public class GuildSettingsWriter {
 
 			writer.flush();
 			writer.close();
+			reader.close();
 		} catch (IOException e) {
 			System.err.println("ERROR: Error trying to write to file : " + guild.guildID
 					+ ".json\nEnsure that the corresponding keys or files exist");
@@ -76,7 +78,7 @@ public class GuildSettingsWriter {
 			File settingsFile = new File(path);
 
 			// Read and store the contents of the file into a JsonObject
-			reader = new FileReader(settingsFile);
+			reader = new BufferedReader(new FileReader(settingsFile));
 			JsonObject object = Json.parse(reader).asObject();
 
 			object.set(key, value);
@@ -87,6 +89,7 @@ public class GuildSettingsWriter {
 
 			writer.flush();
 			writer.close();
+			reader.close();
 		} catch (IOException e) {
 			System.err.println("ERROR: Error trying to write to file " + guildID + ".json\nEnsure that key " + key
 					+ "or file exists");

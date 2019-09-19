@@ -1,5 +1,6 @@
 package kuroodo.swagbot.json;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,11 +15,12 @@ public class GuildSettingsReader {
 
 	public static GuildSettings loadSettingsFile(long guildID) {
 		Reader reader;
+		GuildSettings settings = new GuildSettings(guildID);
 		try {
-			reader = new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json");
+			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json"));
 			JsonObject object = Json.parse(reader).asObject();
 
-			GuildSettings settings = new GuildSettings(guildID);
+			settings = new GuildSettings(guildID);
 			// booleans
 			settings.enableWelcome = Boolean.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WELCOME).asString());
 			settings.enableWelcomeRole = Boolean
@@ -38,13 +40,13 @@ public class GuildSettingsReader {
 			settings.rolePermission1 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION1).asString());
 			settings.rolePermission2 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION2).asString());
 
+			reader.close();
 			return settings;
 		} catch (IOException e) {
-			e.printStackTrace();
 			System.err.println("Error retrieving guild or guild settings for guild: " + guildID);
 		}
 
-		return null;
+		return settings;
 	}
 
 	public static String getSettingsValue(long guildID, String key) {
@@ -52,10 +54,11 @@ public class GuildSettingsReader {
 
 		Reader reader;
 		try {
-			reader = new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json");
+			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json"));
 			JsonObject object = Json.parse(reader).asObject();
 
 			retrievedValue = object.get(key).asString();
+			reader.close();
 		} catch (IOException e) {
 			System.err.println("ERROR: Could not get key: " + key + "\nEnsure that the key or the file " + guildID
 					+ ".json" + " exist");
@@ -68,4 +71,5 @@ public class GuildSettingsReader {
 		String path = JSONKeys.SETTINGS_PATH + guildID + ".json";
 		return new File(path).exists();
 	}
+
 }
