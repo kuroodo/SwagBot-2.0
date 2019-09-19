@@ -14,6 +14,7 @@ public class Init {
 	public static void main(String[] args) {
 		startShutdownHook();
 		startInputThread();
+		verifyConfigFile();
 		initializeBot();
 
 		System.out.println("Set up complete");
@@ -24,7 +25,7 @@ public class Init {
 		// Attempt to get JDA
 		JDA jda = initializeJDA();
 		if (jda == null) {
-			System.err.println("ERROR: Could not get JDA");
+			System.out.println("ERROR: Could not start JDA. Ensure the bot token is correct");
 			exitApplication(-1);
 			return;
 		}
@@ -41,7 +42,6 @@ public class Init {
 			System.out.println("JDA build succesful");
 			return jda;
 		} catch (InterruptedException | LoginException e) {
-			e.printStackTrace();
 		}
 		return null;
 	}
@@ -50,7 +50,6 @@ public class Init {
 		final Thread inputThread = new Thread(new Runnable() {
 
 			public void run() {
-				System.out.println("running");
 				Scanner scanner = new Scanner(System.in);
 				while (true) {
 					String input = scanner.nextLine();
@@ -72,9 +71,16 @@ public class Init {
 					SwagBot.getJDA().shutdown();
 				} catch (NullPointerException e) {
 				}
-				System.out.println("Shutting down");
+				System.out.println("Shutting down...");
 			}
 		});
+	}
+
+	private static void verifyConfigFile() {
+		if (!ConfigReader.configFileExists()) {
+			System.out.println("Error: config.json is missing");
+			exitApplication(-1);
+		}
 	}
 
 	private static void exitApplication(int exitCode) {
