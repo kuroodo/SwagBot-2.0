@@ -12,7 +12,6 @@ public class CommandAvatar extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
-		// no params = author avatar
 		if (commandParams.length == 1) {
 			sendEmbed(makeEmbed(event.getAuthor()));
 		} else if (!event.getMessage().getMentionedUsers().isEmpty()) {
@@ -26,10 +25,10 @@ public class CommandAvatar extends ChatCommand {
 	}
 
 	private EmbedBuilder makeEmbed(User user) {
+		EmbedBuilder eb = new EmbedBuilder();
+
 		String name = user.getName();
 		String avatarURL = user.getAvatarUrl();
-
-		EmbedBuilder eb = new EmbedBuilder();
 
 		eb.setColor(Color.RED);
 		eb.addField(name + "'s Avatar: ", user.getAsMention(), false);
@@ -39,7 +38,7 @@ public class CommandAvatar extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Get the avatar of a user\nUsage: !avatar or !avatar @user";
+		return "Get the avatar of a user\nUsage: " + commandPrefix + "avatar or " + commandPrefix + "avatar @user";
 	}
 
 }
