@@ -38,10 +38,10 @@ public class GuildManager {
 			if (channel != null) {
 				return channel;
 			}
-			System.err.print("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
+			System.err.println("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
 		}
 
-		System.err.print("ERROR: Could not find Guild " + guildID);
+		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 
@@ -51,10 +51,10 @@ public class GuildManager {
 			if (channel != null) {
 				return channel;
 			}
-			System.err.print("ERROR: Could not find VoiceChannel " + channelID + " in guild " + guildID);
+			System.err.println("ERROR: Could not find VoiceChannel " + channelID + " in guild " + guildID);
 		}
 
-		System.err.print("ERROR: Could not find Guild " + guildID);
+		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 
@@ -64,10 +64,10 @@ public class GuildManager {
 			if (role != null) {
 				return role;
 			}
-			System.err.print("ERROR: Could not find Role " + roleID + " in guild " + guildID);
+			System.err.println("ERROR: Could not find Role " + roleID + " in guild " + guildID);
 		}
 
-		System.err.print("ERROR: Could not find Guild " + guildID);
+		System.err.println("ERROR: Could not find Guild " + guildID);
 		return null;
 	}
 
