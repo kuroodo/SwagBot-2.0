@@ -4,6 +4,7 @@ public class JSONKeys {
 	// Config.json
 	public static final String CONFIG_FILE_NAME = "config.json";
 	public static final String CONFIG_BOT_TOKEN = "bottoken";
+	public static final String CONIG_BOT_OWNER = "botownerid";
 
 	// Guild Settings
 	public static final String SETTINGS_PATH = "guildsettings/";
