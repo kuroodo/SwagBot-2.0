@@ -29,8 +29,9 @@ public class CommandSetupHelp extends ChatCommand {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Current Build Settings");
 		eb = getSettings(settings, eb);
+		eb.setDescription("For information, see the [manual](https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt)");
 		eb.setFooter("To edit these values, use " + commandPrefix + "setup <key> <value>\n"
-				+ "To get a description of each key and their values, enter: " + commandPrefix + "help");
+				+ "To get a description of each key and their values, enter: " + commandPrefix + "setuphelp keys");
 		return eb;
 	}
 

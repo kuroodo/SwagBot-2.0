@@ -25,7 +25,7 @@ public class CommandSetup extends ChatCommand {
 			sendNoPermissionsMessage();
 			return;
 		} else if (commandParams.length < expectedParamsLength) {
-			printFormatErrorMessage();
+			sendFormatErrorMessage();
 			return;
 		}
 
@@ -72,6 +72,8 @@ public class CommandSetup extends ChatCommand {
 		case JSONKeys.SETTINGS_ROLE_PERMISSION2:
 			updatePermission2();
 			return;
+		default:
+			sendFormatErrorMessage();
 		}
 	}
 
@@ -93,7 +95,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				settings.enableWelcome = Boolean.parseBoolean(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -111,7 +113,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -155,7 +157,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				settings.enableWelcomeRole = Boolean.parseBoolean(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 			sendMessage(BotUtility.codifyText(
@@ -172,7 +174,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -198,7 +200,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -224,7 +226,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -250,7 +252,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -276,7 +278,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -302,7 +304,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -328,7 +330,7 @@ public class CommandSetup extends ChatCommand {
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (ParseException e) {
-				printFormatErrorMessage();
+				sendFormatErrorMessage();
 				return;
 			}
 
@@ -350,9 +352,9 @@ public class CommandSetup extends ChatCommand {
 		GuildManager.reloadGuildSettings(settings.guildID);
 	}
 
-	private void printFormatErrorMessage() {
+	private void sendFormatErrorMessage() {
 		sendMessage(BotUtility.quotifyText("Parameters incorrect.\nCorrect format: " + commandPrefix
-				+ "setup <param> <value> AND ensure that the value is correct OR enter " + commandPrefix
+				+ "setup <key> <value> AND ensure that the value is correct OR enter " + commandPrefix
 				+ "setuphelp for more information"));
 	}
 

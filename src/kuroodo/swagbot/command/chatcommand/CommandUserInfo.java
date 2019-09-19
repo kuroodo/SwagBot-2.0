@@ -13,18 +13,25 @@ public class CommandUserInfo extends ChatCommand {
 		super.executeCommand(commandParams, event);
 
 		if (commandParams.length == 1) {
-			sendEmbed(getInfoEmb(event.getMember()));
+			sendEmbed(makeEmbed(event.getMember()));
 		} else if (!event.getMessage().getMentionedMembers().isEmpty()) {
-			sendEmbed(getInfoEmb(event.getMessage().getMentionedMembers().get(0)));
+			sendEmbed(makeEmbed(event.getMessage().getMentionedMembers().get(0)));
 		} else {
-			Member member = event.getGuild().getMemberById(commandParams[1]);
+			Member member = null;
+			// Check if entered valid long ID
+			try {
+				member = event.getGuild().getMemberById(commandParams[1]);
+			} catch (NumberFormatException e) {
+			}
 			if (member != null) {
-				sendEmbed(getInfoEmb(member));
+				sendEmbed(makeEmbed(member));
+			} else {
+				sendMessage("Please mention a valid user");
 			}
 		}
 	}
 
-	private EmbedBuilder getInfoEmb(Member member) {
+	private EmbedBuilder makeEmbed(Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 		String name = member.getUser().getAsTag();
 		String nickname = member.getEffectiveName();
