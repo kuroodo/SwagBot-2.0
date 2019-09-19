@@ -4,16 +4,44 @@ import java.util.List;
 
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.guild.GuildManager;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
 public class BotUtility {
 
+	public static void sendGuildMessage(Guild guild, TextChannel channel, String message) {
+		// Check if has perms to send message
+		if (hasPermission(Permission.MESSAGE_WRITE, channel, BotUtility.getSelfMember(guild))) {
+			channel.sendMessage(message).queue();
+		}
+	}
+
+	public static void sendEmbed(Guild guild, TextChannel channel, EmbedBuilder eb) {
+		// Check if has perms to send message
+		if (BotUtility.hasPermission(Permission.MESSAGE_EMBED_LINKS, channel, BotUtility.getSelfMember(guild))) {
+			channel.sendMessage(eb.build()).queue();
+		}
+	}
+
+	public static void addRoleToMember(Guild guild, Role role, Member member) {
+		if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
+			System.out.println("Has permission");
+			guild.addRoleToMember(member, role).queue();
+		}
+		System.out.println("exit");
+	}
+
 	public static boolean hasPermission(Permission permission, TextChannel channel, Member member) {
 		return member.getPermissions(channel).contains(permission);
+	}
+
+	public static boolean hasPermission(Permission permission, Member member) {
+		return member.getPermissions().contains(permission);
 	}
 
 	public static boolean hasPermissions(List<Permission> permissions, TextChannel channel, Member member) {
@@ -23,6 +51,10 @@ public class BotUtility {
 			}
 		}
 		return true;
+	}
+
+	public static boolean doesRoleExist(Guild guild, String rolename) {
+		return !guild.getRolesByName(rolename, true).isEmpty();
 	}
 
 	public static User getSelfUser() {
@@ -57,7 +89,4 @@ public class BotUtility {
 		return "> " + message;
 	}
 
-	public static boolean doesRoleExist(Guild guild, String rolename) {
-		return !guild.getRolesByName(rolename, true).isEmpty();
-	}
 }
