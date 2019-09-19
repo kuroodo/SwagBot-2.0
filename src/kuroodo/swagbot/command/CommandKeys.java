@@ -1,12 +1,14 @@
 package kuroodo.swagbot.command;
 
 public class CommandKeys {
+	
+	// HELP commands
+		public static final String COMMAND_HELP = "help";
+		
 	// FUN commands
 	public static final String COMMAND_FLIPCOIN = "flipcoin";
 	
-	// MISC commands
+	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";
-	
-	// HELP commands
-	public static final String COMMAND_HELP = "help";
+	public static final String COMMAND_SETUPHELP = "setuphelp";
 }
