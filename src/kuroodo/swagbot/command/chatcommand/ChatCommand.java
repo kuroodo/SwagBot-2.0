@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import kuroodo.swagbot.command.Command;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.PrivateChannel;
@@ -45,6 +46,10 @@ public class ChatCommand extends Command {
 			});
 
 		}
+	}
+
+	protected void sendEmbed(EmbedBuilder eb) {
+		event.getChannel().sendMessage(eb.build()).queue();
 	}
 
 	protected boolean memberHasPermissions(GuildSettings guild, Member member) {

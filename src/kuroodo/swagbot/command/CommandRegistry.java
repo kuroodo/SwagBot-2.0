@@ -4,6 +4,7 @@ import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.command.chatcommand.CommandFlipCoin;
 import kuroodo.swagbot.command.chatcommand.CommandHelp;
 import kuroodo.swagbot.command.chatcommand.CommandSetup;
+import kuroodo.swagbot.command.chatcommand.CommandSetupHelp;
 
 public class CommandRegistry {
 	public static Command getCommand(String command) {
@@ -15,6 +16,8 @@ public class CommandRegistry {
 			return new CommandSetup();
 		case CommandKeys.COMMAND_HELP:
 			return new CommandHelp();
+		case CommandKeys.COMMAND_SETUPHELP:
+			return new CommandSetupHelp();
 		default:
 			// Return empty command
 			return new ChatCommand();

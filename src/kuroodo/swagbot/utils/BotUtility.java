@@ -19,6 +19,10 @@ public class BotUtility {
 		return "```css\n" + message + "\n```";
 	}
 	
+	public static String codifyTextBlank(String message) {
+		return "```\n" + message + "\n```";
+	}
+	
 	public static String quotifyText(String message) {
 		return "> " + message;
 	}
