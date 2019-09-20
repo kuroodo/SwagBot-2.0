@@ -93,19 +93,21 @@ public class BotUtility {
 		return "> " + message;
 	}
 
+	// Removes an element by rebuilding the array without that index
 	public static String[] removeElement(String[] array, int index) {
 		String[] newArray = new String[array.length - 1];
-		int x = 0;
+		int replacingIndex = 0;
 
 		for (int i = 0; i < array.length; i++) {
 			if (i == index) {
-				x++;
+				// Ignore this index and get the index that comes after
+				replacingIndex++;
 			}
 
-			newArray[i] = array[x];
-			x++;
+			newArray[i] = array[replacingIndex];
+			replacingIndex++;
 
-			if (x >= array.length) {
+			if (replacingIndex >= array.length) {
 				return newArray;
 			}
 		}
