@@ -7,6 +7,7 @@ import kuroodo.swagbot.command.chatcommand.config.CommandUserInfo;
 import kuroodo.swagbot.command.chatcommand.fun.CommandAvatar;
 import kuroodo.swagbot.command.chatcommand.fun.CommandFlipCoin;
 import kuroodo.swagbot.command.chatcommand.fun.CommandLaser;
+import kuroodo.swagbot.command.chatcommand.fun.CommandMagicBall;
 import kuroodo.swagbot.command.chatcommand.fun.CommandPoke;
 import kuroodo.swagbot.command.chatcommand.fun.CommandRoulette;
 import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
@@ -35,6 +36,8 @@ public class CommandRegistry {
 			return new CommandRoulette();
 		case CommandKeys.COMMAND_SPARTANKICK:
 			return new CommandSpartanKick();
+		case CommandKeys.COMMAND_MAGICBALL:
+			return new CommandMagicBall();
 		case CommandKeys.COMMAND_SETUP:
 			return new CommandSetup();
 		case CommandKeys.COMMAND_SETUPHELP:
@@ -44,5 +47,9 @@ public class CommandRegistry {
 			// Return empty command
 			return new CommandBlank();
 		}
+	}
+
+	public static boolean isCommandRegistered(String command) {
+		return !(getCommand(command) instanceof CommandBlank);
 	}
 }

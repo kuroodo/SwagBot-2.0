@@ -3,6 +3,7 @@ package kuroodo.swagbot.utils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.guild.GuildManager;
@@ -136,5 +137,10 @@ public class BotUtility {
 		}
 
 		return newArray;
+	}
+
+	public static int getRandomInt(int range) {
+		Random rand = new Random(System.nanoTime());
+		return rand.nextInt(range);
 	}
 }

@@ -14,6 +14,7 @@ public class CommandKeys {
 	public static final String COMMAND_SLAP = "slap";
 	public static final String COMMAND_ROULETTE = "roulette";
 	public static final String COMMAND_SPARTANKICK = "spartankick";
+	public static final String COMMAND_MAGICBALL = "magicball";
 
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";

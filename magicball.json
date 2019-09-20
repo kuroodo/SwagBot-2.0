@@ -1,0 +1,48 @@
+{
+	"what": ["Idk.", "Perhaps in the foreseeable future I'll be able to answer that.", "It could be the other way around actually", "for fuck sake these questions are getting ridiculous!", 
+	"Look deep into your heart and you will find the answer", "21", "42", "57-68", "I think instead you should be asking to yourself: Why am I talking to a robot?", "Simple, cake!", "I'm wondering the same thing!"],
+	
+	"are": ["Yes!", "No!", "Maybe.", "Possibly", "Without a doubt!", "Well, not exacyly", "Nope", "Just like sprinkles on icecream.", "Perhaps in the foreseeable future.", 
+	"Don't count on it!", "Look deep into your heart and you will find the answer", "With a little bit of luck perhaps", "I'm wondering the same thing!"],
+	
+	"who": ["idk", "Perhaps in the foreseeable future I'll be able to answer that.", "One of us.", "Nobody", "Look deep into your heart and you will find the answer", 
+	"A pink fluffy unicorn walking on rainbows", "Ask again and maybe I'll be in the mood to answer", "They're all the same", "I don't think you'd want to know", "I'm wondering the same thing!"],
+	
+	"is": ["Yes!", "Perhaps in the foreseeable future.", "Maybe.", "don't count on it!", "Look deep into your heart and you will find the answer", 
+		"With a little bit of luck perhaps", "Ask someone else", "Possibly", "Without a doubt!", "Well, not exactly", "Nope", "I must say no", 
+		"Just like sprinkles on icecream.", "More than anything", "Only if you spread butter over it", "It depends really.", "You're annoying", "Look at the bigger picture!", "How should I know?", 
+		"I dunno what you just asked me, but you are now forced to date the user below you on the member list. If there is no one below you, then try the person above you. If no one is above you, then you are dating me <3", "I'm wondering the same thing!"],
+	
+	"will": ["Yes!", "Perhaps in the foreseeable future.", "Maybe.", "don't count on it!", "Look deep into your heart and you will find the answer", 
+		"With a little bit of luck perhaps", "Ask someone else", "Possibly", "Without a doubt!", "Well, not exactly", "Nope", "I must say no", 
+		"Just like sprinkles on icecream.", "More than anything", "Only if you spread butter over it", "It depends really.", "You're annoying", "Look at the bigger picture!", "How should I know?", 
+		"I dunno what you just asked me, but you are now forced to date the user below you on the member list. If there is no one below you, then try the person above you. If no one is above you, then you are dating me <3", "I'm wondering the same thing!"],
+	
+	"when": ["Yes", "Soon!", "Perhaps in the foreseeable future.", "Maybe right now", "Don't count on it!", "Look deep into your heart and you will find the answer", "Never!", "How the hell should I know?", 
+	"You expect me to know that?", "NEVER AHAHAH", "I say never", "Give it a few minutes", "In the next leap year!", "When Half Life 3 comes out!", "I could ask you the same thing...", "I'm wondering the same thing!", "It's time someone took action!"],
+	
+	"how": ["Idk.", "Dunno", "Science...BITCH!", "El senor Jesu'cristo!", "Step 1.Open it. Step 2.Bring it out. Step 3.Make sure its hard. Step 4.Put it in. Step 5.That's how you put frozen food in the microwave :D", 
+	"Look deep into your heart and you will find the answer", "Go away!", "Ask me again and maybe this time I will consider an actual answer", 
+	"You thought I would give you an actual answer?", "How? You ask How?!?!? THIS IS AN OUTRAGE", "Life, uh, finds a way", "If it fits it ships", "I could ask you the same thing...", "I'm wondering the same thing!"],
+	
+	"if": ["Idk.", "That's just simply how life works..", "Just because.", "Look deep into your heart and you will find the answer", "Do you really want me to answer that?", "How am I supposed to know?", 
+	"Why are you so annoying?", "What even are these questions...", "Because.", "Sometimes things just are like that", "Sometimes it b like dat", "Sometimes it do", "I'm wondering the same thing!"],
+	
+	"hi": ["Hello my sweet child", "You are below me. How dare you think you can speak to me?", "*Robot Noises*", "Hey!", "Hello", "Hi, how are you?", 
+	"OMG SENPAI NOTICED ME!!!", "What's up!?", "heeyyyyy", "Zzz", "*Notices you OwO*", "Man some of programmed responses are cringe..."],
+	
+	"hello": ["Hello my sweet child", "You are below me. How dare you think you can speak to me?", "*Robot Noises*", "Hey!", "Hello", "Hi, how are you?", 
+	"OMG SENPAI NOTICED ME!!!", "What's up!?", "heeyyyyy", "Zzz", "*Notices you OwO*", "Man some of programmed responses are cringe..."],
+	
+	"hey": ["Hello my sweet child", "You are below me. How dare you think you can speak to me?", "*Robot Noises*", "Hey!", "Hello", "Hi, how are you?", 
+	"OMG SENPAI NOTICED ME!!!", "What's up!?", "heeyyyyy", "Zzz", "*Notices you OwO*", "Man some of programmed responses are cringe..."],
+	
+	"fuck": ["Watch your language!", "You kiss your mother with that mouth?", "No u", "Wow that's rude.", "THIS IS THE HATE SPEECH POLICE. PUT YOUR HADS UP!", "I'm 5 and what does fuck mean?", ":joy:", ":joy::ok_hand::ok_hand:"],
+	
+	"nullpassive": ["What!?", "What do you want from me", "Leave me alone...", "Go away...", "Seriously, please stop", "*Casually ignores you...*", 
+	"You dare disturb me?", "I've been summoned!", "Are my circuits shorting or did you just try to talk to me?", ":joy::ok_hand::ok_hand:"],
+	
+	"nullother": ["What!?", "Do yu speaky da engrish?", "Perhaps in the foreseeable future.", "Look deep into your heart and you will find the answer", 
+	"I don't feel like answering", "What if the child consents?", "M8 i have no idea what you just said, but I just want to tell you, good luck", 
+	"Step 1.Open it. Step 2.Bring it out. Step 3.Make sure its hard. Step 4.Put it in. Step 5.That's how you put frozen food in the microwave :D", ":joy:", "bruh :joy:", "bruh :joy::ok_hand::ok_hand:", ":joy::ok_hand::ok_hand:"]
+}

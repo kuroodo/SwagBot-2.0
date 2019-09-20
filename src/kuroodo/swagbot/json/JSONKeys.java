@@ -22,4 +22,9 @@ public class JSONKeys {
 	public static final String SETTINGS_ROLE_PERMISSION0 = "rolepermission0";
 	public static final String SETTINGS_ROLE_PERMISSION1 = "rolepermission1";
 	public static final String SETTINGS_ROLE_PERMISSION2 = "rolepermission2";
+
+	// Magic Ball
+	public static final String MAGICBALL_FILE_NAME = "magicball.json";
+	public static final String MAGICBALL_PASSIVE_RESPONSE = "nullpassive";
+	public static final String MAGICBALL_OTHER_RESPONSE = "nullother";
 }

@@ -1,6 +1,7 @@
 package kuroodo.swagbot.listeners;
 
 import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -44,7 +45,15 @@ public class ChatListener extends ListenerAdapter {
 				// If entered parameters
 				if (commandParams.length > 1) {
 					commandName = commandParams[1];
+					// Remove bot mention
 					commandParams = BotUtility.removeElement(commandParams, 0);
+
+					// If not a registered command, perform magicball command
+					if (!CommandRegistry.isCommandRegistered(commandName)) {
+						commandName = CommandKeys.COMMAND_MAGICBALL;
+					}
+				} else {// If just a blank mention, do magicball
+					commandName = CommandKeys.COMMAND_MAGICBALL;
 				}
 			} else {
 				return;
