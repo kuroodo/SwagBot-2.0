@@ -1,5 +1,6 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.chatcommand.config;
 
+import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import net.dv8tion.jda.api.EmbedBuilder;

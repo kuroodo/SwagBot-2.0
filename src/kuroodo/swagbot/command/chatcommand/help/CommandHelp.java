@@ -1,7 +1,8 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.chatcommand.help;
 
 import kuroodo.swagbot.command.Command;
 import kuroodo.swagbot.command.CommandRegistry;
+import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

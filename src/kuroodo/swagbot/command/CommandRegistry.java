@@ -1,16 +1,16 @@
 package kuroodo.swagbot.command;
 
-import kuroodo.swagbot.command.chatcommand.CommandAvatar;
 import kuroodo.swagbot.command.chatcommand.CommandBlank;
-import kuroodo.swagbot.command.chatcommand.CommandFlipCoin;
-import kuroodo.swagbot.command.chatcommand.CommandHelp;
-import kuroodo.swagbot.command.chatcommand.CommandLaser;
-import kuroodo.swagbot.command.chatcommand.CommandPoke;
-import kuroodo.swagbot.command.chatcommand.CommandRoulette;
-import kuroodo.swagbot.command.chatcommand.CommandSetup;
-import kuroodo.swagbot.command.chatcommand.CommandSetupHelp;
-import kuroodo.swagbot.command.chatcommand.CommandSlap;
-import kuroodo.swagbot.command.chatcommand.CommandUserInfo;
+import kuroodo.swagbot.command.chatcommand.config.CommandSetup;
+import kuroodo.swagbot.command.chatcommand.config.CommandSetupHelp;
+import kuroodo.swagbot.command.chatcommand.config.CommandUserInfo;
+import kuroodo.swagbot.command.chatcommand.fun.CommandAvatar;
+import kuroodo.swagbot.command.chatcommand.fun.CommandFlipCoin;
+import kuroodo.swagbot.command.chatcommand.fun.CommandLaser;
+import kuroodo.swagbot.command.chatcommand.fun.CommandPoke;
+import kuroodo.swagbot.command.chatcommand.fun.CommandRoulette;
+import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
+import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
 
 public class CommandRegistry {
 	public static Command getCommand(String command) {

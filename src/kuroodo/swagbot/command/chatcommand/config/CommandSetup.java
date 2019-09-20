@@ -1,7 +1,8 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.chatcommand.config;
 
 import com.eclipsesource.json.ParseException;
 
+import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.GuildSettingsReader;

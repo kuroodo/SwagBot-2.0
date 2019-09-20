@@ -1,10 +1,11 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.chatcommand.fun;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 
+import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;

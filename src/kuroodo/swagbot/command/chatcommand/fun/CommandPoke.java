@@ -1,9 +1,10 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.chatcommand.fun;
 
+import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class CommandSlap extends ChatCommand {
+public class CommandPoke extends ChatCommand {
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
@@ -13,8 +14,12 @@ public class CommandSlap extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
+		if (!selfHasPermissions()) {
+			return;
+		}
+
 		if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			sendMessage(event.getAuthor().getAsMention() + " slaps "
+			sendMessage(event.getAuthor().getAsMention() + " pokes "
 					+ event.getMessage().getMentionedUsers().get(0).getAsMention());
 		} else {
 			sendMessage("Please mention a valid user");
@@ -23,6 +28,6 @@ public class CommandSlap extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Slap a user\nUsage: " + commandPrefix + "slap @user";
+		return "Poke a user\nUsage: " + commandPrefix + "poke @user";
 	}
 }
