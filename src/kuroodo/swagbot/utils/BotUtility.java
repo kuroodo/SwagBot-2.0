@@ -58,9 +58,17 @@ public class BotUtility {
 		}
 		return true;
 	}
+	
+	public static boolean hasRole(Role role, Member member) {
+		return member.getRoles().contains(role);
+	}
 
 	public static boolean doesRoleExist(Guild guild, String rolename) {
 		return !guild.getRolesByName(rolename, true).isEmpty();
+	}
+
+	public static boolean doesRoleExist(Guild guild, long roleID) {
+		return guild.getRoleById(roleID) != null;
 	}
 
 	public static User getSelfUser() {
