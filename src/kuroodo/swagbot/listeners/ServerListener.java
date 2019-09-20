@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.entities.Guild.Ban;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.ReconnectedEvent;
 import net.dv8tion.jda.api.events.channel.category.CategoryCreateEvent;
 import net.dv8tion.jda.api.events.channel.category.CategoryDeleteEvent;
@@ -34,6 +35,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
@@ -63,7 +65,7 @@ public class ServerListener extends ListenerAdapter {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
 		}
-
+		
 		GuildManager.addGuild(settings);
 	}
 
@@ -81,8 +83,14 @@ public class ServerListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		Member member = event.getMember();
 
-		sendWelcomeMessage(guild, member);
-		giveWelcomeRole(guild, member);
+		GuildSettings settings = GuildManager.getGuild(guild);
+		if (settings.enableWelcome) {
+			sendWelcomeMessage(guild, settings, member);
+		}
+
+		if (settings.enableWelcomeRole) {
+			giveWelcomeRole(guild, settings, member);
+		}
 
 		if (hasLogChannel(event.getGuild())) {
 			long guildID = event.getGuild().getIdLong();
@@ -170,6 +178,30 @@ public class ServerListener extends ListenerAdapter {
 
 				BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
 			}
+		}
+	}
+
+	@Override
+	public void onGuildVoiceMove(GuildVoiceMoveEvent event) {
+		super.onGuildVoiceMove(event);
+		Guild guild = event.getGuild();
+		if (hasMuteChannel(guild)) {
+			GuildSettings settings = GuildManager.getGuild(guild);
+			VoiceChannel muteChannel = GuildManager.getVoiceChannel(settings.guildID, settings.muteChannel);
+			Role muteRole = GuildManager.getRole(settings.guildID, settings.muteRole);
+			Member member = event.getMember();
+
+			// Joined/Moved to mute channel
+			if (event.getChannelJoined() == muteChannel && GuildManager.canMemberBeMuted(guild, member)) {
+				// Give mute role if permission
+				if (BotUtility.hasPermission(Permission.MANAGE_ROLES, BotUtility.getSelfMember(guild))) {
+					giveMuteRole(guild, GuildManager.getGuild(guild), member);
+				}
+				// If muted member was moved away
+			} else if (muteRole != null && BotUtility.hasRole(muteRole, member)) {
+				BotUtility.removeRoleFromMember(guild, muteRole, member);
+			}
+
 		}
 	}
 
@@ -467,14 +499,10 @@ public class ServerListener extends ListenerAdapter {
 		}
 	}
 
-	private void sendWelcomeMessage(Guild guild, Member member) {
-		GuildSettings settings = GuildManager.getGuild(guild.getIdLong());
-		if (settings.enableWelcome) {
-			TextChannel channel = GuildManager.getTextChannel(settings.guildID, settings.welcomeChannel);
-			if (channel != null) {
-				BotUtility.sendGuildMessage(settings.guild, channel,
-						member.getAsMention() + " " + settings.welcomeMessage);
-			}
+	private void sendWelcomeMessage(Guild guild, GuildSettings settings, Member member) {
+		TextChannel channel = GuildManager.getTextChannel(settings.guildID, settings.welcomeChannel);
+		if (channel != null) {
+			BotUtility.sendGuildMessage(settings.guild, channel, member.getAsMention() + " " + settings.welcomeMessage);
 		}
 	}
 
@@ -482,14 +510,22 @@ public class ServerListener extends ListenerAdapter {
 		return GuildManager.getTextChannel(guild.getIdLong(), GuildManager.getGuild(guild).logChannel) != null;
 	}
 
-	private void giveWelcomeRole(Guild guild, Member member) {
-		GuildSettings settings = GuildManager.getGuild(guild.getIdLong());
-		if (settings.enableWelcomeRole) {
-			Role role = GuildManager.getRole(settings.guildID, settings.welcomeRole);
+	private boolean hasMuteChannel(Guild guild) {
+		return GuildManager.getVoiceChannel(guild.getIdLong(), GuildManager.getGuild(guild).muteChannel) != null;
+	}
 
-			if (role != null) {
-				BotUtility.addRoleToMember(settings.guild, role, member);
-			}
+	private void giveWelcomeRole(Guild guild, GuildSettings settings, Member member) {
+		Role role = GuildManager.getRole(settings.guildID, settings.welcomeRole);
+
+		if (role != null) {
+			BotUtility.addRoleToMember(settings.guild, role, member);
+		}
+	}
+
+	private void giveMuteRole(Guild guild, GuildSettings settings, Member member) {
+		Role role = GuildManager.getRole(settings.guildID, settings.muteRole);
+		if (role != null) {
+			BotUtility.addRoleToMember(settings.guild, role, member);
 		}
 	}
 }
