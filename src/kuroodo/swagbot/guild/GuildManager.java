@@ -16,17 +16,17 @@ public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
 
 	public static void verifyGuildIntegrity(long guildID) {
-		// If file for guild doesn't exist
-		if (!GuildSettingsReader.settingsFileExists(guildID)) {
-			GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
-		}
-
-		// Add missing guild to manager if the template file exists
-		if (!containsGuild(guildID)) {
-			if (GuildSettingsWriter.isTemplateExist()) {
-				addGuild(guildID);
-			}
-		}
+		if (containsGuild(guildID)) {
+            // If file for guild doesn't exist
+            if (!GuildSettingsReader.settingsFileExists(guildID)) {
+                GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
+            }
+        } else {
+            // Add missing guild to manager if the template file exists
+            if (GuildSettingsWriter.isTemplateExist()) {
+                addGuild(guildID);
+            }
+        }
 	}
 
 	public static void reloadGuildSettings(long guildID) {
