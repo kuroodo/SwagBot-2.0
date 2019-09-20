@@ -32,12 +32,27 @@ public class ChatListener extends ListenerAdapter {
 	private void HandleCommandRequest(MessageReceivedEvent event) {
 		if (event.isFromGuild()) {
 			GuildSettings guild = GuildManager.getGuild(event.getGuild().getIdLong());
-			if (event.getMessage().getContentRaw().startsWith(guild.commandPrefix)) {
-				String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
-				String commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
-				Command command = CommandRegistry.getCommand(commandName);
-				command.executeCommand(commandParams, event);
+
+			String commandName = "";
+			String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
+
+			// If starts with command prefix
+			if (commandParams[0].startsWith(guild.commandPrefix)) {
+				commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
+				// Else starts with bot mention
+			} else if (commandParams[0].equals((BotUtility.getSelfUser().getAsMention()))) {
+				// If entered parameters
+				if (commandParams.length > 1) {
+					commandName = commandParams[1];
+					commandParams = BotUtility.removeElement(commandParams, 0);
+				}
+			} else {
+				return;
 			}
+
+			Command command = CommandRegistry.getCommand(commandName);
+			command.executeCommand(commandParams, event);
+
 		} else if (event.isFromType(ChannelType.PRIVATE)) {
 			// TODO: Private commands
 		}

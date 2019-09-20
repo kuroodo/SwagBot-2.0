@@ -93,4 +93,23 @@ public class BotUtility {
 		return "> " + message;
 	}
 
+	public static String[] removeElement(String[] array, int index) {
+		String[] newArray = new String[array.length - 1];
+		int x = 0;
+
+		for (int i = 0; i < array.length; i++) {
+			if (i == index) {
+				x++;
+			}
+
+			newArray[i] = array[x];
+			x++;
+
+			if (x >= array.length) {
+				return newArray;
+			}
+		}
+
+		return newArray;
+	}
 }
