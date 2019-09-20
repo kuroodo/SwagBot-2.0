@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 
 public class BotUtility {
 
@@ -31,14 +32,20 @@ public class BotUtility {
 	}
 
 	public static void addRoleToMember(Guild guild, Role role, Member member) {
-		if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
-			guild.addRoleToMember(member, role).queue();
+		try {
+			if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
+				guild.addRoleToMember(member, role).queue();
+			}
+		} catch (HierarchyException e) {
 		}
 	}
 
 	public static void removeRoleFromMember(Guild guild, Role role, Member member) {
-		if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
-			guild.removeRoleFromMember(member, role).queue();
+		try {
+			if (BotUtility.hasPermission(Permission.MANAGE_ROLES, getSelfMember(guild))) {
+				guild.removeRoleFromMember(member, role).queue();
+			}
+		} catch (HierarchyException e) {
 		}
 	}
 
@@ -58,7 +65,7 @@ public class BotUtility {
 		}
 		return true;
 	}
-	
+
 	public static boolean hasRole(Role role, Member member) {
 		return member.getRoles().contains(role);
 	}
