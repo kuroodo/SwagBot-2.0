@@ -4,7 +4,10 @@ import java.util.HashMap;
 
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
+import kuroodo.swagbot.utils.BotUtility;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
@@ -47,6 +50,18 @@ public class GuildManager {
 		}
 	}
 
+	public static void removeGuild(Guild guild) {
+		if (GUILDS.containsKey(guild.getIdLong())) {
+			GUILDS.remove(guild.getIdLong());
+		}
+	}
+
+	public static void removeGuild(long guildID) {
+		if (GUILDS.containsKey(guildID)) {
+			GUILDS.remove(guildID);
+		}
+	}
+
 	public static TextChannel getTextChannel(long guildID, long channelID) {
 		if (GUILDS.containsKey(guildID)) {
 			TextChannel channel = GUILDS.get(guildID).guild.getTextChannelById(channelID);
@@ -86,6 +101,28 @@ public class GuildManager {
 		return null;
 	}
 
+	public static boolean canMemberBeMuted(Guild guild, Member member) {
+		if (BotUtility.hasPermission(Permission.ADMINISTRATOR, member)) {
+			return false;
+		}
+
+		GuildSettings settings = getGuild(guild);
+		Role permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission0);
+		if (permRole != null && BotUtility.hasRole(permRole, member)) {
+			return false;
+		}
+		permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission1);
+		if (permRole != null && BotUtility.hasRole(permRole, member)) {
+			return false;
+		}
+		permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission2);
+		if (permRole != null && BotUtility.hasRole(permRole, member)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static GuildSettings getGuild(long guildID) {
 		if (GUILDS.containsKey(guildID)) {
 			return GUILDS.get(guildID);
@@ -102,18 +139,6 @@ public class GuildManager {
 
 		System.out.println("ERROR: Guild " + guild.getIdLong() + " does not exist in map");
 		return null;
-	}
-
-	public static void removeGuild(Guild guild) {
-		if (GUILDS.containsKey(guild.getIdLong())) {
-			GUILDS.remove(guild.getIdLong());
-		}
-	}
-
-	public static void removeGuild(long guildID) {
-		if (GUILDS.containsKey(guildID)) {
-			GUILDS.remove(guildID);
-		}
 	}
 
 	public static boolean containsGuild(long guildID) {
