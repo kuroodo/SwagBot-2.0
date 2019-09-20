@@ -9,6 +9,10 @@ import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandSetup extends ChatCommand {
@@ -133,7 +137,7 @@ public class CommandSetup extends ChatCommand {
 			settings.welcomeChannel = 0;
 			sendMessage(BotUtility.codifyText("Welcome channel removed from configuration"));
 		} else {
-			Long channelID;
+			long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -141,16 +145,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			// Check if the channel exists
-			if (GuildManager.getTextChannel(settings.guildID, channelID) != null) {
+			Guild guild = settings.guild;
+			TextChannel channel = guild.getTextChannelById(channelID);
+			if (channel != null) {
 				settings.welcomeChannel = channelID;
 			} else {
 				printTextChannelErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("Welcome channel has been set to "
-					+ GuildManager.getTextChannel(settings.guildID, settings.welcomeChannel)));
+			sendMessage(BotUtility.codifyText("Welcome channel has been set to " + channel.getName()));
 		}
 	}
 
@@ -194,7 +198,7 @@ public class CommandSetup extends ChatCommand {
 			settings.welcomeRole = 0;
 			sendMessage(BotUtility.codifyText("Welcome role removed from configuration"));
 		} else {
-			Long roleID;
+			long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -202,15 +206,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			if (GuildManager.getRole(settings.guildID, roleID) != null) {
+			Guild guild = settings.guild;
+			Role role = guild.getRoleById(roleID);
+			if (role != null) {
 				settings.welcomeRole = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText(
-					"Welcome role has been set to " + GuildManager.getRole(settings.guildID, settings.welcomeRole)));
+			sendMessage(BotUtility.codifyText("Welcome role has been set to " + role.getName()));
 		}
 
 	}
@@ -220,7 +225,7 @@ public class CommandSetup extends ChatCommand {
 			settings.logChannel = 0;
 			sendMessage(BotUtility.codifyText("Log channel removed from configuration"));
 		} else {
-			Long channelID;
+			long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -228,16 +233,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			// Check if the channel exists
-			if (GuildManager.getTextChannel(settings.guildID, channelID) != null) {
+			Guild guild = settings.guild;
+			TextChannel channel = guild.getTextChannelById(channelID);
+			if (channel != null) {
 				settings.logChannel = channelID;
 			} else {
 				printTextChannelErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("Log channel has been set to "
-					+ GuildManager.getTextChannel(settings.guildID, settings.logChannel)));
+			sendMessage(BotUtility.codifyText("Log channel has been set to " + channel.getName()));
 		}
 	}
 
@@ -246,23 +251,23 @@ public class CommandSetup extends ChatCommand {
 			settings.muteRole = 0;
 			sendMessage(BotUtility.codifyText("Mute role removed from configuration"));
 		} else {
-			Long roleID;
+			long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
-
-			if (GuildManager.getRole(settings.guildID, roleID) != null) {
+			Guild guild = settings.guild;
+			Role role = guild.getRoleById(roleID);
+			if (role != null) {
 				settings.muteRole = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText(
-					"Mute role has been set to " + GuildManager.getRole(settings.guildID, settings.muteRole)));
+			sendMessage(BotUtility.codifyText("Mute role has been set to " + role.getName()));
 		}
 
 	}
@@ -272,7 +277,7 @@ public class CommandSetup extends ChatCommand {
 			settings.muteChannel = 0;
 			sendMessage(BotUtility.codifyText("Mute channel removed from configuration"));
 		} else {
-			Long channelID;
+			long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -280,16 +285,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			// Check if the channel exists
-			if (GuildManager.getVoiceChannel(settings.guildID, channelID) != null) {
+			Guild guild = settings.guild;
+			VoiceChannel channel = guild.getVoiceChannelById(channelID);
+			if (channel != null) {
 				settings.muteChannel = channelID;
 			} else {
 				printVoiceChannelErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("Mute channel has been set to "
-					+ GuildManager.getVoiceChannel(settings.guildID, settings.muteChannel)));
+			sendMessage(BotUtility.codifyText("Mute channel has been set to " + channel.getName()));
 		}
 	}
 
@@ -298,7 +303,7 @@ public class CommandSetup extends ChatCommand {
 			settings.rolePermission0 = 0;
 			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
 		} else {
-			Long roleID;
+			long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -306,15 +311,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			if (GuildManager.getRole(settings.guildID, roleID) != null) {
+			Guild guild = settings.guild;
+			Role role = guild.getRoleById(roleID);
+			if (role != null) {
 				settings.rolePermission0 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("Permission0 role has been set to "
-					+ GuildManager.getRole(settings.guildID, settings.rolePermission0)));
+			sendMessage(BotUtility.codifyText("Permission0 role has been set to " + role.getName()));
 		}
 
 	}
@@ -324,7 +330,7 @@ public class CommandSetup extends ChatCommand {
 			settings.rolePermission1 = 0;
 			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
 		} else {
-			Long roleID;
+			long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -332,15 +338,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			if (GuildManager.getRole(settings.guildID, roleID) != null) {
+			Guild guild = settings.guild;
+			Role role = guild.getRoleById(roleID);
+			if (role != null) {
 				settings.rolePermission1 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("rolePermission1 role has been set to "
-					+ GuildManager.getRole(settings.guildID, settings.rolePermission1)));
+			sendMessage(BotUtility.codifyText("rolePermission1 role has been set to " + role.getName()));
 		}
 
 	}
@@ -350,7 +357,7 @@ public class CommandSetup extends ChatCommand {
 			settings.rolePermission2 = 0;
 			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
 		} else {
-			Long roleID;
+			long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
@@ -358,15 +365,16 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			if (GuildManager.getRole(settings.guildID, roleID) != null) {
+			Guild guild = settings.guild;
+			Role role = guild.getRoleById(roleID);
+			if (role != null) {
 				settings.rolePermission2 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("rolePermission1 role has been set to "
-					+ GuildManager.getRole(settings.guildID, settings.rolePermission2)));
+			sendMessage(BotUtility.codifyText("rolePermission1 role has been set to " + role.getName()));
 		}
 
 	}

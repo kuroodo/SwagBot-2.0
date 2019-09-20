@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.entities.Guild.Ban;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.ReconnectedEvent;
 import net.dv8tion.jda.api.events.channel.category.CategoryCreateEvent;
@@ -65,7 +66,7 @@ public class ServerListener extends ListenerAdapter {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
 		}
-		
+
 		GuildManager.addGuild(settings);
 	}
 
@@ -92,18 +93,18 @@ public class ServerListener extends ListenerAdapter {
 			giveWelcomeRole(guild, settings, member);
 		}
 
-		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+		if (hasLogChannel(guild)) {
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("A USER has JOINED THE SERVER");
-			eb.setDescription(event.getMember().getAsMention());
-			eb.addField("Tag", event.getUser().getAsTag(), true);
-			eb.setImage(event.getUser().getAvatarUrl());
+			eb.setDescription(member.getAsMention());
+			eb.addField("Tag", member.getUser().getAsTag(), true);
+			eb.setImage(member.getUser().getAvatarUrl());
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -112,17 +113,20 @@ public class ServerListener extends ListenerAdapter {
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		super.onGuildMemberLeave(event);
 		if (hasLogChannel(event.getGuild())) {
+			Guild guild = event.getGuild();
+			Member member = event.getMember();
 			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
 
+			TextChannel logChannel = guild.getTextChannelById(channelID);
+
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("A USER has LEFT THE SERVER");
-			eb.setDescription(event.getMember().getAsMention());
-			eb.addField("Tag", event.getUser().getAsTag(), true);
-			eb.setImage(event.getUser().getAvatarUrl());
+			eb.setDescription(member.getAsMention());
+			eb.addField("Tag", member.getUser().getAsTag(), true);
+			eb.setImage(member.getUser().getAvatarUrl());
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -130,18 +134,21 @@ public class ServerListener extends ListenerAdapter {
 	public void onGuildUnban(GuildUnbanEvent event) {
 		super.onGuildUnban(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			User user = event.getUser();
 
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
+
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("A USER has been UNBANNED");
-			eb.setDescription(event.getUser().getName());
-			eb.addField("Tag", event.getUser().getAsTag(), true);
-			eb.setImage(event.getUser().getAvatarUrl());
+			eb.setDescription(user.getName());
+			eb.addField("Tag", user.getAsTag(), true);
+			eb.setImage(user.getAvatarUrl());
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -149,26 +156,29 @@ public class ServerListener extends ListenerAdapter {
 	public void onGuildBan(GuildBanEvent event) {
 		super.onGuildBan(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
+			Guild guild = event.getGuild();
+			User user = event.getUser();
+
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
+
 			EmbedBuilder eb = new EmbedBuilder();
-
 			eb.setTitle("A USER has been BANNED");
-			eb.setDescription(event.getUser().getName());
-			eb.addField("Tag", event.getUser().getAsTag(), true);
+			eb.setDescription(user.getName());
+			eb.addField("Tag", user.getAsTag(), true);
 
-			if (BotUtility.hasPermission(Permission.BAN_MEMBERS, BotUtility.getSelfMember(event.getGuild()))) {
-				event.getGuild().retrieveBan(event.getUser()).queue(new Consumer<Ban>() {
+			if (BotUtility.hasPermission(Permission.BAN_MEMBERS, BotUtility.getSelfMember(guild))) {
+				guild.retrieveBan(user).queue(new Consumer<Ban>() {
 
 					@Override
 					public void accept(Ban t) {
 						if (t.getReason() != null) {
 							eb.setDescription("Banned for: " + t.getReason());
-							eb.setImage(event.getUser().getAvatarUrl());
+							eb.setImage(user.getAvatarUrl());
 							eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-							BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+							BotUtility.sendEmbed(guild, logChannel, eb);
 						}
 					}
 				});
@@ -184,11 +194,12 @@ public class ServerListener extends ListenerAdapter {
 	@Override
 	public void onGuildVoiceMove(GuildVoiceMoveEvent event) {
 		super.onGuildVoiceMove(event);
-		Guild guild = event.getGuild();
-		if (hasMuteChannel(guild)) {
+		if (hasMuteChannel(event.getGuild())) {
+			Guild guild = event.getGuild();
 			GuildSettings settings = GuildManager.getGuild(guild);
-			VoiceChannel muteChannel = GuildManager.getVoiceChannel(settings.guildID, settings.muteChannel);
-			Role muteRole = GuildManager.getRole(settings.guildID, settings.muteRole);
+			VoiceChannel muteChannel = guild.getVoiceChannelById(settings.muteChannel);
+
+			Role muteRole = guild.getRoleById(settings.muteRole);
 			Member member = event.getMember();
 
 			// Joined/Moved to mute channel
@@ -209,9 +220,11 @@ public class ServerListener extends ListenerAdapter {
 	public void onTextChannelUpdateNSFW(TextChannelUpdateNSFWEvent event) {
 		super.onTextChannelUpdateNSFW(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
+
 			EmbedBuilder eb = new EmbedBuilder();
 
 			if (event.getNewValue()) {
@@ -222,7 +235,7 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("#" + event.getChannel().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -230,17 +243,18 @@ public class ServerListener extends ListenerAdapter {
 	public void onTextChannelUpdateName(TextChannelUpdateNameEvent event) {
 		super.onTextChannelUpdateName(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following TEXT CHANNEL has been RENAMED:");
 			eb.addField("Old name", "#" + event.getOldName(), true);
 			eb.addField("New name", "#" + event.getNewName(), true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -248,16 +262,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onTextChannelDelete(TextChannelDeleteEvent event) {
 		super.onTextChannelDelete(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following TEXT CHANNEL has been DELETED:");
 			eb.addField("#" + event.getChannel().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -265,16 +280,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onTextChannelCreate(TextChannelCreateEvent event) {
 		super.onTextChannelCreate(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following TEXT CHANNEL has been CREATED:");
 			eb.addField("#" + event.getChannel().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -282,17 +298,18 @@ public class ServerListener extends ListenerAdapter {
 	public void onVoiceChannelUpdateName(VoiceChannelUpdateNameEvent event) {
 		super.onVoiceChannelUpdateName(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following VOICE CHANNEL has been RENAMED:");
 			eb.addField("Old name", event.getOldName(), true);
 			eb.addField("New name", event.getNewName(), true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -300,16 +317,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onVoiceChannelDelete(VoiceChannelDeleteEvent event) {
 		super.onVoiceChannelDelete(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following VOICE CHANNEL has been DELETED:");
 			eb.addField(event.getChannel().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -317,16 +335,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onVoiceChannelCreate(VoiceChannelCreateEvent event) {
 		super.onVoiceChannelCreate(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following VOICE CHANNEL has been CREATED:");
 			eb.addField(event.getChannel().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -334,17 +353,18 @@ public class ServerListener extends ListenerAdapter {
 	public void onCategoryUpdateName(CategoryUpdateNameEvent event) {
 		super.onCategoryUpdateName(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following CATEGORY has been RENAMED:");
 			eb.addField("Old name", event.getOldName(), true);
 			eb.addField("New name", event.getNewName(), true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -352,16 +372,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onCategoryDelete(CategoryDeleteEvent event) {
 		super.onCategoryDelete(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following CATEGORY has been DELETED:");
 			eb.addField(event.getCategory().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -369,16 +390,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onCategoryCreate(CategoryCreateEvent event) {
 		super.onCategoryCreate(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following CATEGORY has been CREATED:");
 			eb.addField(event.getCategory().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -386,11 +408,12 @@ public class ServerListener extends ListenerAdapter {
 	public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
 		super.onGuildMemberRoleAdd(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("A user has been GIVEN the following ROLES");
 			eb.setDescription(event.getMember().getAsMention());
 
@@ -400,7 +423,7 @@ public class ServerListener extends ListenerAdapter {
 
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -409,11 +432,12 @@ public class ServerListener extends ListenerAdapter {
 		super.onGuildMemberRoleRemove(event);
 
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("A user has had the following ROLES REMOVED");
 			eb.setDescription(event.getMember().getAsMention());
 
@@ -423,7 +447,7 @@ public class ServerListener extends ListenerAdapter {
 
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -431,16 +455,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onRoleCreate(RoleCreateEvent event) {
 		super.onRoleCreate(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following CROLE has been CREATED:");
 			eb.addField(event.getRole().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -448,16 +473,17 @@ public class ServerListener extends ListenerAdapter {
 	public void onRoleDelete(RoleDeleteEvent event) {
 		super.onRoleDelete(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following ROLE has been DELETED:");
 			eb.addField(event.getRole().getName(), "", true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -465,17 +491,18 @@ public class ServerListener extends ListenerAdapter {
 	public void onRoleUpdateName(RoleUpdateNameEvent event) {
 		super.onRoleUpdateName(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following ROLE has been RENAMED");
 			eb.addField("Old name", event.getOldName(), true);
 			eb.addField("New name", event.getNewName(), true);
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
@@ -483,11 +510,12 @@ public class ServerListener extends ListenerAdapter {
 	public void onRoleUpdatePermissions(RoleUpdatePermissionsEvent event) {
 		super.onRoleUpdatePermissions(event);
 		if (hasLogChannel(event.getGuild())) {
-			long guildID = event.getGuild().getIdLong();
-			long logchannel = GuildManager.getGuild(guildID).logChannel;
-			TextChannel logChannel = GuildManager.getTextChannel(guildID, logchannel);
-			EmbedBuilder eb = new EmbedBuilder();
+			Guild guild = event.getGuild();
+			long guildID = guild.getIdLong();
+			long channelID = GuildManager.getGuild(guildID).logChannel;
+			TextChannel logChannel = guild.getTextChannelById(channelID);
 
+			EmbedBuilder eb = new EmbedBuilder();
 			eb.setTitle("The following ROLE has NEW PERMISSIONS:");
 			eb.setDescription("These are the new permissions for " + event.getRole().getName());
 			for (Permission perm : event.getNewPermissions()) {
@@ -495,27 +523,27 @@ public class ServerListener extends ListenerAdapter {
 			}
 			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
-			BotUtility.sendEmbed(event.getGuild(), logChannel, eb);
+			BotUtility.sendEmbed(guild, logChannel, eb);
 		}
 	}
 
 	private void sendWelcomeMessage(Guild guild, GuildSettings settings, Member member) {
-		TextChannel channel = GuildManager.getTextChannel(settings.guildID, settings.welcomeChannel);
+		TextChannel channel = guild.getTextChannelById(settings.welcomeChannel);
 		if (channel != null) {
 			BotUtility.sendGuildMessage(settings.guild, channel, member.getAsMention() + " " + settings.welcomeMessage);
 		}
 	}
 
 	private boolean hasLogChannel(Guild guild) {
-		return GuildManager.getTextChannel(guild.getIdLong(), GuildManager.getGuild(guild).logChannel) != null;
+		return guild.getTextChannelById(GuildManager.getGuild(guild).logChannel) != null;
 	}
 
 	private boolean hasMuteChannel(Guild guild) {
-		return GuildManager.getVoiceChannel(guild.getIdLong(), GuildManager.getGuild(guild).muteChannel) != null;
+		return guild.getVoiceChannelById(GuildManager.getGuild(guild).muteChannel) != null;
 	}
 
 	private void giveWelcomeRole(Guild guild, GuildSettings settings, Member member) {
-		Role role = GuildManager.getRole(settings.guildID, settings.welcomeRole);
+		Role role = guild.getRoleById(settings.welcomeRole);
 
 		if (role != null) {
 			BotUtility.addRoleToMember(settings.guild, role, member);
@@ -523,7 +551,7 @@ public class ServerListener extends ListenerAdapter {
 	}
 
 	private void giveMuteRole(Guild guild, GuildSettings settings, Member member) {
-		Role role = GuildManager.getRole(settings.guildID, settings.muteRole);
+		Role role = guild.getRoleById(settings.muteRole);
 		if (role != null) {
 			BotUtility.addRoleToMember(settings.guild, role, member);
 		}

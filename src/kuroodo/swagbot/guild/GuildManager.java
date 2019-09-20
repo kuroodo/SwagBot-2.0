@@ -9,24 +9,22 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
 
 	public static void verifyGuildIntegrity(long guildID) {
 		if (containsGuild(guildID)) {
-            // If file for guild doesn't exist
-            if (!GuildSettingsReader.settingsFileExists(guildID)) {
-                GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
-            }
-        } else {
-            // Add missing guild to manager if the template file exists
-            if (GuildSettingsWriter.isTemplateExist()) {
-                addGuild(guildID);
-            }
-        }
+			// If file for guild doesn't exist
+			if (!GuildSettingsReader.settingsFileExists(guildID)) {
+				GuildSettingsWriter.createNewFile(GUILDS.get(guildID));
+			}
+		} else {
+			// Add missing guild to manager if the template file exists
+			if (GuildSettingsWriter.isTemplateExist()) {
+				addGuild(guildID);
+			}
+		}
 	}
 
 	public static void reloadGuildSettings(long guildID) {
@@ -62,60 +60,21 @@ public class GuildManager {
 		}
 	}
 
-	public static TextChannel getTextChannel(long guildID, long channelID) {
-		if (GUILDS.containsKey(guildID)) {
-			TextChannel channel = GUILDS.get(guildID).guild.getTextChannelById(channelID);
-			if (channel != null) {
-				return channel;
-			}
-			System.err.println("ERROR: Could not find TextChannel " + channelID + " in guild " + guildID);
-		} else {
-			System.err.println("ERROR: Could not find Guild " + guildID);
-		}
-		return null;
-	}
-
-	public static VoiceChannel getVoiceChannel(long guildID, long channelID) {
-		if (GUILDS.containsKey(guildID)) {
-			VoiceChannel channel = GUILDS.get(guildID).guild.getVoiceChannelById(channelID);
-			if (channel != null) {
-				return channel;
-			}
-			System.err.println("ERROR: Could not find VoiceChannel " + channelID + " in guild " + guildID);
-		} else {
-			System.err.println("ERROR: Could not find Guild " + guildID);
-		}
-		return null;
-	}
-
-	public static Role getRole(long guildID, long roleID) {
-		if (GUILDS.containsKey(guildID)) {
-			Role role = GUILDS.get(guildID).guild.getRoleById(roleID);
-			if (role != null) {
-				return role;
-			}
-			System.err.println("ERROR: Could not find Role " + roleID + " in guild " + guildID);
-		} else {
-			System.err.println("ERROR: Could not find Guild " + guildID);
-		}
-		return null;
-	}
-
 	public static boolean canMemberBeMuted(Guild guild, Member member) {
 		if (BotUtility.hasPermission(Permission.ADMINISTRATOR, member)) {
 			return false;
 		}
 
 		GuildSettings settings = getGuild(guild);
-		Role permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission0);
+		Role permRole = guild.getRoleById(settings.rolePermission0);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
-		permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission1);
+		permRole = guild.getRoleById(settings.rolePermission1);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
-		permRole = GuildManager.getRole(guild.getIdLong(), settings.rolePermission2);
+		permRole = guild.getRoleById(settings.rolePermission2);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}

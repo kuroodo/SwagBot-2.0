@@ -4,6 +4,7 @@ import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
@@ -89,6 +90,7 @@ public class CommandSetupHelp extends ChatCommand {
 	}
 
 	public EmbedBuilder getCurrentSettings(GuildSettings settings, EmbedBuilder eb) {
+		Guild guild = settings.guild;
 		TextChannel channel;
 		VoiceChannel vChannel;
 		Role role;
@@ -100,7 +102,8 @@ public class CommandSetupHelp extends ChatCommand {
 		eb.addField("Enable Welcome Message", "" + settings.enableWelcome, true);
 
 		// Welcome Channel
-		channel = GuildManager.getTextChannel(settings.guildID, settings.welcomeChannel);
+
+		channel = guild.getTextChannelById(settings.welcomeChannel);
 		if (channel != null) {
 			eb.addField("Welcome Channel", "" + channel.getName(), true);
 		} else {
@@ -113,7 +116,7 @@ public class CommandSetupHelp extends ChatCommand {
 		eb.addField("Enable Welcome Role", "" + settings.enableWelcomeRole, true);
 
 		// Welcome Role
-		role = GuildManager.getRole(settings.guildID, settings.welcomeRole);
+		role = guild.getRoleById(settings.welcomeRole);
 		if (role != null) {
 			eb.addField("Welcome Role", role.getName(), true);
 		} else {
@@ -121,7 +124,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Log Channel
-		channel = GuildManager.getTextChannel(settings.guildID, settings.logChannel);
+		channel = guild.getTextChannelById(settings.logChannel);
 		if (channel != null) {
 			eb.addField("Log Channel", channel.getName(), true);
 		} else {
@@ -129,7 +132,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Mute Role
-		role = GuildManager.getRole(settings.guildID, settings.muteRole);
+		role = guild.getRoleById(settings.muteRole);
 		if (role != null) {
 			eb.addField("Mute Role: ", role.getName(), true);
 		} else {
@@ -137,7 +140,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Mute Channel
-		vChannel = GuildManager.getVoiceChannel(settings.guildID, settings.muteChannel);
+		vChannel = guild.getVoiceChannelById(settings.muteChannel);
 		if (vChannel != null) {
 			eb.addField("Mute Channel", vChannel.getName(), true);
 		} else {
@@ -145,7 +148,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Permission 0
-		role = GuildManager.getRole(settings.guildID, settings.rolePermission0);
+		role = guild.getRoleById(settings.rolePermission0);
 		if (role != null) {
 			eb.addField("Permission0 Role", role.getName(), true);
 		} else {
@@ -153,7 +156,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Permission 1
-		role = GuildManager.getRole(settings.guildID, settings.rolePermission1);
+		role = guild.getRoleById(settings.rolePermission1);
 		if (role != null) {
 			eb.addField("Permission1 Role", role.getName(), true);
 		} else {
@@ -161,7 +164,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Permission 2
-		role = GuildManager.getRole(settings.guildID, settings.rolePermission2);
+		role = guild.getRoleById(settings.rolePermission2);
 		if (role != null) {
 			eb.addField("Permission2 Role", role.getName(), true);
 		} else {
