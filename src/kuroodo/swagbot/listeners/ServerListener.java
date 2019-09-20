@@ -103,12 +103,6 @@ public class ServerListener extends ListenerAdapter {
 	@Override
 	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
 		super.onGuildMemberLeave(event);
-		Guild guild = event.getGuild();
-		Member member = event.getMember();
-
-		sendWelcomeMessage(guild, member);
-		giveWelcomeRole(guild, member);
-
 		if (hasLogChannel(event.getGuild())) {
 			long guildID = event.getGuild().getIdLong();
 			long logchannel = GuildManager.getGuild(guildID).logChannel;
