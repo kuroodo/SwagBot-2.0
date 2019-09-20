@@ -47,7 +47,7 @@ public class CommandSetup extends ChatCommand {
 		if (!memberHasPermissions(GuildManager.getGuild(event.getGuild().getIdLong()), event.getMember())) {
 			sendNoPermissionsMessage();
 			return;
-		// If not enough params
+			// If not enough params
 		} else if (commandParams.length < expectedParamsLength) {
 			sendFormatErrorMessage();
 			return;
@@ -118,7 +118,7 @@ public class CommandSetup extends ChatCommand {
 
 			try {
 				settings.enableWelcome = Boolean.parseBoolean(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -136,7 +136,7 @@ public class CommandSetup extends ChatCommand {
 			Long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -180,7 +180,7 @@ public class CommandSetup extends ChatCommand {
 		} else {
 			try {
 				settings.enableWelcomeRole = Boolean.parseBoolean(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -197,7 +197,7 @@ public class CommandSetup extends ChatCommand {
 			Long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -223,7 +223,7 @@ public class CommandSetup extends ChatCommand {
 			Long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -249,7 +249,7 @@ public class CommandSetup extends ChatCommand {
 			Long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -275,7 +275,7 @@ public class CommandSetup extends ChatCommand {
 			Long channelID;
 			try {
 				channelID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -301,7 +301,7 @@ public class CommandSetup extends ChatCommand {
 			Long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -327,7 +327,7 @@ public class CommandSetup extends ChatCommand {
 			Long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -353,7 +353,7 @@ public class CommandSetup extends ChatCommand {
 			Long roleID;
 			try {
 				roleID = Long.parseLong(commandParams[2]);
-			} catch (ParseException e) {
+			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
