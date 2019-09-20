@@ -30,7 +30,6 @@ public class ChatListener extends ListenerAdapter {
 	}
 
 	private void HandleCommandRequest(MessageReceivedEvent event) {
-		// TODO: Check if not from a guild
 		if (event.isFromGuild()) {
 			GuildSettings guild = GuildManager.getGuild(event.getGuild().getIdLong());
 			if (event.getMessage().getContentRaw().startsWith(guild.commandPrefix)) {
