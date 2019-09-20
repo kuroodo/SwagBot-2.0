@@ -10,6 +10,7 @@ import kuroodo.swagbot.command.chatcommand.fun.CommandLaser;
 import kuroodo.swagbot.command.chatcommand.fun.CommandPoke;
 import kuroodo.swagbot.command.chatcommand.fun.CommandRoulette;
 import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
+import kuroodo.swagbot.command.chatcommand.fun.CommandSpartanKick;
 import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
 
 public class CommandRegistry {
@@ -32,6 +33,8 @@ public class CommandRegistry {
 			return new CommandSlap();
 		case CommandKeys.COMMAND_ROULETTE:
 			return new CommandRoulette();
+		case CommandKeys.COMMAND_SPARTANKICK:
+			return new CommandSpartanKick();
 		case CommandKeys.COMMAND_SETUP:
 			return new CommandSetup();
 		case CommandKeys.COMMAND_SETUPHELP:
