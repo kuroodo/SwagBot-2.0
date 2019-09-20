@@ -1,5 +1,7 @@
 package kuroodo.swagbot.utils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import kuroodo.swagbot.SwagBot;
@@ -91,6 +93,12 @@ public class BotUtility {
 
 	public static String quotifyText(String message) {
 		return "> " + message;
+	}
+
+	public static String getCurrentDate() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		return dtf.format(now);
 	}
 
 	// Removes an element by rebuilding the array without that index
