@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
 import com.eclipsesource.json.WriterConfig;
 
 import kuroodo.swagbot.guild.GuildSettings;
@@ -37,15 +38,15 @@ public class GuildSettingsWriter {
 	}
 
 	public static void writeSettings(GuildSettings guild) {
+		String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
+		File settingsFile = new File(path);
 		try {
 			Reader reader;
-			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
-			File settingsFile = new File(path);
 
 			// Read and store the contents of the file into a JsonObject
 			reader = new BufferedReader(new FileReader(settingsFile));
 			JsonObject object = Json.parse(reader).asObject();
-
+			
 			object.set(JSONKeys.SETTINGS_GUILD_ID, Long.toString(guild.guildID));
 			object.set(JSONKeys.SETTINGS_COMMAND_PREFIX, guild.commandPrefix);
 			object.set(JSONKeys.SETTINGS_ENABLE_WELCOME, Boolean.toString(guild.enableWelcome));
@@ -67,9 +68,9 @@ public class GuildSettingsWriter {
 			writer.flush();
 			writer.close();
 			reader.close();
-		} catch (IOException e) {
+		} catch (ParseException | IOException e) {
 			System.err.println("ERROR: Error trying to write to file : " + guild.guildID
-					+ ".json\nEnsure that the corresponding keys or files exist");
+					+ ".json\nEnsure that the corresponding keys or files exist, or that the file valid json");
 		}
 	}
 

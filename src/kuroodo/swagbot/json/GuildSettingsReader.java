@@ -8,6 +8,7 @@ import java.io.Reader;
 
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
 
 import kuroodo.swagbot.guild.GuildSettings;
 
@@ -42,7 +43,7 @@ public class GuildSettingsReader {
 
 			reader.close();
 			return settings;
-		} catch (IOException e) {
+		} catch (ParseException | IOException e) {
 			System.err.println("Error retrieving guild or guild settings for guild: " + guildID);
 		}
 
