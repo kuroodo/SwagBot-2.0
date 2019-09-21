@@ -141,6 +141,10 @@ public class BotUtility {
 	public static String quotifyText(String message) {
 		return "> " + message;
 	}
+	
+	public static String boldifyText(String message) {
+		return "**" + message + "**";
+	}
 
 	public static String getCurrentDate() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
