@@ -20,10 +20,10 @@ public class GuildSettingsWriter {
 	public static void createNewFile(GuildSettings guild) {
 		try {
 			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
-
-			// Create a new settings folder from template
-			File templateFile = new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME);
-			if (templateFile.exists()) {
+			// If template file is valid
+			if (isTemplateExist()) {
+				File templateFile = new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME);
+				// Create a new settings file from template
 				FileUtils.copyFile(templateFile, new File(path));
 				writeSettings(guild);
 			} else {

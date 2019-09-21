@@ -4,19 +4,42 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.guild.GuildManager;
+import kuroodo.swagbot.json.ConfigReader;
+import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.HierarchyException;
 
 public class BotUtility {
+
+	public static void sendMessageToBotOwner(String message) {
+		try {
+			long ownerID = Long.parseLong(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER));
+			User owner = SwagBot.getJDA().getUserById(ownerID);
+
+			if (owner != null) {
+				owner.openPrivateChannel().queue(new Consumer<PrivateChannel>() {
+					@Override
+					public void accept(PrivateChannel t) {
+						t.sendMessage(message).queue();
+					}
+				});
+			}
+
+		} catch (NumberFormatException e) {
+			System.err.println("Bot owner ID invalid in config file. Cannot send message to owner");
+		}
+	}
 
 	public static void sendGuildMessage(Guild guild, TextChannel channel, String message) {
 		// Check if has perms to send message

@@ -8,6 +8,7 @@ import java.io.Reader;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.json.JSONKeys;
@@ -28,7 +29,7 @@ public class CommandMagicBall extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-		
+
 		try {
 			Reader reader;
 			reader = new BufferedReader(new FileReader(JSONKeys.MAGICBALL_FILE_NAME));
@@ -45,13 +46,17 @@ public class CommandMagicBall extends ChatCommand {
 			}
 
 			reader.close();
-		} catch (IOException e) {
+		} catch (ParseException | IOException e) {
+			String errorMessage = "ERROR: Could not parse " + JSONKeys.MAGICBALL_FILE_NAME
+					+ " ensure the exists or is in the correct json format";
+			System.err.println(errorMessage);
+			BotUtility.sendMessageToBotOwner(errorMessage);
 		}
 
 	}
 
 	private void sendPassiveResponse(JsonObject object) {
-		if(object.get(JSONKeys.MAGICBALL_PASSIVE_RESPONSE) == null)
+		if (object.get(JSONKeys.MAGICBALL_PASSIVE_RESPONSE) == null)
 			return;
 		String response = "";
 		JsonArray items = object.get(JSONKeys.MAGICBALL_PASSIVE_RESPONSE).asArray();
@@ -75,7 +80,7 @@ public class CommandMagicBall extends ChatCommand {
 	}
 
 	private void sendOtherResponse(JsonObject object) {
-		if(object.get(JSONKeys.MAGICBALL_OTHER_RESPONSE) == null)
+		if (object.get(JSONKeys.MAGICBALL_OTHER_RESPONSE) == null)
 			return;
 		String response = "";
 		JsonArray items = object.get(JSONKeys.MAGICBALL_OTHER_RESPONSE).asArray();

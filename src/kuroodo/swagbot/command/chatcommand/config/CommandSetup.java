@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand.config;
 
 import com.eclipsesource.json.ParseException;
 
+import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -33,6 +34,16 @@ public class CommandSetup extends ChatCommand {
 			return;
 		}
 
+		// Check if settings file for guild exists
+		if (!GuildSettingsReader.settingsFileExists(event.getGuild().getIdLong())) {
+			sendMessage(BotUtility.codifyText("Error finding this server's configuration file."));
+			if (!SwagBot.verifyGuildTemplateFile()) {
+				sendMessage(BotUtility
+						.quotifyText("There is an issue managing server configuration. A fix is being worked on."));
+			}
+			return;
+		}
+
 		// 3 params should be <prefix>setup key value
 		int expectedParamsLength = 3;
 
@@ -43,16 +54,6 @@ public class CommandSetup extends ChatCommand {
 			// If not enough params
 		} else if (commandParams.length < expectedParamsLength) {
 			sendFormatErrorMessage();
-			return;
-		}
-
-		// Check if settings file for guild exists
-		if (!GuildSettingsReader.settingsFileExists(event.getGuild().getIdLong())) {
-			sendMessage(BotUtility.codifyText("Error finding this server's configuration file."));
-			if (!GuildSettingsWriter.isTemplateExist()) {
-				sendMessage(BotUtility
-						.quotifyText("There is an issue managing server configuration. A fix is being worked on."));
-			}
 			return;
 		}
 

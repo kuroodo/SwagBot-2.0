@@ -1,20 +1,16 @@
 package kuroodo.swagbot;
 
-import java.util.function.Consumer;
-
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
-import kuroodo.swagbot.json.ConfigReader;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
-import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.listeners.ChatListener;
 import kuroodo.swagbot.listeners.ServerListener;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.PrivateChannel;
 
 public class SwagBot {
 	private static BotConfig config;
@@ -23,7 +19,7 @@ public class SwagBot {
 		verifyGuildTemplateFile();
 		loadGuilds();
 		setToDefaultActivity();
-		
+
 		config.addEventListener(new ChatListener());
 		config.addEventListener(new ServerListener());
 	}
@@ -50,20 +46,17 @@ public class SwagBot {
 				+ " new guild configurations");
 	}
 
-	private static void verifyGuildTemplateFile() {
+	public static boolean verifyGuildTemplateFile() {
 		if (!GuildSettingsWriter.isTemplateExist()) {
-			// Send a message to the bot owner
-			getJDA().getUserById(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER)).openPrivateChannel()
-					.queue(new Consumer<PrivateChannel>() {
-
-						@Override
-						public void accept(PrivateChannel t) {
-							t.sendMessage(
-									"THE _TEMPLATE.json FILE IS MISSING. CANNOT CREATE GUILDSETTINGS. FIX THIS ASAP")
-									.queue();
-						}
-					});
+			// Big angry messahe
+			String message = "**********************************************************************"
+					+ "\nTHE _TEMPLATE.json FILE IS MISSING. CANNOT CREATE GUILDSETTINGS. FIX THIS ASAP\n"
+					+ "**********************************************************************";
+			System.err.println(message);
+			BotUtility.sendMessageToBotOwner(message);
+			return false;
 		}
+		return true;
 	}
 
 	public static void setActivity(Activity activity) {
