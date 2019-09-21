@@ -1,4 +1,4 @@
-package kuroodo.swagbot.command.chatcommand.config;
+package kuroodo.swagbot.command.chatcommand.fun;
 
 import java.awt.Color;
 import java.time.format.DateTimeFormatter;
