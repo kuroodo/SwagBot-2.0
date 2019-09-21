@@ -19,7 +19,10 @@ public class CommandUserInfo extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-
+		if (!selfHasPermissions()) {
+			return;
+		}
+		
 		// If no parameters
 		if (commandParams.length == 1) {
 			sendEmbed(makeEmbed(event.getMember()));

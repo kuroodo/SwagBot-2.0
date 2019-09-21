@@ -13,7 +13,10 @@ public class CommandSlap extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-
+		if (!selfHasPermissions()) {
+			return;
+		}
+		
 		if (!event.getMessage().getMentionedUsers().isEmpty()) {
 			sendMessage(event.getAuthor().getAsMention() + " slaps "
 					+ event.getMessage().getMentionedUsers().get(0).getAsMention());

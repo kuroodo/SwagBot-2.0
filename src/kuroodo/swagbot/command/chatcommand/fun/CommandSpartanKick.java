@@ -11,6 +11,10 @@ public class CommandSpartanKick extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
+		if (!selfHasPermissions()) {
+			return;
+		}
+		
 		if (event.getMessage().getMentionedMembers().size() == 0) {
 			return;
 		}

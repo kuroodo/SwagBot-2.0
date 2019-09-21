@@ -25,6 +25,10 @@ public class CommandMagicBall extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+		if (!selfHasPermissions()) {
+			return;
+		}
+		
 		try {
 			Reader reader;
 			reader = new BufferedReader(new FileReader(JSONKeys.MAGICBALL_FILE_NAME));

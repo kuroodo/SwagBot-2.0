@@ -22,6 +22,10 @@ public class CommandSetupHelp extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+		if (!selfHasPermissions()) {
+			return;
+		}
+		
 		// If asking for the setup keys, <prefix>setuphelp keys
 		if (commandParams.length > 1 && commandParams[1].toLowerCase().equals("keys")) {
 			sendKeyDescriptions();
