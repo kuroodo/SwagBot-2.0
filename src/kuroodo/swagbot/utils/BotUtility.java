@@ -51,17 +51,25 @@ public class BotUtility {
 	}
 
 	public static boolean hasPermission(Permission permission, TextChannel channel, Member member) {
-		return member.getPermissions(channel).contains(permission);
+		if (!member.getPermissions().contains(Permission.ADMINISTRATOR)) {
+			return member.getPermissions(channel).contains(permission);
+		}
+		return true;
 	}
 
 	public static boolean hasPermission(Permission permission, Member member) {
-		return member.getPermissions().contains(permission);
+		if (!member.getPermissions().contains(Permission.ADMINISTRATOR)) {
+			return member.getPermissions().contains(permission);
+		}
+		return true;
 	}
 
 	public static boolean hasPermissions(List<Permission> permissions, TextChannel channel, Member member) {
-		for (Permission perm : permissions) {
-			if (!member.getPermissionsExplicit(channel).contains(perm)) {
-				return false;
+		if (!member.getPermissions().contains(Permission.ADMINISTRATOR)) {
+			for (Permission perm : permissions) {
+				if (!member.getPermissionsExplicit(channel).contains(perm)) {
+					return false;
+				}
 			}
 		}
 		return true;
