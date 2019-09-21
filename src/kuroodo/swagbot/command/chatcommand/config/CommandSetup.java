@@ -19,13 +19,10 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class CommandSetup extends ChatCommand {
 	GuildSettings settings;
 
-	public CommandSetup() {
-		isPermission0 = true;
-	}
-
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
+		isPermission0 = true;
 	}
 
 	@Override
@@ -36,6 +33,19 @@ public class CommandSetup extends ChatCommand {
 			return;
 		}
 
+		// 3 params should be <prefix>setup key value
+		int expectedParamsLength = 3;
+
+		// Does member have a permission0/1/2 role
+		if (!memberHasPermissions(event.getMember())) {
+			sendNoPermissionsMessage();
+			return;
+			// If not enough params
+		} else if (commandParams.length < expectedParamsLength) {
+			sendFormatErrorMessage();
+			return;
+		}
+
 		// Check if settings file for guild exists
 		if (!GuildSettingsReader.settingsFileExists(event.getGuild().getIdLong())) {
 			sendMessage(BotUtility.codifyText("Error finding this server's configuration file."));
@@ -43,18 +53,6 @@ public class CommandSetup extends ChatCommand {
 				sendMessage(BotUtility
 						.quotifyText("There is an issue managing server configuration. A fix is being worked on."));
 			}
-			return;
-		}
-		// 3 params should be <prefix>setup key value
-		int expectedParamsLength = 3;
-
-		// Does member have a permission0/1/2 role
-		if (!memberHasPermissions(GuildManager.getGuild(event.getGuild().getIdLong()), event.getMember())) {
-			sendNoPermissionsMessage();
-			return;
-			// If not enough params
-		} else if (commandParams.length < expectedParamsLength) {
-			sendFormatErrorMessage();
 			return;
 		}
 
@@ -329,7 +327,7 @@ public class CommandSetup extends ChatCommand {
 	private void updatePermission1() {
 		if (commandParams[2].equals("-1")) {
 			settings.rolePermission1 = 0;
-			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
+			sendMessage(BotUtility.codifyText("Permission1 role removed from configuration"));
 		} else {
 			long roleID;
 			try {
@@ -356,7 +354,7 @@ public class CommandSetup extends ChatCommand {
 	private void updatePermission2() {
 		if (commandParams[2].equals("-1")) {
 			settings.rolePermission2 = 0;
-			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
+			sendMessage(BotUtility.codifyText("Permission2 role removed from configuration"));
 		} else {
 			long roleID;
 			try {
@@ -375,7 +373,7 @@ public class CommandSetup extends ChatCommand {
 				return;
 			}
 
-			sendMessage(BotUtility.codifyText("rolePermission1 role has been set to " + role.getName()));
+			sendMessage(BotUtility.codifyText("rolePermission2 role has been set to " + role.getName()));
 		}
 
 	}

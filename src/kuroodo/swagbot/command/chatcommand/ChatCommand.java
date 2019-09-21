@@ -79,21 +79,37 @@ public abstract class ChatCommand extends Command {
 				BotUtility.getSelfMember(event.getGuild()));
 	}
 
-	protected boolean memberHasPermissions(GuildSettings guild, Member member) {
-		// If member role is of higher permission levels
-		if (isPermission0) {
-			Role permission0Role = guild.guild.getRoleById(guild.rolePermission0);
+	protected boolean memberHasPermissions(Member member) {
+		// TODO: TEST THIS
+		// If not owner or admin
+		if (!member.isOwner() || !member.hasPermission(net.dv8tion.jda.api.Permission.ADMINISTRATOR)) {
+			GuildSettings settings = GuildManager.getGuild(member.getGuild());
+			if (isPermission0 || isPermission1 || isPermission2) {
 
-			return member.getRoles().contains(permission0Role) || member.isOwner()
-					|| member.hasPermission(net.dv8tion.jda.api.Permission.ADMINISTRATOR);
-		} else if (isPermission1) {
-			Role permission1Role = guild.guild.getRoleById(guild.rolePermission1);
-			return member.getRoles().contains(permission1Role);
-		} else if (isPermission2) {
-			Role permission2Role = guild.guild.getRoleById(guild.rolePermission2);
-			return member.getRoles().contains(permission2Role);
+				if (isPermission0) {
+					Role permission0Role = settings.guild.getRoleById(settings.rolePermission0);
+					if (permission0Role != null && member.getRoles().contains(permission0Role)) {
+						return true;
+					}
+				}
+
+				if (isPermission1) {
+					Role permission1Role = settings.guild.getRoleById(settings.rolePermission1);
+					if (permission1Role != null && member.getRoles().contains(permission1Role)) {
+						return true;
+					}
+				}
+
+				if (isPermission2) {
+					Role permission2Role = settings.guild.getRoleById(settings.rolePermission2);
+					if (permission2Role != null && member.getRoles().contains(permission2Role)) {
+						return true;
+					}
+				}
+				// Return false if member does not have any perm roles
+				return false;
+			}
 		}
-
 		return true;
 	}
 

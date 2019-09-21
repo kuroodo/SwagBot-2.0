@@ -17,15 +17,16 @@ public class CommandSetupHelp extends ChatCommand {
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
 		requiredPermissions.add(Permission.MESSAGE_EMBED_LINKS);
+		isPermission0 = true;
 	}
 
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-		if (!selfHasPermissions()) {
+		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
 			return;
 		}
-		
+
 		// If asking for the setup keys, <prefix>setuphelp keys
 		if (commandParams.length > 1 && commandParams[1].toLowerCase().equals("keys")) {
 			sendKeyDescriptions();
