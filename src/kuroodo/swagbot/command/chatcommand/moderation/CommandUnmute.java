@@ -55,13 +55,28 @@ public class CommandUnmute extends ChatCommand {
 			if (member.getRoles().contains(muterole)) {
 				settings.guild.removeRoleFromMember(member, muterole).queue();
 				logUnmute(settings, member);
+				sendUnmuteMessage(member);
 			}
 		}
 	}
 
+	private void sendUnmuteMessage(Member member) {
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted"));
+	}
+
 	private void logUnmute(GuildSettings settings, Member member) {
-		String logMessage = BotUtility.quotifyText(
-				event.getAuthor().getName() + " has UNMUTED user " + member.getAsMention());
+		String logMessage = BotUtility
+				.quotifyText(event.getAuthor().getName() + " has UNMUTED user " + member.getAsMention());
 		Logger.sendLogMessage(settings, logMessage);
+	}
+
+	@Override
+	public String commandDescription() {
+		return "Remove the mute role from a member with the mute role";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "unmute @user";
 	}
 }

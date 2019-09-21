@@ -26,4 +26,9 @@ public abstract class Command {
 	 * Returns a tooltip of what the command does
 	 */
 	public abstract String commandDescription();
+	
+	/**
+	 * Returns a tooltip of the proper command format
+	 */
+	public abstract String commandFormat();
 }

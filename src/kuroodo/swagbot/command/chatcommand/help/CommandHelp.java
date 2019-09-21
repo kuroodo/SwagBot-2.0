@@ -44,4 +44,10 @@ public class CommandHelp extends ChatCommand {
 	public String commandDescription() {
 		return "Gives information on how to use certain commands.";
 	}
+
+	@Override
+	public String commandFormat() {
+		return "For general help, " + commandPrefix + "help , for help with a specific command: " + commandPrefix
+				+ "help <commandname>";
+	}
 }

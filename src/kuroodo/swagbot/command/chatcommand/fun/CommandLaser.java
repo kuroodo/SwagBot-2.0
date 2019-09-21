@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandLaser extends ChatCommand {
-	
+
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
@@ -29,6 +29,11 @@ public class CommandLaser extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Point a laser at someones eye\nUsage: " + commandPrefix + "laser @user";
+		return "Point a laser at someones eye";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "laser @user";
 	}
 }

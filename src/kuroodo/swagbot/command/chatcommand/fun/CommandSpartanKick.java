@@ -14,7 +14,7 @@ public class CommandSpartanKick extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-		
+
 		if (event.getMessage().getMentionedMembers().size() == 0) {
 			return;
 		}
@@ -23,11 +23,11 @@ public class CommandSpartanKick extends ChatCommand {
 		if (!member.getVoiceState().inVoiceChannel()) {
 			return;
 		}
-		
+
 		Guild guild = event.getGuild();
 
 		int totalChannels = guild.getVoiceChannels().size() - 1;
-		int userCurrentIndex = guild.getVoiceChannels().indexOf(member.getVoiceState().getChannel()); // getUserChannelIndex(member);
+		int userCurrentIndex = guild.getVoiceChannels().indexOf(member.getVoiceState().getChannel());
 
 		final int totalKicks = 3;
 		for (int i = 0; i < totalKicks; i++) {
@@ -44,5 +44,15 @@ public class CommandSpartanKick extends ChatCommand {
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.VOICE_MOVE_OTHERS);
+	}
+
+	@Override
+	public String commandDescription() {
+		return "Spartankick a user across voice channels, only if they are in a voicechannel";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "spartankick @user";
 	}
 }

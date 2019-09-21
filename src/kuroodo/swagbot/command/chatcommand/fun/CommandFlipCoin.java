@@ -25,20 +25,25 @@ public class CommandFlipCoin extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-		
+
 		int sides = 2;
 		rand.setSeed(System.nanoTime());
 		int x = rand.nextInt(sides);
 
 		if (x == 0) {
 			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on tails\n```");
-		}else {
+		} else {
 			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on heads\n```");
 		}
 	}
 
 	@Override
 	public String commandDescription() {
-		return "Flip a coin between heads or tails\nUsage: !flipcoin";
+		return "Flip a coin between heads or tails";
+	}
+
+	@Override
+	public String commandFormat() {
+		return "!flipcoin";
 	}
 }

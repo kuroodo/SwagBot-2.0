@@ -407,6 +407,11 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Use this command to set up your server configuration with the bot.\nUse !setuphelp for help and usage";
+		return "Use this command to set up your server configuration with the bot. Use !setuphelp for more information, and information keys and values.";
+	}
+
+	@Override
+	public String commandFormat() {
+		return "Usage: " + commandPrefix + "setup <key> <value>";
 	}
 }

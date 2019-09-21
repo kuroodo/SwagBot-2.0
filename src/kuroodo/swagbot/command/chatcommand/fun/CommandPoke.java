@@ -28,6 +28,11 @@ public class CommandPoke extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Poke a user\nUsage: " + commandPrefix + "poke @user";
+		return "Poke a user";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "poke @user";
 	}
 }

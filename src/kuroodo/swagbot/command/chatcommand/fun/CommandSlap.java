@@ -16,7 +16,7 @@ public class CommandSlap extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-		
+
 		if (!event.getMessage().getMentionedUsers().isEmpty()) {
 			sendMessage(event.getAuthor().getAsMention() + " slaps "
 					+ event.getMessage().getMentionedUsers().get(0).getAsMention());
@@ -27,6 +27,11 @@ public class CommandSlap extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Slap a user\nUsage: " + commandPrefix + "slap @user";
+		return "Slap a user";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "slap @user";
 	}
 }

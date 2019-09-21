@@ -92,4 +92,14 @@ public class CommandMagicBall extends ChatCommand {
 		}
 	}
 
+	@Override
+	public String commandDescription() {
+		return "Ask the magic ball, or the bot, for advice or words of wisdom";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "magicball QUESTION , or " + BotUtility.getSelfUser().getAsMention() + " QUESTION";
+	}
+
 }

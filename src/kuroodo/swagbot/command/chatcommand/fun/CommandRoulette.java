@@ -117,4 +117,14 @@ public class CommandRoulette extends ChatCommand {
 			BotUtility.removeRoleFromMember(guild, role, event.getMember());
 		}
 	}
+
+	@Override
+	public String commandDescription() {
+		return "Test out your luck in a game of roulette";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "roulette";
+	}
 }

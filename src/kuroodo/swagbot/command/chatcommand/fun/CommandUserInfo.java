@@ -22,7 +22,7 @@ public class CommandUserInfo extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-		
+
 		// If no parameters
 		if (commandParams.length == 1) {
 			sendEmbed(makeEmbed(event.getMember()));
@@ -70,6 +70,12 @@ public class CommandUserInfo extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Get information of a user\nUsage: " + commandPrefix + "userinfo or " + commandPrefix + "userinfo @user";
+		return "Get information about a user or yourself";
+	}
+
+	@Override
+	public String commandFormat() {
+		return "To get your information: " + commandPrefix + "userinfo , To get a users information:  " + commandPrefix
+				+ "userinfo @user";
 	}
 }

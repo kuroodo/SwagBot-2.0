@@ -40,6 +40,11 @@ public abstract class ChatCommand extends Command {
 		return "ERROR: Command not found or no description";
 	}
 
+	@Override
+	public String commandFormat() {
+		return "ERROR: Command not found or no format";
+	}
+
 	protected void sendMessage(String message) {
 		// Check if has perms to send message
 		if (!BotUtility.hasPermission(Permission.MESSAGE_WRITE, event.getTextChannel(),

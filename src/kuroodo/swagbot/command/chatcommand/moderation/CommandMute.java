@@ -69,6 +69,7 @@ public class CommandMute extends ChatCommand {
 			}
 
 			logMute(settings, duration, member);
+			sendMuteMessage(member);
 		}
 	}
 
@@ -82,6 +83,10 @@ public class CommandMute extends ChatCommand {
 				logUnmute(settings, member);
 			}
 		}
+	}
+
+	private void sendMuteMessage(Member member) {
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted"));
 	}
 
 	private void logMute(GuildSettings settings, long duration, Member member) {
@@ -109,5 +114,15 @@ public class CommandMute extends ChatCommand {
 		String logMessage = BotUtility
 				.quotifyText("The MUTE duration for user " + member.getAsMention() + " has expired.");
 		Logger.sendLogMessage(settings, logMessage);
+	}
+
+	@Override
+	public String commandDescription() {
+		return "Give a member the mute role";
+	}
+
+	@Override
+	public String commandFormat() {
+		return commandPrefix + "mute @user <duration>(optional)";
 	}
 }
