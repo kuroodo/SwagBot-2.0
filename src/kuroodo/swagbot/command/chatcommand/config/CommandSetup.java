@@ -91,6 +91,12 @@ public class CommandSetup extends ChatCommand {
 		case JSONKeys.SETTINGS_MUTE_CHANNEL:
 			updateMuteChannel();
 			return;
+		case JSONKeys.SETTINGS_MUSIC_CHANNEL:
+			updateMusicChannel();
+			return;
+		case JSONKeys.SETTINGS_SPARTANKICK:
+			updateEnableSpartankick();
+			return;
 		case JSONKeys.SETTINGS_ROLE_PERMISSION0:
 			updatePermission0();
 			return;
@@ -126,9 +132,9 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-
-			sendMessage(BotUtility.codifyText(
-					"Welcome message has been enabled. Don't forget to set a welcome message if you haven't already"));
+			String result = settings.enableWelcome ? "enabled" : "disabled";
+			sendMessage(BotUtility.codifyText("Welcome message has been " + result
+					+ ". Don't forget to set a welcome message if you haven't already"));
 		}
 	}
 
@@ -188,8 +194,9 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
+			String result = settings.enableWelcomeRole ? "enabled" : "disabled";
 			sendMessage(BotUtility.codifyText(
-					"Welcome role has been enabled. Don't forget to set a welcome role if you haven't already"));
+					"Welcome role has been " + result + ". Don't forget to set a welcome role if you haven't already"));
 		}
 	}
 
