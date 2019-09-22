@@ -43,6 +43,10 @@ public class CommandMute extends ChatCommand {
 			sendMessage("This person is too important to be muted");
 		}
 
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
 	}
 
 	private void performMute(Member member) {

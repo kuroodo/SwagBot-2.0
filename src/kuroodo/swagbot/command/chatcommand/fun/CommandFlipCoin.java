@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 import java.util.Random;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -24,6 +25,11 @@ public class CommandFlipCoin extends ChatCommand {
 
 		if (!selfHasPermissions()) {
 			return;
+		}
+
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
 		}
 
 		int sides = 2;

@@ -34,6 +34,11 @@ public class CommandClearChat extends ChatCommand {
 			return;
 		}
 
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
+
 		final int MAX_MESSAGES = 25;
 
 		RestAction<List<Message>> restAction;

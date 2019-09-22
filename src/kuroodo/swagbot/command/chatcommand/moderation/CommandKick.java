@@ -38,6 +38,11 @@ public class CommandKick extends ChatCommand {
 		} else {
 			sendMessage("This person is too important to be removed");
 		}
+		
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
 	}
 
 	private void performKick(Member member) {

@@ -34,6 +34,10 @@ public class CommandUnmute extends ChatCommand {
 			return;
 		}
 		performUnmute(member);
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
 	}
 
 	private void performUnmute(Member member) {

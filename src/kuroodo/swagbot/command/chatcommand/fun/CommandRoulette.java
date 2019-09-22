@@ -31,6 +31,11 @@ public class CommandRoulette extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
+		
 		// Create death role if doesn't already exist
 		createDeathRole();
 		playRoulette();

@@ -30,7 +30,7 @@ public class CommandBan extends ChatCommand {
 			sendMessage(commandFormat());
 			return;
 		}
-		
+
 		Member member = findParamsMember();
 
 		if (member == null) {
@@ -42,6 +42,11 @@ public class CommandBan extends ChatCommand {
 			performBan(member);
 		} else {
 			sendMessage("This person is too important to be removed");
+		}
+
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
 		}
 	}
 
