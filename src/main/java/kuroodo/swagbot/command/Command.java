@@ -7,7 +7,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class Command {
 	protected ArrayList<Permission> requiredPermissions = new ArrayList<Permission>();
-
+	public String commandPrefix = "";
+	
 	/**
 	 * Specify any permissions required for normal command function
 	 */

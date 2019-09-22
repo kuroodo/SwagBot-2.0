@@ -17,8 +17,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public abstract class ChatCommand extends Command {
 	protected MessageReceivedEvent event;
 	protected String[] commandParams;
-
-	protected String commandPrefix = "";
+	
 	protected boolean isPrivateMessageCommand = false;
 	protected boolean isPermission0 = false, isPermission1 = false, isPermission2 = false;
 

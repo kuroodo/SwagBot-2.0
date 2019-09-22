@@ -3,7 +3,7 @@ package kuroodo.swagbot.command.chatcommand.help;
 import kuroodo.swagbot.command.Command;
 import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
-import kuroodo.swagbot.utils.BotUtility;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -12,6 +12,7 @@ public class CommandHelp extends ChatCommand {
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
+		requiredPermissions.add(Permission.MESSAGE_EMBED_LINKS);
 	}
 
 	@Override
@@ -21,23 +22,40 @@ public class CommandHelp extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		EmbedBuilder eb = null;
 
 		// If no parameters
 		if (commandParams.length == 1) {
-			sendHelpOverview();
+			eb = sendHelpOverview();
 			// If asking for help with specific command
 		} else if (commandParams.length == 2) {
-			sendCommandHelp();
+			eb = sendCommandHelp();
+		}
+		if (eb != null) {
+			sendEmbed(eb);
 		}
 	}
 
-	private void sendHelpOverview() {
-		sendMessage(event.getAuthor().getAsMention() + " https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt");
+	private EmbedBuilder sendHelpOverview() {
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setTitle("Bot Help");
+		eb.setDescription(
+				"[click here to see the manual for help on commands and bot functions: ](https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt)");
+
+		return eb;
 	}
 
-	private void sendCommandHelp() {
+	private EmbedBuilder sendCommandHelp() {
+		EmbedBuilder eb = new EmbedBuilder();
+		String commandName = commandParams[1];
 		Command command = CommandRegistry.getCommand(commandParams[1]);
-		sendMessage(BotUtility.codifyText(command.commandDescription()));
+		command.commandPrefix = commandPrefix;
+
+		eb.setTitle(commandName);
+		eb.setDescription(command.commandDescription());
+		eb.addField("Usage", command.commandFormat(), false);
+
+		return eb;
 	}
 
 	@Override
