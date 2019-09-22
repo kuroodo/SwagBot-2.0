@@ -13,6 +13,7 @@ import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
 import kuroodo.swagbot.command.chatcommand.fun.CommandSpartanKick;
 import kuroodo.swagbot.command.chatcommand.fun.CommandUserInfo;
 import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
+import kuroodo.swagbot.command.chatcommand.lavaplayer.CommandLavaPlayer;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandBan;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandClearChat;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandKick;
@@ -64,6 +65,16 @@ public class CommandRegistry {
 			return new CommandSetup();
 		case CommandKeys.COMMAND_SETUPHELP:
 			return new CommandSetupHelp();
+
+		// LAVA PLAYER Commands
+		case CommandKeys.COMMAND_PLAY:
+		case CommandKeys.COMMAND_PLAYRANDOM:
+		case CommandKeys.COMMAND_PAUSE:
+		case CommandKeys.COMMAND_RESUME:
+		case CommandKeys.COMMAND_STOP:
+		case CommandKeys.COMMAND_SKIP:
+		case CommandKeys.COMMAND_TRACKINFO:
+			return new CommandLavaPlayer();
 		default:
 			// Return empty command
 			return new CommandBlank();
