@@ -35,7 +35,6 @@ public class CommandMute extends ChatCommand {
 		if (!event.getMessage().getMentionedUsers().isEmpty()) {
 			member = event.getMessage().getMentionedMembers().get(0);
 		} else if (commandParams.length > 1) { // Else check if entered a user ID
-
 			// Check if entered valid long ID
 			try {
 				member = event.getGuild().getMemberById(commandParams[1]);
@@ -47,28 +46,37 @@ public class CommandMute extends ChatCommand {
 			sendMessage("Please mention a valid user or ensure correct command format");
 			return;
 		}
-		performMute(member);
+
+		if (GuildManager.canMemberBeRemoved(event.getGuild(), member)) {
+			performMute(member);
+		} else {
+			sendMessage("This person is too important to be muted");
+		}
+
 	}
 
 	private void performMute(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		Role muterole = settings.guild.getRoleById(settings.muteRole);
+		String reason = getReason();
 		long duration = 0;
 
 		if (muterole != null) {
-			settings.guild.addRoleToMember(member, muterole).queue();
-
 			// If entered a mute duration
-			if (commandParams.length == 3) {
+			if (commandParams.length >= 3) {
 				try {
 					duration = Long.parseLong(commandParams[2]);
-					startUnmuteTimer(duration, member);
 				} catch (NumberFormatException e) {
-					sendMessage("ERROR: User muted, but time format incorrect. Please enter time in minutes");
+					sendMessage("ERROR: Mute duration is incorrect. Please enter a NUMBER of days");
 				}
 			}
 
-			logMute(settings, duration, member);
+			// Give mute role
+			settings.guild.addRoleToMember(member, muterole).queue();
+			if (duration > 0)
+				startUnmuteTimer(duration, member);
+
+			logMute(settings, duration, reason, member);
 			sendMuteMessage(member);
 		}
 	}
@@ -89,12 +97,14 @@ public class CommandMute extends ChatCommand {
 		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted"));
 	}
 
-	private void logMute(GuildSettings settings, long duration, Member member) {
-		String logMessage = event.getAuthor().getName() + " has MUTED user " + member.getAsMention();
+	private void logMute(GuildSettings settings, long duration, String reason, Member member) {
+		String logMessage = event.getAuthor().getAsMention() + " has MUTED user " + member.getAsMention();
 
 		if (duration > 0) {
 			logMessage += " for " + duration + " minute(s)";
 		}
+
+		logMessage += " with reason: " + reason;
 
 		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
 	}
@@ -116,6 +126,15 @@ public class CommandMute extends ChatCommand {
 		Logger.sendLogMessage(settings, logMessage);
 	}
 
+	private String getReason() {
+		String reason = "";
+		for (int i = 3; i < commandParams.length; i++) {
+			reason += commandParams[i] + " ";
+		}
+
+		return reason;
+	}
+
 	@Override
 	public String commandDescription() {
 		return "Give a member the mute role";
@@ -123,6 +142,6 @@ public class CommandMute extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "mute @user <duration>(optional)";
+		return commandPrefix + "mute @user <duration MINUTES>(optional)";
 	}
 }
