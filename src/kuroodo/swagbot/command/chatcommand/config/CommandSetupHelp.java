@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.config;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import kuroodo.swagbot.json.JSONKeys;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -66,36 +67,42 @@ public class CommandSetupHelp extends ChatCommand {
 	}
 
 	public EmbedBuilder getKeyDescriptions(GuildSettings settings, EmbedBuilder eb) {
-		eb.addField("commandprefix",
+		eb.addField(JSONKeys.SETTINGS_COMMAND_PREFIX,
 				"The prefix that will be used to activate a command. Accepted values: Text with no spaces ", true);
-		eb.addField("enablewelcome",
+		eb.addField(JSONKeys.SETTINGS_ENABLE_WELCOME,
 				"Enable the bot to send a welcome message when someone joins the server. Accepted values: true or false",
 				true);
-		eb.addField("welcomechannel",
+		eb.addField(JSONKeys.SETTINGS_WELCOME_CHANNEL,
 				"The channel the bot posts welcome messages to when a user joins the server. Accepted values: A TEXT CHANNEL ID",
 				true);
-		eb.addField("welcomemessage", "The welcome message sent to new members. Accepted values: Any text", true);
-		eb.addField("enablewelcomerole",
+		eb.addField(JSONKeys.SETTINGS_WELCOME_MESSAGE,
+				"The welcome message sent to new members. Accepted values: Any text", true);
+		eb.addField(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE,
 				"Enable the bot to give a role when someoene joins the server. Accepted values: true or false", true);
-		eb.addField("welcomerole", "The role the bot gives to new joining members. Accepted values: A ROLE ID", true);
-		eb.addField("logchannel", "The channel for the bot to post logs. Accepted values: A TEXT CHANNEL ID", true);
-		eb.addField("muterole", "Role given to members who are to be muted. Accepted values: A ROLE ID", true);
-		eb.addField("muterole",
+		eb.addField(JSONKeys.SETTINGS_WELCOME_ROLE,
+				"The role the bot gives to new joining members. Accepted values: A ROLE ID", true);
+		eb.addField(JSONKeys.SETTINGS_LOG_CHANNEL,
+				"The channel for the bot to post logs. Accepted values: A TEXT CHANNEL ID", true);
+		eb.addField(JSONKeys.SETTINGS_MUTE_ROLE,
+				"Role given to members who are to be muted. Accepted values: A ROLE ID", true);
+		eb.addField(JSONKeys.SETTINGS_MUTE_CHANNEL,
 				"A voice channel where it instantly gives members the muterole if manually placed in. Accepted values: A VOICE CHANNEL ID",
 				true);
-		eb.addField("musicchannel",
+		eb.addField(JSONKeys.SETTINGS_MUSIC_CHANNEL,
 				"A channel where the bot can play music with the play command. See the help file for more info. Accepted values: A VOICE CHANNEL ID",
 				true);
-		eb.addField("spartankick", "Enable or disable the spartankick command. Accepted values: true or false", true);
-		eb.addField("rolepermission0",
-				"Define what role has Admin control/Access to all commands. Roles with Admin permissions inherit this ability by default. Therefore use this command if a role does not have Admin permissions. "
-						+ "Accepted values: A ROLE ID",
+		eb.addField(JSONKeys.SETTINGS_SPARTANKICK,
+				"Enable or disable the spartankick command. Accepted values: true or false", true);
+		eb.addField(JSONKeys.SETTINGS_ROLE_PERMISSION0,
+				"Define what role has Admin control/Access to all commands. Roles with Admin permissions inherit this ability by default. "
+						+ "Therefore use this command if a role does not have Admin permissions. Accepted values: A ROLE ID",
 				true);
-		eb.addField("rolepermission1",
-				"Define what role has Moderator-level of control. Access to Ban, clearchat, and silencing commands. Commands do not affect admins. Accepted values: A ROLE ID",
+		eb.addField(JSONKeys.SETTINGS_ROLE_PERMISSION1,
+				"Define what role has Moderator-level of control. Access to Ban, clearchat, and silencing commands. "
+						+ "Commands do not affect admins. Accepted values: A ROLE ID",
 				true);
-		eb.addField("rolepermission2",
-				"Extra permissions role that has access to silencing commands. Accepted values: A ROLE ID", true);
+		eb.addField(JSONKeys.SETTINGS_ROLE_PERMISSION2,
+				"Extra permissions role that has access to muting commands. Accepted values: A ROLE ID", true);
 		return eb;
 	}
 
@@ -169,7 +176,7 @@ public class CommandSetupHelp extends ChatCommand {
 		eb.addField("Enable Spartankick Command", "" + settings.spartankick, true);
 
 		// Permission 0
-		role = guild.getRoleById(settings.rolePermission0);
+		role = guild.getRoleById(settings.permission0);
 		if (role != null) {
 			eb.addField("Permission0 Role", role.getName(), true);
 		} else {
@@ -177,7 +184,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Permission 1
-		role = guild.getRoleById(settings.rolePermission1);
+		role = guild.getRoleById(settings.permission1);
 		if (role != null) {
 			eb.addField("Permission1 Role", role.getName(), true);
 		} else {
@@ -185,7 +192,7 @@ public class CommandSetupHelp extends ChatCommand {
 		}
 
 		// Permission 2
-		role = guild.getRoleById(settings.rolePermission2);
+		role = guild.getRoleById(settings.permission2);
 		if (role != null) {
 			eb.addField("Permission2 Role", role.getName(), true);
 		} else {

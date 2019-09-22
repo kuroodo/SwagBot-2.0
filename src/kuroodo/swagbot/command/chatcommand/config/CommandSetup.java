@@ -353,7 +353,7 @@ public class CommandSetup extends ChatCommand {
 
 	private void updatePermission0() {
 		if (commandParams[2].equals("-1")) {
-			settings.rolePermission0 = 0;
+			settings.permission0 = 0;
 			sendMessage(BotUtility.codifyText("Permission0 role removed from configuration"));
 		} else {
 			long roleID;
@@ -367,7 +367,7 @@ public class CommandSetup extends ChatCommand {
 			Guild guild = settings.guild;
 			Role role = guild.getRoleById(roleID);
 			if (role != null) {
-				settings.rolePermission0 = roleID;
+				settings.permission0 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
@@ -380,7 +380,7 @@ public class CommandSetup extends ChatCommand {
 
 	private void updatePermission1() {
 		if (commandParams[2].equals("-1")) {
-			settings.rolePermission1 = 0;
+			settings.permission1 = 0;
 			sendMessage(BotUtility.codifyText("Permission1 role removed from configuration"));
 		} else {
 			long roleID;
@@ -394,7 +394,7 @@ public class CommandSetup extends ChatCommand {
 			Guild guild = settings.guild;
 			Role role = guild.getRoleById(roleID);
 			if (role != null) {
-				settings.rolePermission1 = roleID;
+				settings.permission1 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;
@@ -407,7 +407,7 @@ public class CommandSetup extends ChatCommand {
 
 	private void updatePermission2() {
 		if (commandParams[2].equals("-1")) {
-			settings.rolePermission2 = 0;
+			settings.permission2 = 0;
 			sendMessage(BotUtility.codifyText("Permission2 role removed from configuration"));
 		} else {
 			long roleID;
@@ -421,7 +421,7 @@ public class CommandSetup extends ChatCommand {
 			Guild guild = settings.guild;
 			Role role = guild.getRoleById(roleID);
 			if (role != null) {
-				settings.rolePermission2 = roleID;
+				settings.permission2 = roleID;
 			} else {
 				printRoleErrorMessage();
 				return;

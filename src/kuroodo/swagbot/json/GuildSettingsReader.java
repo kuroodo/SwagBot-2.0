@@ -39,9 +39,9 @@ public class GuildSettingsReader {
 			settings.muteRole = Long.parseLong(object.get(JSONKeys.SETTINGS_MUTE_ROLE).asString());
 			settings.muteChannel = Long.parseLong(object.get(JSONKeys.SETTINGS_MUTE_CHANNEL).asString());
 			settings.muteChannel = Long.parseLong(object.get(JSONKeys.SETTINGS_MUSIC_CHANNEL).asString());
-			settings.rolePermission0 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION0).asString());
-			settings.rolePermission1 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION1).asString());
-			settings.rolePermission2 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION2).asString());
+			settings.permission0 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION0).asString());
+			settings.permission1 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION1).asString());
+			settings.permission2 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION2).asString());
 
 			reader.close();
 			return settings;

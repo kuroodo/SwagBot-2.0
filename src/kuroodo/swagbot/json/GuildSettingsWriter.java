@@ -59,9 +59,9 @@ public class GuildSettingsWriter {
 			object.set(JSONKeys.SETTINGS_MUTE_CHANNEL, Long.toString(guild.muteChannel));
 			object.set(JSONKeys.SETTINGS_MUSIC_CHANNEL, Long.toString(guild.musicchannel));
 			object.set(JSONKeys.SETTINGS_SPARTANKICK, Boolean.toString(guild.spartankick));
-			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION0, Long.toString(guild.rolePermission0));
-			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION1, Long.toString(guild.rolePermission1));
-			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION2, Long.toString(guild.rolePermission2));
+			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION0, Long.toString(guild.permission0));
+			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION1, Long.toString(guild.permission1));
+			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION2, Long.toString(guild.permission2));
 
 			// Overwrite original file and paste contents
 			FileWriter writer = new FileWriter(settingsFile, false);

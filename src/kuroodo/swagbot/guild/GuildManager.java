@@ -70,15 +70,15 @@ public class GuildManager {
 		}
 
 		GuildSettings settings = getGuild(guild);
-		Role permRole = guild.getRoleById(settings.rolePermission0);
+		Role permRole = guild.getRoleById(settings.permission0);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
-		permRole = guild.getRoleById(settings.rolePermission1);
+		permRole = guild.getRoleById(settings.permission1);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
-		permRole = guild.getRoleById(settings.rolePermission2);
+		permRole = guild.getRoleById(settings.permission2);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
@@ -97,11 +97,11 @@ public class GuildManager {
 		}
 
 		GuildSettings settings = getGuild(guild);
-		Role permRole = guild.getRoleById(settings.rolePermission0);
+		Role permRole = guild.getRoleById(settings.permission0);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
-		permRole = guild.getRoleById(settings.rolePermission1);
+		permRole = guild.getRoleById(settings.permission1);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
