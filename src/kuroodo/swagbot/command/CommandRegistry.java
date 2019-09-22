@@ -13,6 +13,8 @@ import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
 import kuroodo.swagbot.command.chatcommand.fun.CommandSpartanKick;
 import kuroodo.swagbot.command.chatcommand.fun.CommandUserInfo;
 import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
+import kuroodo.swagbot.command.chatcommand.moderation.CommandBan;
+import kuroodo.swagbot.command.chatcommand.moderation.CommandKick;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandMute;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandUnmute;
 
@@ -25,6 +27,10 @@ public class CommandRegistry {
 			return new CommandHelp();
 
 		// MODERATION commands
+		case CommandKeys.COMMAND_BAN:
+			return new CommandBan();
+		case CommandKeys.COMMAND_KICK:
+			return new CommandKick();
 		case CommandKeys.COMMAND_MUTE:
 			return new CommandMute();
 		case CommandKeys.COMMAND_UNMUTE:
