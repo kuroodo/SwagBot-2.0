@@ -45,13 +45,10 @@ public class ChatListener extends ListenerAdapter {
 				// If entered parameters
 				if (commandParams.length > 1) {
 					commandName = commandParams[1];
-
-					// If not a registered command, perform magicball command
-					if (!CommandRegistry.isCommandRegistered(commandName)) {
-						// Remove bot mention
-						commandParams = BotUtility.removeElement(commandParams, 0);
-						commandName = CommandKeys.COMMAND_MAGICBALL;
-					}
+					// Remove bot mention
+					commandParams = BotUtility.removeElement(commandParams, 0);
+					// Set to magicball command
+					commandName = CommandKeys.COMMAND_MAGICBALL;
 				} else {// If just a blank mention, do magicball
 					commandName = CommandKeys.COMMAND_MAGICBALL;
 				}
