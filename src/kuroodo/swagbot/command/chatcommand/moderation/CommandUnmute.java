@@ -61,7 +61,7 @@ public class CommandUnmute extends ChatCommand {
 	}
 
 	private void sendUnmuteMessage(Member member) {
-		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted"));
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was unmuted"));
 	}
 
 	private void logUnmute(GuildSettings settings, Member member) {

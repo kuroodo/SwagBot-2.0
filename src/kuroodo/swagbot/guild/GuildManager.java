@@ -65,6 +65,10 @@ public class GuildManager {
 			return false;
 		}
 
+		if (member.getUser() == BotUtility.getSelfUser()) {
+			return false;
+		}
+
 		GuildSettings settings = getGuild(guild);
 		Role permRole = guild.getRoleById(settings.rolePermission0);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
@@ -75,6 +79,29 @@ public class GuildManager {
 			return false;
 		}
 		permRole = guild.getRoleById(settings.rolePermission2);
+		if (permRole != null && BotUtility.hasRole(permRole, member)) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	// Can member be removed from server
+	public static boolean canMemberBeRemoved(Guild guild, Member member) {
+		if (BotUtility.hasPermission(Permission.ADMINISTRATOR, member)) {
+			return false;
+		}
+
+		if (member.getUser() == BotUtility.getSelfUser()) {
+			return false;
+		}
+
+		GuildSettings settings = getGuild(guild);
+		Role permRole = guild.getRoleById(settings.rolePermission0);
+		if (permRole != null && BotUtility.hasRole(permRole, member)) {
+			return false;
+		}
+		permRole = guild.getRoleById(settings.rolePermission1);
 		if (permRole != null && BotUtility.hasRole(permRole, member)) {
 			return false;
 		}
