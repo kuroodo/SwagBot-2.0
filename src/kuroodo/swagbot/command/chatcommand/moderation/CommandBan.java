@@ -25,18 +25,13 @@ public class CommandBan extends ChatCommand {
 		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
 			return;
 		}
-
-		Member member = null;
-
-		if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			member = event.getMessage().getMentionedMembers().get(0);
-		} else if (commandParams.length > 1) { // Else check if entered a user ID
-			// Check if entered valid long ID
-			try {
-				member = event.getGuild().getMemberById(commandParams[1]);
-			} catch (NumberFormatException e) {
-			}
+		// If empty parameters
+		if (commandParams.length <= 1) {
+			sendMessage(commandFormat());
+			return;
 		}
+		
+		Member member = findParamsMember();
 
 		if (member == null) {
 			sendMessage("Please mention a valid user or ensure correct command format");
@@ -73,6 +68,7 @@ public class CommandBan extends ChatCommand {
 
 	private void sendBanMessage(Member member) {
 		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was banned"));
+
 	}
 
 	private void logBan(GuildSettings settings, int days, String reason, Member member) {

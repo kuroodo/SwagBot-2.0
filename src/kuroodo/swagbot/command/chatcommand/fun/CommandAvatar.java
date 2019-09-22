@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 import java.awt.Color;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -23,28 +24,24 @@ public class CommandAvatar extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		Member member = findParamsMember();
 
-		// If no parameters
+		// If no parameters get the message author
 		if (commandParams.length == 1) {
-			// Send the message author's avatar
-			sendEmbed(makeEmbed(event.getMember()));
-		} else if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			sendEmbed(makeEmbed(event.getMessage().getMentionedMembers().get(0)));
-
-		} else { // Else check if entered a user ID
-			Member member = null;
-			// Check if entered valid long ID
-			try {
-				member = event.getGuild().getMemberById(commandParams[1]);
-			} catch (NumberFormatException e) {
-			}
-
-			if (member != null) {
-				sendEmbed(makeEmbed(member));
-			} else {
-				sendMessage("Please mention a valid user");
-			}
+			member = event.getMember();
 		}
+
+		if (member == null) {
+			sendMessage("Please mention a valid user");
+			return;
+		}
+
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
+
+		sendEmbed(makeEmbed(member));
 	}
 
 	private EmbedBuilder makeEmbed(Member member) {
@@ -56,6 +53,7 @@ public class CommandAvatar extends ChatCommand {
 		eb.setColor(Color.RED);
 		eb.addField(name + "'s Avatar: ", member.getAsMention(), false);
 		eb.setImage(avatarURL);
+		eb.setFooter("Request made by: " + event.getAuthor().getAsTag());
 		return eb;
 	}
 

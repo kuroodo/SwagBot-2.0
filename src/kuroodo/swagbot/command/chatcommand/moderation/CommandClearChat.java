@@ -37,16 +37,19 @@ public class CommandClearChat extends ChatCommand {
 		final int MAX_MESSAGES = 25;
 
 		RestAction<List<Message>> restAction;
-		Member member = getMember();
-		boolean containsMention = !event.getMessage().getMentionedMembers().isEmpty();
-		int numMessages = getInputtedNumber(containsMention);
+		Member member = findParamsMember();
+		boolean containsMember = !event.getMessage().getMentionedMembers().isEmpty() || member != null ? true : false;
+		int numMessages = getInputtedNumber(containsMember);
 
-		if (numMessages > MAX_MESSAGES) {
-			sendMessage("ERROR: Can only delete maximum 25 messages");
+		if (numMessages > MAX_MESSAGES || numMessages == 0) {
+			sendMessage("ERROR: Can only delete 1-25 messages");
+			return;
+		} else if (numMessages == -1) {
+			sendMessage(commandFormat());
 			return;
 		}
 
-		if (containsMention) {
+		if (containsMember) {
 			if (member == null) {
 				sendMessage("ERROR: Please mention a valid user");
 				return;
@@ -74,7 +77,7 @@ public class CommandClearChat extends ChatCommand {
 				}
 				int deletedMessageCount = t.size();
 
-				if (containsMention) {
+				if (containsMember) {
 					List<Message> memberMessages = getMemberMessages(t, numMessages, member);
 					deletedMessageCount = memberMessages.size();
 					deleteMessages(memberMessages);
@@ -114,7 +117,7 @@ public class CommandClearChat extends ChatCommand {
 	}
 
 	private int getInputtedNumber(boolean containsMention) {
-		int num = 0;
+		int num = -1;
 		try {
 			if (!containsMention) {
 				num = Integer.parseInt(commandParams[1]);
@@ -122,25 +125,9 @@ public class CommandClearChat extends ChatCommand {
 				num = Integer.parseInt(commandParams[2]);
 			}
 		} catch (NumberFormatException E) {
-			sendMessage(commandFormat());
 		}
 
 		return num;
-	}
-
-	private Member getMember() {
-		Member member = null;
-		if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			member = event.getMessage().getMentionedMembers().get(0);
-		} else if (commandParams.length > 1) { // Else check if entered a user ID
-			// Check if entered valid long ID
-			try {
-				member = event.getGuild().getMemberById(commandParams[1]);
-			} catch (NumberFormatException e) {
-			}
-		}
-
-		return member;
 	}
 
 	@Override

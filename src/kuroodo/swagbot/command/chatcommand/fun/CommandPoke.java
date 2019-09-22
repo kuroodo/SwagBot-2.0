@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandPoke extends ChatCommand {
@@ -17,13 +18,13 @@ public class CommandPoke extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
-
-		if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			sendMessage(event.getAuthor().getAsMention() + " pokes "
-					+ event.getMessage().getMentionedUsers().get(0).getAsMention());
-		} else {
+		Member member = findParamsMember();
+		if (member == null) {
 			sendMessage("Please mention a valid user");
+			return;
 		}
+
+		sendMessage(event.getAuthor().getAsMention() + " pokes " + member.getAsMention());
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandLaser extends ChatCommand {
@@ -19,12 +20,13 @@ public class CommandLaser extends ChatCommand {
 			return;
 		}
 
-		if (!event.getMessage().getMentionedUsers().isEmpty()) {
-			sendMessage(event.getAuthor().getAsMention() + " points a laser at "
-					+ event.getMessage().getMentionedUsers().get(0).getAsMention() + "'s eye");
-		} else {
+		Member member = findParamsMember();
+		if (member == null) {
 			sendMessage("Please mention a valid user");
+			return;
 		}
+
+		sendMessage(event.getAuthor().getAsMention() + " points a laser at " + member.getAsMention() + "'s eye");
 	}
 
 	@Override

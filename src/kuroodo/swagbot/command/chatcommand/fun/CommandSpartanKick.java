@@ -19,7 +19,11 @@ public class CommandSpartanKick extends ChatCommand {
 			return;
 		}
 
-		Member member = event.getMessage().getMentionedMembers().get(0);
+		Member member = findParamsMember();
+		if (member == null) {
+			return;
+		}
+		
 		if (!member.getVoiceState().inVoiceChannel()) {
 			return;
 		}

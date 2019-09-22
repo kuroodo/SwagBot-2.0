@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.time.format.DateTimeFormatter;
 
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -23,24 +24,22 @@ public class CommandUserInfo extends ChatCommand {
 			return;
 		}
 
-		// If no parameters
+		Member member = findParamsMember();
+		// If no parameters get the message author
 		if (commandParams.length == 1) {
-			sendEmbed(makeEmbed(event.getMember()));
-		} else if (!event.getMessage().getMentionedMembers().isEmpty()) {
-			sendEmbed(makeEmbed(event.getMessage().getMentionedMembers().get(0)));
-		} else { // Else check if entered a user ID
-			Member member = null;
-			// Check if entered valid long ID
-			try {
-				member = event.getGuild().getMemberById(commandParams[1]);
-			} catch (NumberFormatException e) {
-			}
-			if (member != null) {
-				sendEmbed(makeEmbed(member));
-			} else {
-				sendMessage("Please mention a valid user");
-			}
+			member = event.getMember();
 		}
+
+		if (member == null) {
+			sendMessage("Please mention a valid user");
+			return;
+		}
+		// Delete the command message if permissions
+		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
+			event.getMessage().delete().queue();
+		}
+
+		sendEmbed(makeEmbed(member));
 	}
 
 	private EmbedBuilder makeEmbed(Member member) {

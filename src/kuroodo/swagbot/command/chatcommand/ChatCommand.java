@@ -118,6 +118,21 @@ public abstract class ChatCommand extends Command {
 		return true;
 	}
 
+	protected Member findParamsMember() {
+		Member member = null;
+		if (!event.getMessage().getMentionedUsers().isEmpty()) {
+			member = event.getMessage().getMentionedMembers().get(0);
+		} else if (commandParams.length > 1) { // Else check if entered a user ID
+			// Check if entered valid long ID
+			try {
+				member = event.getGuild().getMemberById(commandParams[1]);
+			} catch (NumberFormatException e) {
+			}
+		}
+
+		return member;
+	}
+
 	protected String permissionsToString() {
 		String str = "";
 		for (Permission perm : requiredPermissions) {
