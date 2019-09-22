@@ -132,9 +132,10 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcome ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText("Welcome message has been " + result
-					+ ". Don't forget to set a welcome message if you haven't already"));
+			String result = settings.enableWelcome
+					? "enabled. Don't forget to set a welcome message if you haven't already"
+					: "disabled";
+			sendMessage(BotUtility.codifyText("Welcome message has been " + result));
 		}
 	}
 
@@ -194,9 +195,10 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcomeRole ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText(
-					"Welcome role has been " + result + ". Don't forget to set a welcome role if you haven't already"));
+			String result = settings.enableWelcomeRole
+					? "enabled. Don't forget to set a welcome role if you haven't already"
+					: "disabled";
+			sendMessage(BotUtility.codifyText("Welcome role has been " + result));
 		}
 	}
 
@@ -345,8 +347,7 @@ public class CommandSetup extends ChatCommand {
 			}
 
 			String result = settings.spartankick ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText("Welcome message has been " + result
-					+ ". Don't forget to set a welcome message if you haven't already"));
+			sendMessage(BotUtility.codifyText("Welcome message has been " + result + "."));
 		}
 	}
 
