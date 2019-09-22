@@ -17,6 +17,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -59,6 +60,7 @@ public class AudioPlayer extends ListenerAdapter {
 
 		String[] params = event.getMessage().getContentRaw().split(" ", 2);
 		String command = params[0];
+		boolean isAudioCommand = true;
 
 		// play
 		if (command.equals(prefix + AudioKeys.KEY_PLAY) && params.length == 2) {
@@ -104,8 +106,13 @@ public class AudioPlayer extends ListenerAdapter {
 			message = message + " (" + trackTime + ")";
 
 			BotUtility.sendGuildMessage(settings.guild, event.getChannel(), message);
+		} else {
+			isAudioCommand = false;
 		}
 
+		if (isAudioCommand && BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(settings.guild))) {
+			event.getMessage().delete().queue();
+		}
 		super.onGuildMessageReceived(event);
 	}
 
