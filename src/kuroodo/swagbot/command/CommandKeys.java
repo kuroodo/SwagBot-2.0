@@ -10,6 +10,7 @@ public class CommandKeys {
 	public static final String COMMAND_KICK = "kick";
 	public static final String COMMAND_MUTE = "mute";
 	public static final String COMMAND_UNMUTE = "unmute";
+	public static final String COMMAND_CLEARCHAT = "clearchat";
 
 	// FUN commands
 	public static final String COMMAND_FLIPCOIN = "flipcoin";

@@ -14,6 +14,7 @@ import kuroodo.swagbot.command.chatcommand.fun.CommandSpartanKick;
 import kuroodo.swagbot.command.chatcommand.fun.CommandUserInfo;
 import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandBan;
+import kuroodo.swagbot.command.chatcommand.moderation.CommandClearChat;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandKick;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandMute;
 import kuroodo.swagbot.command.chatcommand.moderation.CommandUnmute;
@@ -35,6 +36,8 @@ public class CommandRegistry {
 			return new CommandMute();
 		case CommandKeys.COMMAND_UNMUTE:
 			return new CommandUnmute();
+		case CommandKeys.COMMAND_CLEARCHAT:
+			return new CommandClearChat();
 
 		// FUN commands
 		case CommandKeys.COMMAND_FLIPCOIN:
