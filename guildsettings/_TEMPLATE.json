@@ -9,6 +9,8 @@
 	"logchannel": "0",
 	"muterole": "0",	
 	"mutechannel": "0",
+	"musicchannel": "0",
+	"spartankick": "false",
 	"rolepermission0": "0",
 	"rolepermission1": "0",
 	"rolepermission2": "0"

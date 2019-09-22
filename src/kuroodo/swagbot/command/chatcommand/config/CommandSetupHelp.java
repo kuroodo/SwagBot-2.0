@@ -83,6 +83,10 @@ public class CommandSetupHelp extends ChatCommand {
 		eb.addField("muterole",
 				"A voice channel where it instantly gives members the muterole if manually placed in. Accepted values: A VOICE CHANNEL ID",
 				true);
+		eb.addField("musicchannel",
+				"A channel where the bot can play music with the play command. See the help file for more info. Accepted values: A VOICE CHANNEL ID",
+				true);
+		eb.addField("spartankick", "Enable or disable the spartankick command. Accepted values: true or false", true);
 		eb.addField("rolepermission0",
 				"Define what role has Admin control/Access to all commands. Roles with Admin permissions inherit this ability by default. Therefore use this command if a role does not have Admin permissions. "
 						+ "Accepted values: A ROLE ID",
@@ -152,6 +156,17 @@ public class CommandSetupHelp extends ChatCommand {
 		} else {
 			eb.addField("Mute Channel", "None", true);
 		}
+
+		// Musc Channel
+		vChannel = guild.getVoiceChannelById(settings.muteChannel);
+		if (vChannel != null) {
+			eb.addField("Music Channel", vChannel.getName(), true);
+		} else {
+			eb.addField("Music Channel", "None", true);
+		}
+
+		// Enable Spartankick
+		eb.addField("Enable Spartankick Command", "" + settings.spartankick, true);
 
 		// Permission 0
 		role = guild.getRoleById(settings.rolePermission0);

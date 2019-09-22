@@ -26,6 +26,7 @@ public class GuildSettingsReader {
 			settings.enableWelcome = Boolean.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WELCOME).asString());
 			settings.enableWelcomeRole = Boolean
 					.parseBoolean(object.get(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE).asString());
+			settings.spartankick = Boolean.parseBoolean(object.get(JSONKeys.SETTINGS_SPARTANKICK).asString());
 
 			// Strings
 			settings.commandPrefix = object.get(JSONKeys.SETTINGS_COMMAND_PREFIX).asString();
@@ -37,6 +38,7 @@ public class GuildSettingsReader {
 			settings.logChannel = Long.parseLong(object.get(JSONKeys.SETTINGS_LOG_CHANNEL).asString());
 			settings.muteRole = Long.parseLong(object.get(JSONKeys.SETTINGS_MUTE_ROLE).asString());
 			settings.muteChannel = Long.parseLong(object.get(JSONKeys.SETTINGS_MUTE_CHANNEL).asString());
+			settings.muteChannel = Long.parseLong(object.get(JSONKeys.SETTINGS_MUSIC_CHANNEL).asString());
 			settings.rolePermission0 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION0).asString());
 			settings.rolePermission1 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION1).asString());
 			settings.rolePermission2 = Long.parseLong(object.get(JSONKeys.SETTINGS_ROLE_PERMISSION2).asString());

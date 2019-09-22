@@ -46,7 +46,7 @@ public class GuildSettingsWriter {
 			// Read and store the contents of the file into a JsonObject
 			reader = new BufferedReader(new FileReader(settingsFile));
 			JsonObject object = Json.parse(reader).asObject();
-			
+
 			object.set(JSONKeys.SETTINGS_GUILD_ID, Long.toString(guild.guildID));
 			object.set(JSONKeys.SETTINGS_COMMAND_PREFIX, guild.commandPrefix);
 			object.set(JSONKeys.SETTINGS_ENABLE_WELCOME, Boolean.toString(guild.enableWelcome));
@@ -57,6 +57,8 @@ public class GuildSettingsWriter {
 			object.set(JSONKeys.SETTINGS_LOG_CHANNEL, Long.toString(guild.logChannel));
 			object.set(JSONKeys.SETTINGS_MUTE_ROLE, Long.toString(guild.muteRole));
 			object.set(JSONKeys.SETTINGS_MUTE_CHANNEL, Long.toString(guild.muteChannel));
+			object.set(JSONKeys.SETTINGS_MUSIC_CHANNEL, Long.toString(guild.musicchannel));
+			object.set(JSONKeys.SETTINGS_SPARTANKICK, Boolean.toString(guild.spartankick));
 			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION0, Long.toString(guild.rolePermission0));
 			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION1, Long.toString(guild.rolePermission1));
 			object.set(JSONKeys.SETTINGS_ROLE_PERMISSION2, Long.toString(guild.rolePermission2));

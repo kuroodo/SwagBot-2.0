@@ -19,6 +19,8 @@ public class JSONKeys {
 	public static final String SETTINGS_LOG_CHANNEL = "logchannel";
 	public static final String SETTINGS_MUTE_ROLE = "muterole";
 	public static final String SETTINGS_MUTE_CHANNEL = "mutechannel";
+	public static final String SETTINGS_MUSIC_CHANNEL = "musicchannel";
+	public static final String SETTINGS_SPARTANKICK = "spartankick";
 	public static final String SETTINGS_ROLE_PERMISSION0 = "rolepermission0";
 	public static final String SETTINGS_ROLE_PERMISSION1 = "rolepermission1";
 	public static final String SETTINGS_ROLE_PERMISSION2 = "rolepermission2";

@@ -15,6 +15,8 @@ public class GuildSettings {
 	public long logChannel = 0;
 	public long muteRole = 0;
 	public long muteChannel = 0;
+	public long musicchannel = 0;
+	public boolean spartankick = false;
 	public long rolePermission0 = 0;
 	public long rolePermission1 = 0;
 	public long rolePermission2 = 0;
@@ -29,8 +31,9 @@ public class GuildSettings {
 	}
 
 	public GuildSettings(Guild guild, long guildID, String commandPrefix, boolean enableWelcome, long welcomeChannel,
-			String welcomeMessage, boolean enableWelcomeRole, long welcomeRole, long logChannel, long muteRole, long muteChannel,
-			long rolePermission0, long rolePermission1, long rolePermission2) {
+			String welcomeMessage, boolean enableWelcomeRole, long welcomeRole, long logChannel, long muteRole,
+			long muteChannel, long musicChannel, boolean spartankick, long rolePermission0, long rolePermission1,
+			long rolePermission2) {
 		this.guild = guild;
 		this.guildID = guildID;
 		this.commandPrefix = commandPrefix;
@@ -42,6 +45,8 @@ public class GuildSettings {
 		this.logChannel = logChannel;
 		this.muteRole = muteRole;
 		this.muteChannel = muteChannel;
+		this.musicchannel = musicChannel;
+		this.spartankick = spartankick;
 		this.rolePermission0 = rolePermission0;
 		this.rolePermission1 = rolePermission1;
 		this.rolePermission2 = rolePermission2;

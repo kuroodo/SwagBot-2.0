@@ -305,6 +305,51 @@ public class CommandSetup extends ChatCommand {
 		}
 	}
 
+	private void updateMusicChannel() {
+		if (commandParams[2].equals("-1")) {
+			settings.musicchannel = 0;
+			sendMessage(BotUtility.codifyText("Music channel removed from configuration"));
+		} else {
+			long channelID;
+			try {
+				channelID = Long.parseLong(commandParams[2]);
+			} catch (NumberFormatException | ParseException e) {
+				sendFormatErrorMessage();
+				return;
+			}
+
+			Guild guild = settings.guild;
+			VoiceChannel channel = guild.getVoiceChannelById(channelID);
+			if (channel != null) {
+				settings.musicchannel = channelID;
+			} else {
+				printVoiceChannelErrorMessage();
+				return;
+			}
+
+			sendMessage(BotUtility.codifyText("Music channel has been set to " + channel.getName()));
+		}
+	}
+
+	private void updateEnableSpartankick() {
+		if (commandParams[2].equals("-1")) {
+			settings.spartankick = false;
+			sendMessage(BotUtility.codifyText("Spartankick command has been disabled."));
+		} else {
+
+			try {
+				settings.spartankick = Boolean.parseBoolean(commandParams[2]);
+			} catch (NumberFormatException | ParseException e) {
+				sendFormatErrorMessage();
+				return;
+			}
+
+			String result = settings.spartankick ? "enabled" : "disabled";
+			sendMessage(BotUtility.codifyText("Welcome message has been " + result
+					+ ". Don't forget to set a welcome message if you haven't already"));
+		}
+	}
+
 	private void updatePermission0() {
 		if (commandParams[2].equals("-1")) {
 			settings.rolePermission0 = 0;
