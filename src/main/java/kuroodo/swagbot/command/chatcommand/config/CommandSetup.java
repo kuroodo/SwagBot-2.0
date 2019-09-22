@@ -348,7 +348,7 @@ public class CommandSetup extends ChatCommand {
 			}
 
 			String result = settings.spartankick ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText("Welcome message has been " + result + "."));
+			sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
 		}
 	}
 
