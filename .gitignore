@@ -55,3 +55,4 @@ local.properties
 .worksheet
 
 libraries/Commons IO/docs/
+/.gradle/

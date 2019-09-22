@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot 2.0/SwagBot 2.0/SwagBot 2.0/libraries/JDA-4.0.0_46-withDependencies.jar" sourcepath="C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot 2.0/SwagBot 2.0/SwagBot 2.0/libraries/JDA-4.0.0_46-sources.jar">
+	<classpathentry kind="src" output="bin/main" path="src/main/java">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot%202.0/SwagBot%202.0/SwagBot%202.0/libraries/JDA-4.0.0_46-javadoc.jar!/"/>
+			<attribute name="gradle_scope" value="main"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot 2.0/SwagBot 2.0/SwagBot 2.0/libraries/Commons IO/commons-io-2.6.jar" sourcepath="C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot 2.0/SwagBot 2.0/SwagBot 2.0/libraries/Commons IO/commons-io-2.6-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot%202.0/SwagBot%202.0/SwagBot%202.0/libraries/Commons%20IO/commons-io-2.6-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/kuroo/Desktop/Programming/DiscordDevelopment/JDA/SwagBot 2.0/SwagBot 2.0/SwagBot 2.0/libraries/minimal-json-0.9.4.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+	<classpathentry kind="output" path="bin/default"/>
 </classpath>
