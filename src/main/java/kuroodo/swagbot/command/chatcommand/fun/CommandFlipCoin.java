@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 
 import java.util.Random;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
@@ -50,6 +51,11 @@ public class CommandFlipCoin extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "!flipcoin";
+		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
 	}
 }

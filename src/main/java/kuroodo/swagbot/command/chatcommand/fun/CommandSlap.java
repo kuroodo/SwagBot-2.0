@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.fun;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
@@ -39,6 +40,12 @@ public class CommandSlap extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "slap @user";
+		return commandPrefix + CommandKeys.COMMAND_SLAP + " @user";
 	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_SLAP + " @Person#1234";
+	}
+
 }

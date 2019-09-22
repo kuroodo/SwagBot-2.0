@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.config;
 import com.eclipsesource.json.ParseException;
 
 import kuroodo.swagbot.SwagBot;
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -460,11 +461,17 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Use this command to set up your server configuration with the bot. Use !setuphelp for more information, and information keys and values.";
+		return "Use this command to set up your server configuration with the bot.\nUse " + commandPrefix
+				+ CommandKeys.COMMAND_SETUPHELP + " for more information, and for information about keys and values.";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "Usage: " + commandPrefix + "setup <key> <value>";
+		return "Usage: " + commandPrefix + CommandKeys.COMMAND_SETUP + " <key> <value>";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_SETUP + " mutechannel 110614880465227776";
 	}
 }

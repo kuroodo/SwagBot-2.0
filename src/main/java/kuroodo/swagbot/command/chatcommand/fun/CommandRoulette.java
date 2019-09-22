@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
@@ -35,7 +36,7 @@ public class CommandRoulette extends ChatCommand {
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
 		}
-		
+
 		// Create death role if doesn't already exist
 		createDeathRole();
 		playRoulette();
@@ -130,6 +131,11 @@ public class CommandRoulette extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "roulette";
+		return commandPrefix + CommandKeys.COMMAND_ROULETTE;
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_ROULETTE;
 	}
 }

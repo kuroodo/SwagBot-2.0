@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.config;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -204,12 +205,19 @@ public class CommandSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Insight on how to set up and configure the bot. Use" + commandPrefix + "setup to modify these values";
+		return "Insight on how to set up and configure the bot. Use " + commandPrefix + "setup to modify these values";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "To get current key values:" + commandPrefix
-				+ "setuphelp , To get information on each key and it's values: " + commandPrefix + "setuphelp keys";
+		return "To get current key values: " + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ "\nTo get information on a key and it's values: " + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ " keys";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_SETUPHELP + "\n" + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ " keys";
 	}
 }

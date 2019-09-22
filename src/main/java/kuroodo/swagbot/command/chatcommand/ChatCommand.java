@@ -41,7 +41,12 @@ public abstract class ChatCommand extends Command {
 
 	@Override
 	public String commandFormat() {
-		return "ERROR: Command not found or no format";
+		return "";
+	}
+	
+	@Override
+	public String commandUsageExample() {
+		return "";
 	}
 
 	protected void sendMessage(String message) {

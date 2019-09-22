@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
@@ -142,6 +143,11 @@ public class CommandClearChat extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "clearchat <user> <amount> OR " + commandPrefix + "clearchat <armound>";
+		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <user> <amount>\n" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <amount>";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " @Person#1234 25\n" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " 25";
 	}
 }

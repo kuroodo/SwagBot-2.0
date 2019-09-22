@@ -2,6 +2,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 
 import java.awt.Color;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -64,7 +65,14 @@ public class CommandAvatar extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "avatar or " + commandPrefix + "avatar @user";
+		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
+				+ " @user";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
+				+ " @Person#1234";
 	}
 
 }

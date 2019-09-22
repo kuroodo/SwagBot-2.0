@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -38,7 +39,7 @@ public class CommandKick extends ChatCommand {
 		} else {
 			sendMessage("This person is too important to be removed");
 		}
-		
+
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
@@ -82,6 +83,12 @@ public class CommandKick extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "kick @user <reason>(optional)";
+		return commandPrefix + CommandKeys.COMMAND_KICK + " @user <reason>(optional)";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234 For disturbing the peace\n"
+				+ commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234";
 	}
 }

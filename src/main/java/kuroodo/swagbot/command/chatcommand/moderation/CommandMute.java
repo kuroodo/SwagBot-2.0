@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.moderation;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -136,6 +137,12 @@ public class CommandMute extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "mute @user <duration MINUTES>(optional)";
+		return commandPrefix + CommandKeys.COMMAND_MUTE + " @user <duration MINUTES>(optional)";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_MUTE + " @Person#1234 5 For disturbing the peace\n" + commandPrefix
+				+ CommandKeys.COMMAND_MUTE + " @Person#1234";
 	}
 }

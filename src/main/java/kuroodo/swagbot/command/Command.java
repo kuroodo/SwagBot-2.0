@@ -32,4 +32,6 @@ public abstract class Command {
 	 * Returns a tooltip of the proper command format
 	 */
 	public abstract String commandFormat();
+	
+	public abstract String commandUsageExample();
 }

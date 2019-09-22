@@ -1,6 +1,7 @@
 package kuroodo.swagbot.command.chatcommand.help;
 
 import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -54,7 +55,7 @@ public class CommandHelp extends ChatCommand {
 		eb.setTitle(commandName);
 		eb.setDescription(command.commandDescription());
 		eb.addField("Usage", command.commandFormat(), false);
-
+		eb.addField("Example", command.commandUsageExample(), false);
 		return eb;
 	}
 
@@ -65,7 +66,12 @@ public class CommandHelp extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "For general help, " + commandPrefix + "help , for help with a specific command: " + commandPrefix
-				+ "help <commandname>";
+		return "For general help, " + commandPrefix + CommandKeys.COMMAND_HELP + "\nFor help with a specific command: "
+				+ commandPrefix + CommandKeys.COMMAND_HELP + "<commandname>";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_HELP + " magicball";
 	}
 }

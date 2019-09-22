@@ -10,6 +10,7 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.ParseException;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.utils.BotUtility;
@@ -99,7 +100,13 @@ public class CommandMagicBall extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "magicball QUESTION , or " + BotUtility.getSelfUser().getAsMention() + " QUESTION";
+		return commandPrefix + CommandKeys.COMMAND_MAGICBALL + " QUESTION\n"
+				+ BotUtility.getSelfUser().getAsMention() + " QUESTION";
 	}
 
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_MAGICBALL + " What is the meaning of life?\n"
+				+ BotUtility.getSelfUser().getAsMention() + " Will my crush ask me out?";
+	}
 }

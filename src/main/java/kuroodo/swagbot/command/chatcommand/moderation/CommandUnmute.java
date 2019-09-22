@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
@@ -70,6 +71,11 @@ public class CommandUnmute extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "unmute @user";
+		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @user";
+	}
+	
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @Person#1234";
 	}
 }

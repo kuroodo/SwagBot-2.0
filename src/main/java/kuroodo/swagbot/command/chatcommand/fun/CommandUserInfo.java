@@ -3,6 +3,7 @@ package kuroodo.swagbot.command.chatcommand.fun;
 import java.awt.Color;
 import java.time.format.DateTimeFormatter;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -74,7 +75,13 @@ public class CommandUserInfo extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "To get your information: " + commandPrefix + "userinfo , To get a users information:  " + commandPrefix
-				+ "userinfo @user";
+		return "To get your information: " + commandPrefix + CommandKeys.COMMAND_USERINFO
+				+ "\nTo get a users information:  " + commandPrefix + CommandKeys.COMMAND_USERINFO + " @user";
+	}
+
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_USERINFO + "\n" + commandPrefix
+				+ CommandKeys.COMMAND_USERINFO + " @Person#1234";
 	}
 }

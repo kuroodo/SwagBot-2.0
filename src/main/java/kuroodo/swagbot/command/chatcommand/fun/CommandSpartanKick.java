@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.fun;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -23,7 +24,7 @@ public class CommandSpartanKick extends ChatCommand {
 		if (member == null) {
 			return;
 		}
-		
+
 		if (!member.getVoiceState().inVoiceChannel()) {
 			return;
 		}
@@ -57,6 +58,11 @@ public class CommandSpartanKick extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "spartankick @user";
+		return commandPrefix + CommandKeys.COMMAND_SPARTANKICK + " @user";
+	}
+	
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_SPARTANKICK + " @Person#1234";
 	}
 }

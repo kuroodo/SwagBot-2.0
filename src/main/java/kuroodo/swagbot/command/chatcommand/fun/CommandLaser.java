@@ -1,5 +1,6 @@
 package kuroodo.swagbot.command.chatcommand.fun;
 
+import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
@@ -40,6 +41,11 @@ public class CommandLaser extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + "laser @user";
+		return commandPrefix + CommandKeys.COMMAND_LASER + " @user";
+	}
+	
+	@Override
+	public String commandUsageExample() {
+		return commandPrefix + CommandKeys.COMMAND_LASER + " @Person#1234";
 	}
 }
