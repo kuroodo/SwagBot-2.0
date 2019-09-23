@@ -47,8 +47,14 @@ public class ChatListener extends ListenerAdapter {
 					commandName = commandParams[1];
 					// Remove bot mention
 					commandParams = BotUtility.removeElement(commandParams, 0);
-					// Set to magicball command
-					commandName = CommandKeys.COMMAND_MAGICBALL;
+
+					// If not help or setuphelp command
+					if (!commandName.equals(CommandKeys.COMMAND_HELP)
+							&& !commandName.equals(CommandKeys.COMMAND_SETUPHELP)) {
+						
+						// Set to magicball command
+						commandName = CommandKeys.COMMAND_MAGICBALL;
+					}
 				} else {// If just a blank mention, do magicball
 					commandName = CommandKeys.COMMAND_MAGICBALL;
 				}
