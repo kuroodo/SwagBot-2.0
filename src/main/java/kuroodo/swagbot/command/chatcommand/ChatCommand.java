@@ -106,7 +106,7 @@ public abstract class ChatCommand extends Command {
 	protected boolean memberHasPermissions(Member member) {
 		// TODO: TEST THIS
 		// If not owner or admin
-		if (!member.isOwner() || !member.hasPermission(net.dv8tion.jda.api.Permission.ADMINISTRATOR)) {
+		if (!member.isOwner() && !member.hasPermission(Permission.ADMINISTRATOR)) {
 			GuildSettings settings = GuildManager.getGuild(member.getGuild());
 			if (isPermission0 || isPermission1 || isPermission2) {
 
