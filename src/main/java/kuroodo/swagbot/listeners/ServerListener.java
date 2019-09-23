@@ -3,6 +3,8 @@ package kuroodo.swagbot.listeners;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
+import kuroodo.swagbot.command.CommandKeys;
+import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.json.GuildSettingsReader;
@@ -14,6 +16,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Guild.Ban;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -69,6 +72,7 @@ public class ServerListener extends ListenerAdapter {
 		}
 
 		GuildManager.addGuild(settings);
+		sendBotJoinMessage(guild);
 	}
 
 	// Called when bot leaves guild
@@ -471,5 +475,33 @@ public class ServerListener extends ListenerAdapter {
 		if (role != null) {
 			BotUtility.addRoleToMember(settings.guild, role, member);
 		}
+	}
+
+	private void sendBotJoinMessage(Guild guild) {
+		EmbedBuilder eb = new EmbedBuilder();
+		User self = BotUtility.getSelfUser();
+
+		eb.setTitle("Introductions");
+		eb.setDescription("Hello, I am [" + BotConfig.BOTNAME
+				+ "](https://github.com/kuroodo/SwagBot-2.0). I was just added to your server: " + guild.getName());
+
+		eb.addField("Setup", "To begin setting up the bot, use the " + CommandKeys.COMMAND_SETUPHELP + " and "
+				+ CommandKeys.COMMAND_SETUP
+				+ " commands.\nThe default command prefix should be !, therefore use !setuphelp.\nIn an emergency, mention the bot with help or setuphelp, i.e "
+				+ self.getAsMention() + " help or " + self.getAsMention() + " setuphelp", true);
+
+		eb.addField("Manual",
+				"Be sure to [read the manual for more info](https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt)",
+				true);
+		eb.setFooter("Bot join date: " + BotUtility.getCurrentDate());
+
+		guild.getOwner().getUser().openPrivateChannel().queue(new Consumer<PrivateChannel>() {
+
+			@Override
+			public void accept(PrivateChannel t) {
+				t.sendMessage(eb.build()).queue();
+			}
+
+		});
 	}
 }
