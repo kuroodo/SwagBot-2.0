@@ -4,13 +4,18 @@ Source Code: https://github.com/kuroodo/SwagBot-2.0
 
 Default/Initial Command Prefix: !
 <prefix> = Whatever prefix is set up for the server. Default prefix is !. Therefore flipcoin would be used as !flipcoin
+If you forget the prefix, just mention the bot with the setuphelp command, I.E: @bot setuphelp
 
-Be sure to at least give the bot the following Permissions: Embed Links and Send Messages
+Required Permissions for base functions: Embed Links and Send Messages
+IT IS RECOMMENDED TO PUT THE BOT'S ROLE ABOVE ALL OTHER ROLES, OR AT LEAST JUST BELOW THE ADMIN ROLES
 
 ---------
 SETUP
 ---------
 Set up the bot using the setuphelp (i.e !setuphelp) command.
+
+It is up to you to decide what the mute role does (i.e what permissions it revokes/grants). The bot only gives them the role.
+It is up to you to decide what the mute role does.
 
 [Keys]
 	1. commandprefix
@@ -40,16 +45,29 @@ Set up the bot using the setuphelp (i.e !setuphelp) command.
 	9. mutechannel
 		- A voice channel where it instantly gives members the muterole if manually placed in.
 			Accepted values: A VOICE CHANNEL ID
-	10. rolepermission0
+	10. musicchannel
+		- A voice channel where the bot will play music. If value not set, bot joins the channel that the command issuer is in.
+			Accepted values: A VOICE CHANNEL ID
+	11. spartankick
+		- SpartanKick is a fun command where the bot moves a user around in voice channels. Easily abused. Use this key to enable/disable the command. Leave voice for a few seconds and then return if command is spammed.
+			Accepted values: true or false
+	12. permission0
 		- Define what role has Admin control/Access to all commands. Roles with Admin permissions inherit this ability by default. Therefore use this command if a role does not have Admin permissions.     
 			Accepted values: A ROLE ID
-	11. rolepermission1
-		- Define what role has Moderator-level of control. Access to Ban, clearchat, and silencing commands. Commands do not affect admins.
+	13. permission1
+		- Define what role has Moderator-level of control. Access to Ban, clearchat, and muting commands. Commands do not affect admins.
 			Accepted values: A ROLE ID
-	12. rolepermission2
+	14. permission2
 		- Extra permissions role that has access to silencing commands
 			Accepted values: A ROLE ID
 
+[Permission Levels]
+	Permission0:
+		- All commands + setup commands
+	Permission1:
+		- Ban, ClearChat, Kick, Mute, Unmute
+	Permission2:
+	- Mute, Unmute
 
 ---------
 COMMANDS
@@ -61,12 +79,67 @@ COMMANDS
 		Usage: <prefix>help <commandname>
 
 [FUN COMMANDS]
-	1. flipcoin	- Flips a coin and see if it lands on heads or tails
+	1. avatar - Get the avatar of yourself or a user
+		Usage: <prefix>avatar
+		Usage: <prefix>avatar @user
+	2. flipcoin	- Flip a coin between heads or tails
 		Usage: <prefix>flipcoin	
+	3. laser - Point a laser at someones eye
+		Usage: <prefix>laser @user
+	4. magicball - Ask the magic ball, or the bot, for advice or words of wisdom
+		Usage: <prefix>magicball QUESTION
+		Usage: @bot QUESTION
+	5. poke - Poke a user
+		Usage: <prefix>poke @user
+	6. roulette - Test out your luck in a game of roulette
+		Usage: <prefix>roulette
+	7. slap - Slap a user
+		Usage: <prefix>slap @user	
+	8. spartankick - Spartankick a user across voice channels, only if they are in a voicechannel
+		Usage: <prefix>spartankick @user	
+	9. avatar - Get information about a user or yourself
+		Usage: <prefix>userinfo
+		Usage: <prefix>userinfo @user
+	
+[Lava Player]
+	1. play - Play an audio track or playlist (such as youtube playlist)
+		Usage: <prefix>play URL
+	2. playrandom - Play an audio track or playlist (such as youtube playlist)
+		Usage: <prefix>playrandom playlistURL
+	3. pause - Pause the current audio track
+		Usage: <prefix>pause
+	4. rause - Resume playing the current audio track
+		Usage: <prefix>resume
+	5. stop - Stop playing all tracks; clears the entire queue
+		Usage: <prefix>stop
+	6. skip - Skip the current track and play teh next track in the queue
+		usage: <prefix>skip
+	7. trackinfo - Get information about the current track
+		usage: <prefix>trackinfo
 		
+[Moderation]	
+	1. ban - Ban a member from the server. Enter 0 days for permanent ban
+		Usage: <prefix>ban @user <duration DAYS> <reason>
+		Usage: <prefix>ban @user <duration DAYS>
+	2. kick - Kick a member from the server.
+		Usage: <prefix>kick @user <reason>
+		Usage: <prefix>kick @user
+	3. mute - Give a member the mute role. Specify mute role with setup command.
+		Usage: <prefix>mute @user <duration minutes> <reason>
+		Usage: <prefix>mute @user <duration minutes>
+		Usage: <prefix>mute @user <reason>
+		Usage: <prefix>mute @user
+	4. umute - Remove the mute role from a member with the mute role.
+		Usage: <prefix>mute @user
+	5. clearchat - Delete a MAXIMUM of 25 messages, either general messages or from a specific user
+		Usage: <prefix>clearchat @user <amount>
+		Usage: <prefix>clearchat <amount>
+
 [CONFIG]
 	1. setup - Configure a setting related to how the bot interacts with your guild. Use the setuphelp command for more info
 		Usage: <prefix>setup <key> <value>
+		Usage: Usage: @botmention instead of <prefix>
+		
 		Keys: 
 			commandprefix		Value = Text with no spaces
 			enablewelcome		Value = true or false
@@ -76,11 +149,14 @@ COMMANDS
 			logchannel			Value = Text Channel ID
 			muterole			Value = Role ID
 			mutechannel			Value = Voice Channel ID
-			rolepermission0		Value = Role ID
-			rolepermission1		Value = Role ID
-			rolepermission2		Value = Role ID
+			musicchannel		Value = Voice Channel ID
+			spartankick			Value = true or false
+			permission0			Value = Role ID
+			permission1			Value = Role ID
+			permission2			Value = Role ID
 	2. setuphelp - Get current configured values, or description of each key
 		Usage: <prefix>setuphelp
 		Usage: <prefix>setuphelp key
+		Usage: @botmention instead of <prefix>
 
 			
