@@ -180,8 +180,8 @@ public class CommandSetupHelp extends ChatCommand {
 			eb.addField("Mute Channel", "None", true);
 		}
 
-		// Musc Channel
-		vChannel = guild.getVoiceChannelById(settings.muteChannel);
+		// Music Channel
+		vChannel = guild.getVoiceChannelById(settings.musicchannel);
 		if (vChannel != null) {
 			eb.addField("Music Channel", vChannel.getName(), true);
 		} else {
