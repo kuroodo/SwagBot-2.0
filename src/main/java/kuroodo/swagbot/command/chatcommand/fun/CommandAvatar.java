@@ -60,7 +60,7 @@ public class CommandAvatar extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Get the avatar of a user";
+		return "Get the avatar of yourself or a user";
 	}
 
 	@Override
