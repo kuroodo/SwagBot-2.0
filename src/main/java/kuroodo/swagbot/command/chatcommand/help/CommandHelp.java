@@ -19,7 +19,6 @@ import kuroodo.swagbot.command.Command;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
-import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -48,7 +47,6 @@ public class CommandHelp extends ChatCommand {
 			eb = getCommandInformation();
 		}
 		if (eb != null) {
-			eb.setColor(BotUtility.EMBED_USER_COMMANDS);
 			sendEmbed(eb);
 		}
 	}
