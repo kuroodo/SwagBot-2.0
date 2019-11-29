@@ -56,7 +56,8 @@ public class CommandBan extends PunishmentCommand {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		String reason = getReason(3);
 		int days = getDuration();
-
+		if (days == -1)
+			return;
 		try {
 			// Ban member
 			member.ban(days, reason).queue();
@@ -100,6 +101,7 @@ public class CommandBan extends PunishmentCommand {
 				duration = Integer.parseInt(commandParams[2]);
 			} catch (NumberFormatException e) {
 				sendMessage("ERROR: Ban duration is incorrect. Please enter a NUMBER of DAYS or 0 for permanent");
+				duration = -1;
 			}
 		}
 
