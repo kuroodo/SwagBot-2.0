@@ -15,13 +15,18 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.guild.GuildManager;
+import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
+import kuroodo.swagbot.utils.Logger;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -63,8 +68,9 @@ public class CommandClearChat extends ChatCommand {
 		boolean containsMember = !event.getMessage().getMentionedMembers().isEmpty() || member != null ? true : false;
 		int numMessages = getInputtedNumber(containsMember);
 
+		// Check if amount of messages to delete is valid
 		if (numMessages > MAX_MESSAGES || numMessages == 0) {
-			sendMessage("ERROR: Can only delete 1-25 messages");
+			sendMessage(BotUtility.quotifyText("ERROR: Can only delete 1-25 messages"));
 			return;
 		} else if (numMessages == -1) {
 			sendMessage(commandFormat());
@@ -73,7 +79,7 @@ public class CommandClearChat extends ChatCommand {
 
 		if (containsMember) {
 			if (member == null) {
-				sendMessage("ERROR: Please mention a valid user");
+				sendMessage(BotUtility.quotifyText("ERROR: Please mention a valid user"));
 				return;
 			}
 			// Gather messages from the channel
@@ -85,7 +91,7 @@ public class CommandClearChat extends ChatCommand {
 		}
 
 		if (restAction == null) {
-			sendMessage("Error: Something went wrong.");
+			sendMessage(BotUtility.quotifyText("Error: Something went wrong."));
 			return;
 		}
 
@@ -94,7 +100,7 @@ public class CommandClearChat extends ChatCommand {
 			@Override
 			public void accept(List<Message> t) {
 				if (t.isEmpty()) {
-					sendMessage("No messages found.");
+					sendMessage(BotUtility.quotifyText("No messages found."));
 					return;
 				}
 				int deletedMessageCount = t.size();
@@ -107,6 +113,7 @@ public class CommandClearChat extends ChatCommand {
 					deleteMessages(t);
 				}
 				sendMessage(BotUtility.boldifyText("Deleting " + deletedMessageCount + " messages"));
+				logDeletion(GuildManager.getGuild(event.getGuild()), numMessages, member);
 			}
 		});
 
@@ -114,6 +121,23 @@ public class CommandClearChat extends ChatCommand {
 
 	private void deleteMessages(List<Message> messages) {
 		event.getChannel().purgeMessages(messages);
+	}
+
+	private void logDeletion(GuildSettings settings, int messagesDeleted, Member member) {
+		EmbedBuilder eb = new EmbedBuilder();
+
+		eb.setTitle("A user has cleared chat messages");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		if (member != null) {
+			eb.addField("User Targeted", member.getAsMention(), true);
+		} else {
+			eb.addField("User Targeted", "None", true);
+		}
+		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		eb.addField("In channel:", "#" + event.getChannel().getName() + "::" + event.getChannel().getId(), false);
+		eb.addField("Messages deleted", "" + messagesDeleted, false);
+
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	// Get messages from a specific member
