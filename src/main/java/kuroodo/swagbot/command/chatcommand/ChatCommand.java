@@ -32,7 +32,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public abstract class ChatCommand extends Command {
 	protected MessageReceivedEvent event;
 	protected String[] commandParams;
-	
+
 	protected boolean isPrivateMessageCommand = false;
 	protected boolean isPermission0 = false, isPermission1 = false, isPermission2 = false;
 
@@ -58,7 +58,7 @@ public abstract class ChatCommand extends Command {
 	public String commandFormat() {
 		return "";
 	}
-	
+
 	@Override
 	public String commandUsageExample() {
 		return "";
@@ -160,4 +160,14 @@ public abstract class ChatCommand extends Command {
 		return str;
 	}
 
+	public EmbedBuilder getCommandInfoAsEmbed() {
+		EmbedBuilder eb = new EmbedBuilder();
+		String commandName = commandParams[0];
+
+		eb.setTitle(commandName);
+		eb.setDescription(commandDescription());
+		eb.addField("Usage", commandFormat(), false);
+		eb.addField("Example", commandUsageExample(), false);
+		return eb;
+	}
 }

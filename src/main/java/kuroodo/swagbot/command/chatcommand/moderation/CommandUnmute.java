@@ -41,11 +41,11 @@ public class CommandUnmute extends PunishmentCommand {
 		super.executeCommand(commandParams, event);
 
 		if (member == null) {
-			sendMessage("Please mention a valid user or ensure correct command format");
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
-		performUnmute(member);
 
+		performUnmute(member);
 	}
 
 	private void performUnmute(Member member) {

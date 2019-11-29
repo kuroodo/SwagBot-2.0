@@ -38,7 +38,14 @@ public class CommandSpartanKick extends ChatCommand {
 		if (!GuildManager.getGuild(guild).spartankick) {
 			return;
 		}
+		
 		if (!selfHasPermissions()) {
+			return;
+		}
+
+		// If empty parameters
+		if (commandParams.length <= 1) {
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 

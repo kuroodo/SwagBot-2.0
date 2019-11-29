@@ -42,10 +42,10 @@ public class CommandHelp extends ChatCommand {
 		EmbedBuilder eb = null;
 		// If no parameters
 		if (commandParams.length == 1) {
-			eb = sendHelpOverview();
+			eb = getHelpOverview();
 			// If asking for help with specific command
 		} else if (commandParams.length == 2) {
-			eb = sendCommandHelp();
+			eb = getCommandInformation();
 		}
 		if (eb != null) {
 			eb.setColor(BotUtility.EMBED_USER_COMMANDS);
@@ -53,7 +53,7 @@ public class CommandHelp extends ChatCommand {
 		}
 	}
 
-	private EmbedBuilder sendHelpOverview() {
+	private EmbedBuilder getHelpOverview() {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Bot Help");
 		eb.setDescription(
@@ -62,7 +62,7 @@ public class CommandHelp extends ChatCommand {
 		return eb;
 	}
 
-	private EmbedBuilder sendCommandHelp() {
+	private EmbedBuilder getCommandInformation() {
 		EmbedBuilder eb = new EmbedBuilder();
 		String commandName = commandParams[1];
 		Command command = CommandRegistry.getCommand(commandParams[1]);

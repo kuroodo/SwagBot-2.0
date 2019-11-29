@@ -38,9 +38,9 @@ public class CommandKick extends PunishmentCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-
+		
 		if (member == null) {
-			sendMessage("Please mention a valid user or ensure correct command format");
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 

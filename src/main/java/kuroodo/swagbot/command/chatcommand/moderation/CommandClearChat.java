@@ -44,9 +44,10 @@ public class CommandClearChat extends ChatCommand {
 		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
 			return;
 		}
+
 		// If empty parameters
 		if (commandParams.length <= 1) {
-			sendMessage(commandFormat());
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 
@@ -75,11 +76,11 @@ public class CommandClearChat extends ChatCommand {
 				sendMessage("ERROR: Please mention a valid user");
 				return;
 			}
-			// Gether messages from the channel
+			// Gather messages from the channel
 			final int messagesToSeek = 50;
 			restAction = getMessages(messagesToSeek);
 		} else {
-			// Gether messages from the channel
+			// Gather messages from the channel
 			restAction = getMessages(numMessages);
 		}
 
@@ -158,11 +159,13 @@ public class CommandClearChat extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <user> <amount>\n" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <amount>";
+		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <user> <amount>\n" + commandPrefix
+				+ CommandKeys.COMMAND_CLEARCHAT + " <amount>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " @Person#1234 25\n" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " 25";
+		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " @Person#1234 25\n" + commandPrefix
+				+ CommandKeys.COMMAND_CLEARCHAT + " 25";
 	}
 }

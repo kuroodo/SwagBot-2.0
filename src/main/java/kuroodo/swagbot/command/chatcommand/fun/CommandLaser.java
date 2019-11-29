@@ -37,6 +37,12 @@ public class CommandLaser extends ChatCommand {
 			return;
 		}
 
+		// If empty parameters
+		if (commandParams.length <= 1) {
+			sendEmbed(getCommandInfoAsEmbed());
+			return;
+		}
+
 		Member member = findParamsMember();
 		if (member == null) {
 			sendMessage("Please mention a valid user");
@@ -58,7 +64,7 @@ public class CommandLaser extends ChatCommand {
 	public String commandFormat() {
 		return commandPrefix + CommandKeys.COMMAND_LASER + " @user";
 	}
-	
+
 	@Override
 	public String commandUsageExample() {
 		return commandPrefix + CommandKeys.COMMAND_LASER + " @Person#1234";

@@ -40,7 +40,7 @@ public class CommandBan extends PunishmentCommand {
 		super.executeCommand(commandParams, event);
 
 		if (member == null) {
-			sendMessage("Please mention a valid user or ensure correct command format");
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 

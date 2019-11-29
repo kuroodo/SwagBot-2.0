@@ -35,6 +35,12 @@ public class CommandPoke extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		// If empty parameters
+		if (commandParams.length <= 1) {
+			sendEmbed(getCommandInfoAsEmbed());
+			return;
+		}
+		
 		Member member = findParamsMember();
 		if (member == null) {
 			sendMessage("Please mention a valid user");
