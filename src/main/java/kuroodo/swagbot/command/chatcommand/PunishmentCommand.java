@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PunishmentCommand extends ChatCommand {
 	protected Member member;
+	protected boolean canExecute = false;
 
 	@Override
 	protected void setCommandPermissiosn() {
@@ -21,14 +22,17 @@ public class PunishmentCommand extends ChatCommand {
 		}
 		// If empty parameters
 		if (commandParams.length <= 1) {
-			sendMessage(commandFormat());
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 		member = findParamsMember();
 
 		if (member == null) {
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
+
+		canExecute = true;
 
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {

@@ -42,11 +42,8 @@ public class CommandUnmute extends PunishmentCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-
-		if (member == null) {
-			sendEmbed(getCommandInfoAsEmbed());
+		if (!canExecute)
 			return;
-		}
 
 		performUnmute(member);
 	}

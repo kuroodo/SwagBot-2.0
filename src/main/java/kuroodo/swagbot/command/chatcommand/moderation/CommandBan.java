@@ -41,11 +41,8 @@ public class CommandBan extends PunishmentCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-
-		if (member == null) {
-			sendEmbed(getCommandInfoAsEmbed());
+		if (!canExecute)
 			return;
-		}
 
 		if (GuildManager.canMemberBeRemoved(event.getGuild(), member)) {
 			performBan(member);
