@@ -54,7 +54,7 @@ public class CommandBan extends PunishmentCommand {
 
 	private void performBan(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
-		String reason = getReason();
+		String reason = getReason(3);
 		int days = getDuration();
 
 		try {

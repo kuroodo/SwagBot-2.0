@@ -54,7 +54,7 @@ public class CommandKick extends PunishmentCommand {
 
 	private void performKick(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
-		String reason = getReason();
+		String reason = getReason(2);
 
 		try {
 			member.kick(reason).queue();

@@ -37,9 +37,9 @@ public class PunishmentCommand extends ChatCommand {
 
 	}
 
-	protected String getReason() {
+	protected String getReason(int reasonStartIndex) {
 		String reason = "";
-		for (int i = 3; i < commandParams.length; i++) {
+		for (int i = reasonStartIndex; i < commandParams.length; i++) {
 			reason += commandParams[i] + " ";
 		}
 
