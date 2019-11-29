@@ -44,8 +44,8 @@ public abstract class ChatCommand extends Command {
 		setCommandPermissiosn();
 
 		if (!selfHasPermissions()) {
-			sendMessage("I lack the required permissions to run this command\nPermissions required: "
-					+ permissionsToString());
+			sendMessage(BotUtility.quotifyText("I lack the required permissions to run this command\n")
+					+ BotUtility.quotifyText("Permissions required: " + permissionsToString()));
 		}
 	}
 
@@ -95,7 +95,7 @@ public abstract class ChatCommand extends Command {
 	}
 
 	protected void sendNoPermissionsMessage() {
-		sendMessage("You lack permissions to use this command");
+		sendMessage(BotUtility.quotifyText("You lack permissions to use this command"));
 	}
 
 	public boolean selfHasPermissions() {
