@@ -16,7 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.chatcommand.moderation;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -24,8 +24,9 @@ import kuroodo.swagbot.utils.Logger;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 
-public class CommandBan extends ChatCommand {
+public class CommandBan extends PunishmentCommand {
 
 	@Override
 	protected void setCommandPermissiosn() {
@@ -38,17 +39,6 @@ public class CommandBan extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
-		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
-			return;
-		}
-		// If empty parameters
-		if (commandParams.length <= 1) {
-			sendMessage(commandFormat());
-			return;
-		}
-
-		Member member = findParamsMember();
-
 		if (member == null) {
 			sendMessage("Please mention a valid user or ensure correct command format");
 			return;
@@ -60,35 +50,34 @@ public class CommandBan extends ChatCommand {
 			sendMessage("This person is too important to be removed");
 		}
 
-		// Delete the command message if permissions
-		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
-			event.getMessage().delete().queue();
-		}
 	}
 
 	private void performBan(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		String reason = getReason();
-		int days = 0;
+		int days = getDuration();
 
-		// If entered a ban duration
-		if (commandParams.length >= 3) {
-			try {
-				days = Integer.parseInt(commandParams[2]);
-			} catch (NumberFormatException e) {
-				sendMessage("ERROR: Ban duration is incorrect. Please enter a NUMBER of days, or 0 for permanent ban");
-				return;
+		try {
+			// Ban member
+			member.ban(days, reason).queue();
+			logBan(settings, days, reason, member);
+			if (reason.isEmpty()) {
+				sendBanMessage(member);
+			} else {
+				sendBanMessage(member, reason);
 			}
+		} catch (HierarchyException e) {
+			sendHierarchyErrorMessage();
 		}
-
-		member.ban(days, reason).queue();
-
-		logBan(settings, days, reason, member);
-		sendBanMessage(member);
 	}
 
 	private void sendBanMessage(Member member) {
 		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was banned"));
+
+	}
+
+	private void sendBanMessage(Member member, String reason) {
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was banned for " + reason));
 
 	}
 
@@ -103,13 +92,18 @@ public class CommandBan extends ChatCommand {
 		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
 	}
 
-	private String getReason() {
-		String reason = "";
-		for (int i = 3; i < commandParams.length; i++) {
-			reason += commandParams[i] + " ";
+	private int getDuration() {
+		int duration = 0;
+		// If entered a mute duration
+		if (commandParams.length >= 3) {
+			try {
+				duration = Integer.parseInt(commandParams[2]);
+			} catch (NumberFormatException e) {
+				sendMessage("ERROR: Ban duration is incorrect. Please enter a NUMBER of DAYS or 0 for permanent");
+			}
 		}
 
-		return reason;
+		return duration;
 	}
 
 	@Override

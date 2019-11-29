@@ -16,7 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.chatcommand.moderation;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -25,8 +25,9 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 
-public class CommandUnmute extends ChatCommand {
+public class CommandUnmute extends PunishmentCommand {
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MANAGE_ROLES);
@@ -39,21 +40,12 @@ public class CommandUnmute extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
-		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
-			return;
-		}
-
-		Member member = findParamsMember();
-
 		if (member == null) {
-			sendMessage("Please mention a valid user");
+			sendMessage("Please mention a valid user or ensure correct command format");
 			return;
 		}
 		performUnmute(member);
-		// Delete the command message if permissions
-		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
-			event.getMessage().delete().queue();
-		}
+
 	}
 
 	private void performUnmute(Member member) {
@@ -62,9 +54,13 @@ public class CommandUnmute extends ChatCommand {
 
 		if (muterole != null) {
 			if (member.getRoles().contains(muterole)) {
-				settings.guild.removeRoleFromMember(member, muterole).queue();
-				logUnmute(settings, member);
-				sendUnmuteMessage(member);
+				try {
+					settings.guild.removeRoleFromMember(member, muterole).queue();
+					logUnmute(settings, member);
+					sendUnmuteMessage(member);
+				} catch (HierarchyException e) {
+					sendHierarchyErrorMessage();
+				}
 			}
 		}
 	}
@@ -88,7 +84,7 @@ public class CommandUnmute extends ChatCommand {
 	public String commandFormat() {
 		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @user";
 	}
-	
+
 	@Override
 	public String commandUsageExample() {
 		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @Person#1234";

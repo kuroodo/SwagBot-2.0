@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -28,8 +28,9 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 
-public class CommandMute extends ChatCommand {
+public class CommandMute extends PunishmentCommand {
 
 	@Override
 	protected void setCommandPermissiosn() {
@@ -43,11 +44,6 @@ public class CommandMute extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
-		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
-			return;
-		}
-		Member member = findParamsMember();
-
 		if (member == null) {
 			sendMessage("Please mention a valid user or ensure correct command format");
 			return;
@@ -59,35 +55,30 @@ public class CommandMute extends ChatCommand {
 			sendMessage("This person is too important to be muted");
 		}
 
-		// Delete the command message if permissions
-		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
-			event.getMessage().delete().queue();
-		}
 	}
 
 	private void performMute(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		Role muterole = settings.guild.getRoleById(settings.muteRole);
+		if (muterole == null)
+			return;
 		String reason = getReason();
-		long duration = 0;
+		long duration = getDuration();
 
-		if (muterole != null) {
-			// If entered a mute duration
-			if (commandParams.length >= 3) {
-				try {
-					duration = Long.parseLong(commandParams[2]);
-				} catch (NumberFormatException e) {
-					sendMessage("ERROR: Mute duration is incorrect. Please enter a NUMBER of days");
-				}
-			}
-
+		try {
 			// Give mute role
 			settings.guild.addRoleToMember(member, muterole).queue();
 			if (duration > 0)
 				startUnmuteTimer(duration, member);
 
 			logMute(settings, duration, reason, member);
-			sendMuteMessage(member);
+			if (reason.isEmpty()) {
+				sendMuteMessage(member);
+			} else {
+				sendMuteMessage(member, reason);
+			}
+		} catch (HierarchyException e) {
+			sendHierarchyErrorMessage();
 		}
 	}
 
@@ -105,6 +96,10 @@ public class CommandMute extends ChatCommand {
 
 	private void sendMuteMessage(Member member) {
 		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted"));
+	}
+
+	private void sendMuteMessage(Member member, String reason) {
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was muted for " + reason));
 	}
 
 	private void logMute(GuildSettings settings, long duration, String reason, Member member) {
@@ -136,13 +131,18 @@ public class CommandMute extends ChatCommand {
 		Logger.sendLogMessage(settings, logMessage);
 	}
 
-	private String getReason() {
-		String reason = "";
-		for (int i = 3; i < commandParams.length; i++) {
-			reason += commandParams[i] + " ";
+	private long getDuration() {
+		long duration = 0;
+		// If entered a mute duration
+		if (commandParams.length >= 3) {
+			try {
+				duration = Long.parseLong(commandParams[2]);
+			} catch (NumberFormatException e) {
+				sendMessage("ERROR: Mute duration is incorrect. Please enter a NUMBER of MINUTES or 0 for permanent");
+			}
 		}
 
-		return reason;
+		return duration;
 	}
 
 	@Override
@@ -152,7 +152,8 @@ public class CommandMute extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_MUTE + " @user <duration MINUTES>(optional)";
+		return commandPrefix + CommandKeys.COMMAND_MUTE
+				+ " @user <duration MINUTES>(enter 0 for permanent) <reason>(optional)";
 	}
 
 	@Override

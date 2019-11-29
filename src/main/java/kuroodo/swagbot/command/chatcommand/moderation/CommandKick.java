@@ -16,7 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.chatcommand.moderation;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -24,8 +24,9 @@ import kuroodo.swagbot.utils.Logger;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
 
-public class CommandKick extends ChatCommand {
+public class CommandKick extends PunishmentCommand {
 
 	@Override
 	protected void setCommandPermissiosn() {
@@ -38,12 +39,6 @@ public class CommandKick extends ChatCommand {
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
 
-		if (!selfHasPermissions() || !memberHasPermissions(event.getMember())) {
-			return;
-		}
-
-		Member member = findParamsMember();
-
 		if (member == null) {
 			sendMessage("Please mention a valid user or ensure correct command format");
 			return;
@@ -55,24 +50,31 @@ public class CommandKick extends ChatCommand {
 			sendMessage("This person is too important to be removed");
 		}
 
-		// Delete the command message if permissions
-		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
-			event.getMessage().delete().queue();
-		}
 	}
 
 	private void performKick(Member member) {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		String reason = getReason();
 
-		member.kick(reason).queue();
-
-		logKick(settings, reason, member);
-		sendKickMessage(member);
+		try {
+			member.kick(reason).queue();
+			logKick(settings, reason, member);
+			if (reason.isEmpty()) {
+				sendKickMessage(member);
+			} else {
+				sendKickMessage(member, reason);
+			}
+		} catch (HierarchyException e) {
+			sendHierarchyErrorMessage();
+		}
 	}
 
 	private void sendKickMessage(Member member) {
 		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was kicked"));
+	}
+
+	private void sendKickMessage(Member member, String reason) {
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was kicked for " + reason));
 	}
 
 	private void logKick(GuildSettings settings, String reason, Member member) {
@@ -80,15 +82,6 @@ public class CommandKick extends ChatCommand {
 				+ " with reason: " + reason;
 
 		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
-	}
-
-	private String getReason() {
-		String reason = "";
-		for (int i = 3; i < commandParams.length; i++) {
-			reason += commandParams[i] + " ";
-		}
-
-		return reason;
 	}
 
 	@Override
@@ -103,7 +96,7 @@ public class CommandKick extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234 For disturbing the peace\n"
-				+ commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234";
+		return commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234 For disturbing the peace\n" + commandPrefix
+				+ CommandKeys.COMMAND_KICK + " @Person#1234";
 	}
 }
