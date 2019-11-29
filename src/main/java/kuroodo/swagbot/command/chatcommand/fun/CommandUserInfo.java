@@ -15,7 +15,6 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.fun;
 
-import java.awt.Color;
 import java.time.format.DateTimeFormatter;
 
 import kuroodo.swagbot.command.CommandKeys;
@@ -71,7 +70,7 @@ public class CommandUserInfo extends ChatCommand {
 			boostTime = member.getTimeBoosted().toString();
 		}
 
-		eb.setColor(Color.RED);
+		eb.setColor(BotUtility.EMBED_USER_COMMANDS);
 		eb.setTitle(nickname + "'s info");
 		eb.addField("Username", name, true);
 		eb.addField("Status", status, true);
@@ -96,7 +95,7 @@ public class CommandUserInfo extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_USERINFO + "\n" + commandPrefix
-				+ CommandKeys.COMMAND_USERINFO + " @Person#1234";
+		return commandPrefix + CommandKeys.COMMAND_USERINFO + "\n" + commandPrefix + CommandKeys.COMMAND_USERINFO
+				+ " @Person#1234";
 	}
 }

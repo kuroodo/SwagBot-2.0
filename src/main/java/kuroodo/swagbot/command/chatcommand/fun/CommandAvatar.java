@@ -15,8 +15,6 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.fun;
 
-import java.awt.Color;
-
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
@@ -66,7 +64,7 @@ public class CommandAvatar extends ChatCommand {
 		String name = member.getUser().getName();
 		String avatarURL = member.getUser().getAvatarUrl();
 
-		eb.setColor(Color.RED);
+		eb.setColor(BotUtility.EMBED_USER_COMMANDS);
 		eb.addField(name + "'s Avatar: ", member.getAsMention(), false);
 		eb.setImage(avatarURL);
 		eb.setFooter("Request made by: " + event.getAuthor().getAsTag());
