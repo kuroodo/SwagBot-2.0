@@ -37,6 +37,11 @@ import net.dv8tion.jda.api.exceptions.HierarchyException;
 
 public class BotUtility {
 
+	public static final int EMBED_CORE_COLOR = 0xFBC24B;
+	public static final int EMBED_ROLE_COLOR = 0x59A6CD;
+	public static final int EMBED_ALERT_COLOR = 0xCC5959;
+	public static final int EMBDED_CHANNEL_COLOR = 0xADA9A4;
+	
 	public static void sendMessageToBotOwner(String message) {
 		try {
 			long ownerID = Long.parseLong(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER));
@@ -156,7 +161,7 @@ public class BotUtility {
 	public static String quotifyText(String message) {
 		return "> " + message;
 	}
-	
+
 	public static String boldifyText(String message) {
 		return "**" + message + "**";
 	}

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package kuroodo.swagbot.listeners;
 
+import java.awt.Color;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
@@ -116,6 +117,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("A USER has JOINED THE SERVER");
+		eb.setColor(new Color(BotUtility.EMBED_CORE_COLOR));
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
@@ -134,6 +136,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("A USER has LEFT THE SERVER");
+		eb.setColor(new Color(BotUtility.EMBED_CORE_COLOR));
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
@@ -151,6 +154,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("A USER has been UNBANNED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
 		eb.setDescription(user.getName());
 		eb.addField("Tag", user.getAsTag(), true);
 		eb.setImage(user.getAvatarUrl());
@@ -168,6 +172,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("A USER has been BANNED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
 		eb.setDescription(user.getName());
 		eb.addField("Tag", user.getAsTag(), true);
 
@@ -228,11 +233,12 @@ public class ServerListener extends ListenerAdapter {
 		EmbedBuilder eb = new EmbedBuilder();
 
 		if (event.getNewValue()) {
-			eb.setTitle("The following TEXT CHANNEL is now NSFW");
+			eb.setDescription("The following TEXT CHANNEL is now NSFW");
 		} else {
-			eb.setTitle("The following TEXT CHANNEL is NO LONGER NSFW");
+			eb.setDescription("The following TEXT CHANNEL is NO LONGER NSFW");
 		}
-		eb.addField("#" + event.getChannel().getName(), "", true);
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 
 		Logger.sendLogEmbed(settings, eb);
@@ -246,7 +252,8 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following TEXT CHANNEL has been RENAMED:");
+		eb.setDescription("The following TEXT CHANNEL has been RENAMED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", "#" + event.getOldName(), true);
 		eb.addField("New name", "#" + event.getNewName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -261,8 +268,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following TEXT CHANNEL has been DELETED:");
-		eb.addField("#" + event.getChannel().getName(), "", true);
+		eb.setDescription("The following TEXT CHANNEL has been DELETED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -275,8 +283,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following TEXT CHANNEL has been CREATED:");
-		eb.addField("#" + event.getChannel().getName(), "", true);
+		eb.setDescription("The following TEXT CHANNEL has been CREATED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -289,7 +298,8 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following VOICE CHANNEL has been RENAMED:");
+		eb.setDescription("The following VOICE CHANNEL has been RENAMED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -304,8 +314,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following VOICE CHANNEL has been DELETED:");
-		eb.addField(event.getChannel().getName(), "", true);
+		eb.setDescription("The following VOICE CHANNEL has been DELETED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Channel:", event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -318,8 +329,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following VOICE CHANNEL has been CREATED:");
-		eb.addField(event.getChannel().getName(), "", true);
+		eb.setDescription("The following VOICE CHANNEL has been CREATED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Channel:", event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -332,7 +344,8 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following CATEGORY has been RENAMED:");
+		eb.setDescription("The following CATEGORY has been RENAMED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -347,8 +360,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following CATEGORY has been DELETED:");
-		eb.addField(event.getCategory().getName(), "", true);
+		eb.setDescription("The following CATEGORY has been DELETED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Category:", event.getCategory().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -361,8 +375,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following CATEGORY has been CREATED:");
-		eb.addField(event.getCategory().getName(), "", true);
+		eb.setDescription("The following CATEGORY has been CREATED:");
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.addField("Category:", event.getCategory().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -375,11 +390,11 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("A user has been GIVEN the following ROLES");
-		eb.setDescription(event.getMember().getAsMention());
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription(event.getMember().getAsMention() + " has been GIVEN the following ROLES");
 
 		for (Role role : event.getRoles()) {
-			eb.addField(role.getName(), "", true);
+			eb.addField("", role.getName(), false);
 		}
 
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -395,11 +410,11 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("A user has had the following ROLES REMOVED");
-		eb.setDescription(event.getMember().getAsMention());
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription(event.getMember().getAsMention() + " has had the following ROLES REMOVED");
 
 		for (Role role : event.getRoles()) {
-			eb.addField(role.getName(), "", true);
+			eb.addField("", role.getName(), false);
 		}
 
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -414,10 +429,12 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following CROLE has been CREATED:");
-		eb.addField(event.getRole().getName(), "", true);
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription("The following ROLE has been CREATED:");
+		eb.addField("Role:", event.getRole().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
+		// C9932E
 	}
 
 	@Override
@@ -428,8 +445,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following ROLE has been DELETED:");
-		eb.addField(event.getRole().getName(), "", true);
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription("The following ROLE has been DELETED:");
+		eb.addField("Role:", event.getRole().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -442,7 +460,8 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following ROLE has been RENAMED");
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription("The following ROLE has been RENAMED");
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
@@ -457,8 +476,9 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("The following ROLE has NEW PERMISSIONS:");
-		eb.setDescription("These are the new permissions for " + event.getRole().getName());
+		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
+		eb.setDescription("The following ROLE has NEW PERMISSIONS:");
+		eb.addField("", "These are the new permissions for: " + event.getRole().getName(), false);
 		for (Permission perm : event.getNewPermissions()) {
 			eb.addField(perm.getName(), "", false);
 		}
@@ -497,6 +517,7 @@ public class ServerListener extends ListenerAdapter {
 		User self = BotUtility.getSelfUser();
 
 		eb.setTitle("Introductions");
+		eb.setColor(new Color(BotUtility.EMBED_CORE_COLOR));
 		eb.setDescription("Hello, I am [" + BotConfig.BOTNAME
 				+ "](https://github.com/kuroodo/SwagBot-2.0). I was just added to your server: " + guild.getName());
 
