@@ -49,18 +49,21 @@ public class CommandMute extends PunishmentCommand {
 			return;
 
 		if (GuildManager.canMemberBeRemoved(event.getGuild(), member)) {
-			performMute(member);
+			GuildSettings settings = GuildManager.getGuild(event.getGuild());
+			Role muteRole = settings.guild.getRoleById(settings.muteRole);
+			if (muteRole == null)
+				return;
+			if (member.getRoles().contains(muteRole)) {
+				return;
+			}
+
+			performMute(member, settings, muteRole);
 		} else {
 			sendMessage("This person is too important to be muted");
 		}
-
 	}
 
-	private void performMute(Member member) {
-		GuildSettings settings = GuildManager.getGuild(event.getGuild());
-		Role muterole = settings.guild.getRoleById(settings.muteRole);
-		if (muterole == null)
-			return;
+	private void performMute(Member member, GuildSettings settings, Role muteRole) {
 		String reason = getReason(3);
 		long duration = getDuration();
 		if (duration == -1) {
@@ -70,7 +73,7 @@ public class CommandMute extends PunishmentCommand {
 		}
 		try {
 			// Give mute role
-			settings.guild.addRoleToMember(member, muterole).queue();
+			settings.guild.addRoleToMember(member, muteRole).queue();
 			if (duration > 0)
 				startUnmuteTimer(duration, member);
 
