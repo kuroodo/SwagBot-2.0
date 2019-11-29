@@ -52,7 +52,7 @@ public class CommandSetup extends ChatCommand {
 
 		// Check if settings file for guild exists
 		if (!GuildSettingsReader.settingsFileExists(event.getGuild().getIdLong())) {
-			sendMessage(BotUtility.codifyText("Error finding this server's configuration file."));
+			sendMessage(BotUtility.quotifyText("Error finding this server's configuration file."));
 			if (!SwagBot.verifyGuildTemplateFile()) {
 				sendMessage(BotUtility
 						.quotifyText("There is an issue managing server configuration. A fix is being worked on."));
@@ -69,7 +69,7 @@ public class CommandSetup extends ChatCommand {
 			return;
 			// If not enough params
 		} else if (commandParams.length < expectedParamsLength) {
-			sendFormatErrorMessage();
+			sendEmbed(getCommandInfoAsEmbed());
 			return;
 		}
 
@@ -123,7 +123,7 @@ public class CommandSetup extends ChatCommand {
 			updatePermission2();
 			return;
 		default:
-			sendFormatErrorMessage();
+			sendKeyNotFoundMessage();
 		}
 	}
 
@@ -454,9 +454,14 @@ public class CommandSetup extends ChatCommand {
 	}
 
 	private void sendFormatErrorMessage() {
-		sendMessage(BotUtility.quotifyText("Parameters incorrect.\nCorrect format: " + commandPrefix
-				+ "setup <key> <value> AND ensure that the value is correct OR enter " + commandPrefix
-				+ "setuphelp for more information"));
+		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n") + BotUtility.quotifyText("Correct format: "
+				+ commandPrefix + "setup <key> <value> AND ensure that the key AND value are correct. Enter "
+				+ commandPrefix + "setuphelp for more information"));
+	}
+
+	private void sendKeyNotFoundMessage() {
+		sendMessage(BotUtility
+				.quotifyText("Incorrect key entered. Enter " + commandPrefix + "setuphelp for more information"));
 	}
 
 	private void printTextChannelErrorMessage() {
