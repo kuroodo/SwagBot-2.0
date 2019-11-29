@@ -15,6 +15,7 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +25,7 @@ import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
 import kuroodo.swagbot.utils.Logger;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -107,15 +109,20 @@ public class CommandMute extends PunishmentCommand {
 	}
 
 	private void logMute(GuildSettings settings, long duration, String reason, Member member) {
-		String logMessage = event.getAuthor().getAsMention() + " has MUTED user " + member.getAsMention();
+		EmbedBuilder eb = new EmbedBuilder();
+
+		eb.setTitle("A user has been MUTED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		eb.addField("Muted User:", member.getAsMention(), true);
+		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		eb.addField("Reason:", reason, false);
 
 		if (duration > 0) {
-			logMessage += " for " + duration + " minute(s)";
+			eb.addField("Duration (minutes):", "" + duration, false);
+		} else {
+			eb.addField("Duration (minutes):", "PERMANENT", false);
 		}
-
-		logMessage += " with reason: " + reason;
-
-		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	private void startUnmuteTimer(long duration, Member member) {
@@ -130,9 +137,11 @@ public class CommandMute extends PunishmentCommand {
 	}
 
 	private void logUnmute(GuildSettings settings, Member member) {
-		String logMessage = BotUtility
-				.quotifyText("The MUTE duration for user " + member.getAsMention() + " has expired.");
-		Logger.sendLogMessage(settings, logMessage);
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setTitle("User mute duration expired");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		eb.addField("User", member.getAsMention(), true);
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	private long getDuration() {

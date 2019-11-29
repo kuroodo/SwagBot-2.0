@@ -15,12 +15,15 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import java.awt.Color;
+
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
 import kuroodo.swagbot.utils.Logger;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -38,7 +41,7 @@ public class CommandKick extends PunishmentCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
-		
+
 		if (member == null) {
 			sendEmbed(getCommandInfoAsEmbed());
 			return;
@@ -78,10 +81,15 @@ public class CommandKick extends PunishmentCommand {
 	}
 
 	private void logKick(GuildSettings settings, String reason, Member member) {
-		String logMessage = event.getAuthor().getAsMention() + " has KICKED user " + member.getAsMention()
-				+ " with reason: " + reason;
+		EmbedBuilder eb = new EmbedBuilder();
 
-		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
+		eb.setTitle("A user has been KICKED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		eb.addField("Kicked User:", member.getAsMention(), true);
+		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		eb.addField("Reason:", reason, false);
+
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	@Override

@@ -15,12 +15,15 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import java.awt.Color;
+
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
 import kuroodo.swagbot.utils.Logger;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -70,9 +73,12 @@ public class CommandUnmute extends PunishmentCommand {
 	}
 
 	private void logUnmute(GuildSettings settings, Member member) {
-		String logMessage = BotUtility
-				.quotifyText(event.getAuthor().getName() + " has UNMUTED user " + member.getAsMention());
-		Logger.sendLogMessage(settings, logMessage);
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setTitle("A user has been UNMUTED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		eb.addField("Unmuted User:", member.getAsMention(), true);
+		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	@Override

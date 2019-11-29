@@ -15,12 +15,15 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.chatcommand.moderation;
 
+import java.awt.Color;
+
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
 import kuroodo.swagbot.utils.Logger;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -86,14 +89,21 @@ public class CommandBan extends PunishmentCommand {
 	}
 
 	private void logBan(GuildSettings settings, int days, String reason, Member member) {
-		String logMessage = event.getAuthor().getAsMention() + " has BANNED user " + member.getAsMention();
+		EmbedBuilder eb = new EmbedBuilder();
+
+		eb.setTitle("A user has been BANNED");
+		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
+		eb.addField("Banned User:", member.getAsMention(), true);
+		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		eb.addField("Reason:", reason, false);
 
 		if (days > 0) {
-			logMessage += " for " + days + " day(s)";
+			eb.addField("Duration (days):", "" + days, false);
+		} else {
+			eb.addField("Duration (days):", "PERMANENT", false);
 		}
-		logMessage += " with reason: " + reason;
 
-		Logger.sendLogMessage(settings, BotUtility.quotifyText(logMessage));
+		Logger.sendLogEmbed(settings, eb);
 	}
 
 	private int getDuration() {
