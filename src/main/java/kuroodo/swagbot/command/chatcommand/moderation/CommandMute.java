@@ -64,8 +64,11 @@ public class CommandMute extends PunishmentCommand {
 			return;
 		String reason = getReason(3);
 		long duration = getDuration();
-		if (duration == -1)
+		if (duration == -1) {
+			sendMessage(BotUtility.codifyText(
+					"ERROR: Mute duration is incorrect. Please enter a NUMBER of MINUTES or 0 for permanent"));
 			return;
+		}
 		try {
 			// Give mute role
 			settings.guild.addRoleToMember(member, muterole).queue();
@@ -139,7 +142,6 @@ public class CommandMute extends PunishmentCommand {
 			try {
 				duration = Long.parseLong(commandParams[2]);
 			} catch (NumberFormatException e) {
-				sendMessage(BotUtility.codifyText("ERROR: Mute duration is incorrect. Please enter a NUMBER of MINUTES or 0 for permanent"));
 				duration = -1;
 			}
 		}
