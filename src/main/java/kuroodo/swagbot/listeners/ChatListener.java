@@ -15,7 +15,7 @@ limitations under the License.
  */
 package kuroodo.swagbot.listeners;
 
-import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.BotCommand;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
 import kuroodo.swagbot.guild.GuildManager;
@@ -77,7 +77,7 @@ public class ChatListener extends ListenerAdapter {
 				return;
 			}
 
-			Command command = CommandRegistry.getCommand(commandName);
+			BotCommand command = CommandRegistry.getCommand(commandName);
 			command.executeCommand(commandParams, event);
 
 		} else if (event.isFromType(ChannelType.PRIVATE)) {

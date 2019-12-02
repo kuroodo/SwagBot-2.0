@@ -13,16 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.fun;
+package kuroodo.swagbot.command.bot.chatcommand.fun;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class CommandSlap extends ChatCommand {
+public class CommandLaser extends ChatCommand {
+
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
@@ -31,6 +32,7 @@ public class CommandSlap extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+
 		if (!selfHasPermissions()) {
 			return;
 		}
@@ -46,27 +48,25 @@ public class CommandSlap extends ChatCommand {
 			sendMessage("Please mention a valid user");
 			return;
 		}
-
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
 		}
-		sendMessage(event.getAuthor().getAsMention() + " slaps " + member.getAsMention());
+		sendMessage(event.getAuthor().getAsMention() + " points a laser at " + member.getAsMention() + "'s eye");
 	}
 
 	@Override
 	public String commandDescription() {
-		return "Slap a user";
+		return "Point a laser at someones eye";
 	}
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_SLAP + " @user";
+		return commandPrefix + CommandKeys.COMMAND_LASER + " @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_SLAP + " @Person#1234";
+		return commandPrefix + CommandKeys.COMMAND_LASER + " @Person#1234";
 	}
-
 }

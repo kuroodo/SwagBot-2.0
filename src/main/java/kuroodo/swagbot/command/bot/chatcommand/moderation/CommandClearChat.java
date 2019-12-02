@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.moderation;
+package kuroodo.swagbot.command.bot.chatcommand.moderation;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;

@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2019 Leandro Gaspar
 
@@ -14,23 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.fun;
-
-import java.util.Random;
+package kuroodo.swagbot.command.bot.chatcommand.fun;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class CommandFlipCoin extends ChatCommand {
-	private Random rand;
-
-	public CommandFlipCoin() {
-		rand = new Random();
-	}
-
+public class CommandPoke extends ChatCommand {
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
@@ -43,35 +35,38 @@ public class CommandFlipCoin extends ChatCommand {
 		if (!selfHasPermissions()) {
 			return;
 		}
+		// If empty parameters
+		if (commandParams.length <= 1) {
+			sendEmbed(getCommandInfoAsEmbed());
+			return;
+		}
+		
+		Member member = findParamsMember();
+		if (member == null) {
+			sendMessage("Please mention a valid user");
+			return;
+		}
 
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
 		}
 
-		int sides = 2;
-		rand.setSeed(System.nanoTime());
-		int x = rand.nextInt(sides);
-
-		if (x == 0) {
-			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on tails\n```");
-		} else {
-			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on heads\n```");
-		}
+		sendMessage(event.getAuthor().getAsMention() + " pokes " + member.getAsMention());
 	}
 
 	@Override
 	public String commandDescription() {
-		return "Flip a coin between heads or tails";
+		return "Poke a user";
 	}
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
+		return commandPrefix + CommandKeys.COMMAND_POKE + " @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
+		return commandPrefix + CommandKeys.COMMAND_POKE + " @Person#1234";
 	}
 }

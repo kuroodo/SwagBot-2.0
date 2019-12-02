@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.lavaplayer;
+package kuroodo.swagbot.command.bot.chatcommand.lavaplayer;
 
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.lavaplayer.AudioKeys;
 
 public class CommandLavaPlayer extends ChatCommand {

@@ -1,4 +1,4 @@
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.bot.chatcommand;
 
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;

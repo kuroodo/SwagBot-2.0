@@ -19,9 +19,12 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 
+import kuroodo.swagbot.command.CommandRegistry;
+import kuroodo.swagbot.command.ConsoleCommand;
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.json.ConfigReader;
 import kuroodo.swagbot.json.JSONKeys;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 
@@ -65,13 +68,22 @@ public class Init {
 		final Thread inputThread = new Thread(new Runnable() {
 
 			public void run() {
+				// Scanner automatically closes on system exit
+				@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);
+
 				while (true) {
 					String input = scanner.nextLine();
+					if (!input.isEmpty()) {
+						String[] commandParams = BotUtility.splitString(input);
+						String commandName = commandParams[0];
 
-					if (ConsoleInputKeys.isExitKey(input.toLowerCase())) {
-						scanner.close();
-						exitApplication(0);
+						ConsoleCommand command = CommandRegistry.getConsoleCommand(commandName);
+						if (command.isRequiresJDA()) {
+							command.executeCommand(commandParams, SwagBot.getJDA());
+						} else {
+							command.executeCommand(commandParams);
+						}
 					}
 				}
 			}
@@ -98,7 +110,7 @@ public class Init {
 		}
 	}
 
-	private static void exitApplication(int exitCode) {
+	public static void exitApplication(int exitCode) {
 		System.exit(exitCode);
 	}
 }

@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.help;
+package kuroodo.swagbot.command.bot.chatcommand.help;
 
-import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.BotCommand;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -63,7 +63,7 @@ public class CommandHelp extends ChatCommand {
 	private EmbedBuilder getCommandInformation() {
 		EmbedBuilder eb = new EmbedBuilder();
 		String commandName = commandParams[1];
-		Command command = CommandRegistry.getCommand(commandParams[1]);
+		BotCommand command = CommandRegistry.getCommand(commandParams[1]);
 		command.commandPrefix = commandPrefix;
 
 		eb.setTitle(commandName);

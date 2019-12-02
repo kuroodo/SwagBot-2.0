@@ -13,19 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.fun;
-
-import java.time.format.DateTimeFormatter;
+package kuroodo.swagbot.command.bot.chatcommand.fun;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class CommandUserInfo extends ChatCommand {
+public class CommandAvatar extends ChatCommand {
+
 	@Override
 	protected void setCommandPermissiosn() {
 		requiredPermissions.add(Permission.MESSAGE_WRITE);
@@ -35,11 +34,12 @@ public class CommandUserInfo extends ChatCommand {
 	@Override
 	public void executeCommand(String[] commandParams, MessageReceivedEvent event) {
 		super.executeCommand(commandParams, event);
+
 		if (!selfHasPermissions()) {
 			return;
 		}
-
 		Member member = findParamsMember();
+
 		// If no parameters get the message author
 		if (commandParams.length == 1) {
 			member = event.getMember();
@@ -49,6 +49,7 @@ public class CommandUserInfo extends ChatCommand {
 			sendMessage("Please mention a valid user");
 			return;
 		}
+
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
@@ -59,43 +60,32 @@ public class CommandUserInfo extends ChatCommand {
 
 	private EmbedBuilder makeEmbed(Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
-		String name = member.getUser().getAsTag();
-		String nickname = member.getEffectiveName();
-		String avatarURL = member.getUser().getAvatarUrl();
-		String status = member.getOnlineStatus().toString();
-		String joinDate = member.getTimeJoined().format(DateTimeFormatter.ISO_LOCAL_DATE);
 
-		String boostTime = "Not Boosting";
-		if (member.getTimeBoosted() != null) {
-			boostTime = member.getTimeBoosted().toString();
-		}
+		String name = member.getUser().getName();
+		String avatarURL = member.getUser().getAvatarUrl();
 
 		eb.setColor(BotUtility.EMBED_USER_COMMANDS);
-		eb.setTitle(nickname + "'s info");
-		eb.addField("Username", name, true);
-		eb.addField("Status", status, true);
-		eb.addField("Joined Server", joinDate, true);
-		eb.addField("Nitro Boost", boostTime, true);
-		eb.addField("Avatar: ", member.getAsMention(), false);
+		eb.addField(name + "'s Avatar: ", member.getAsMention(), false);
 		eb.setImage(avatarURL);
-
+		eb.setFooter("Request made by: " + event.getAuthor().getAsTag());
 		return eb;
 	}
 
 	@Override
 	public String commandDescription() {
-		return "Get information about a user or yourself";
+		return "Get the avatar of yourself or a user";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "To get your information: " + commandPrefix + CommandKeys.COMMAND_USERINFO
-				+ "\nTo get a users information:  " + commandPrefix + CommandKeys.COMMAND_USERINFO + " @user";
+		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
+				+ " @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_USERINFO + "\n" + commandPrefix + CommandKeys.COMMAND_USERINFO
+		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
 				+ " @Person#1234";
 	}
+
 }
