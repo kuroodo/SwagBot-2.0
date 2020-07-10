@@ -53,7 +53,7 @@ import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -127,8 +127,8 @@ public class ServerListener extends ListenerAdapter {
 
 	// Called when a user leaves a guild
 	@Override
-	public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
-		super.onGuildMemberLeave(event);
+	public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
+		super.onGuildMemberRemove(event);
 		Guild guild = event.getGuild();
 		Member member = event.getMember();
 		GuildSettings settings = GuildManager.getGuild(guild);
