@@ -55,6 +55,9 @@ public class CommandKeys {
 	public static final String CONSOLE_COMMAND_EXIT = "exit";
 	public static final String CONSOLE_COMMAND_QUIT = "quit";
 	public static final String CONSOLE_COMMAND_STOP = "stop";
+	public static final String CONSOLE_COMMAND_LOGOFF = "logoff";
+	public static final String CONSOLE_COMMAND_LOGIN = "login";
 	
 	public static final String CONSOLE_COMMAND_ACTIVITY = "setactivity";
+	public static final String CONSOLE_COMMAND_SERVERCOUNT = "servercount";
 }

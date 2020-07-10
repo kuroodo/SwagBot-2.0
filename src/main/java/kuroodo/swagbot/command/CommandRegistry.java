@@ -34,9 +34,12 @@ import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandClearChat;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandKick;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandMute;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandUnmute;
+import kuroodo.swagbot.command.console.CM_Activity;
 import kuroodo.swagbot.command.console.CM_Error;
 import kuroodo.swagbot.command.console.CM_Exit;
-import kuroodo.swagbot.utils.CM_Activity;
+import kuroodo.swagbot.command.console.CM_LogIn;
+import kuroodo.swagbot.command.console.CM_LogOff;
+import kuroodo.swagbot.command.console.CM_ServerCount;
 
 public class CommandRegistry {
 	public static BotCommand getCommand(String command) {
@@ -107,6 +110,12 @@ public class CommandRegistry {
 			return new CM_Exit();
 		case CommandKeys.CONSOLE_COMMAND_ACTIVITY:
 			return new CM_Activity();
+		case CommandKeys.CONSOLE_COMMAND_SERVERCOUNT:
+			return new CM_ServerCount();
+		case CommandKeys.CONSOLE_COMMAND_LOGOFF:
+			return new CM_LogOff();
+		case CommandKeys.CONSOLE_COMMAND_LOGIN:
+			return new CM_LogIn();
 		default:
 			return new CM_Error();
 		}
