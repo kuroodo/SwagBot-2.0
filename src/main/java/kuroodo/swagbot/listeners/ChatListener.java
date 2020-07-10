@@ -18,6 +18,7 @@ package kuroodo.swagbot.listeners;
 import kuroodo.swagbot.command.BotCommand;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.CommandRegistry;
+import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -52,27 +53,37 @@ public class ChatListener extends ListenerAdapter {
 			String commandName = "";
 			String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
 
+			// If starts with < which is a user mention
+			if (commandParams[0].startsWith("<")) {
+				// For some reason now mentions have an ! in getContentRaw(), so lets remove it
+				commandParams[0] = commandParams[0].replace("!", "");
+			}
+
 			// If starts with command prefix
 			if (commandParams[0].startsWith(guild.commandPrefix)) {
 				commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
+				
 				// Else starts with bot mention
 			} else if (commandParams[0].equals((BotUtility.getSelfUser().getAsMention()))) {
+				
 				// If entered parameters
 				if (commandParams.length > 1) {
 					commandName = commandParams[1];
 					// Remove bot mention
 					commandParams = BotUtility.removeElement(commandParams, 0);
 
-					// If not help or setuphelp command
-					if (!commandName.equals(CommandKeys.COMMAND_HELP)
-							&& !commandName.equals(CommandKeys.COMMAND_SETUPHELP)) {
-						
-						// Set to magicball command
+					
+					// If no valid command is given
+					if (CommandRegistry.getCommand(commandName) instanceof CommandBlank) {
+						// Default to magicball
 						commandName = CommandKeys.COMMAND_MAGICBALL;
 					}
+
+					
 				} else {// If just a blank mention, do magicball
 					commandName = CommandKeys.COMMAND_MAGICBALL;
 				}
+				
 			} else {
 				return;
 			}
