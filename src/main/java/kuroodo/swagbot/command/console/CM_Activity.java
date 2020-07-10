@@ -1,4 +1,4 @@
-package kuroodo.swagbot.utils;
+package kuroodo.swagbot.command.console;
 
 import kuroodo.swagbot.command.ConsoleCommand;
 import net.dv8tion.jda.api.JDA;
