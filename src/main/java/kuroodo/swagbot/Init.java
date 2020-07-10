@@ -83,11 +83,7 @@ public class Init {
 						String commandName = commandParams[0];
 
 						ConsoleCommand command = CommandRegistry.getConsoleCommand(commandName);
-						if (command.isRequiresJDA()) {
-							command.executeCommand(commandParams, SwagBot.getJDA());
-						} else {
-							command.executeCommand(commandParams);
-						}
+						command.executeCommand(commandParams);
 					}
 				}
 			}
