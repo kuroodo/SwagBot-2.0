@@ -27,6 +27,8 @@ import kuroodo.swagbot.json.JSONKeys;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Init {
 	public static void main(String[] args) {
@@ -56,7 +58,9 @@ public class Init {
 
 	private static JDA initializeJDA() {
 		try {
-			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build().awaitReady();
+			JDA jda = JDABuilder.createDefault(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN))
+					.enableIntents(GatewayIntent.GUILD_MEMBERS).setMemberCachePolicy(MemberCachePolicy.ALL).build()
+					.awaitReady();
 			System.out.println("JDA build succesful");
 			return jda;
 		} catch (InterruptedException | LoginException e) {
