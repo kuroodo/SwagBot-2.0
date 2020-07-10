@@ -39,6 +39,8 @@ public class ChatListener extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		super.onMessageReceived(event);
+		GuildManager.cacheMessage(event.getMessage());
+
 		if (event.getAuthor().isFake() || event.getAuthor().isBot()) {
 			return;
 		}
@@ -62,28 +64,26 @@ public class ChatListener extends ListenerAdapter {
 			// If starts with command prefix
 			if (commandParams[0].startsWith(guild.commandPrefix)) {
 				commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
-				
+
 				// Else starts with bot mention
 			} else if (commandParams[0].equals((BotUtility.getSelfUser().getAsMention()))) {
-				
+
 				// If entered parameters
 				if (commandParams.length > 1) {
 					commandName = commandParams[1];
 					// Remove bot mention
 					commandParams = BotUtility.removeElement(commandParams, 0);
 
-					
 					// If no valid command is given
 					if (CommandRegistry.getCommand(commandName) instanceof CommandBlank) {
 						// Default to magicball
 						commandName = CommandKeys.COMMAND_MAGICBALL;
 					}
 
-					
 				} else {// If just a blank mention, do magicball
 					commandName = CommandKeys.COMMAND_MAGICBALL;
 				}
-				
+
 			} else {
 				return;
 			}
