@@ -41,6 +41,7 @@ public class BotUtility {
 	public static final int EMBED_ROLE_COLOR = 0x59A6CD;
 	public static final int EMBED_ALERT_COLOR = 0xCC5959;
 	public static final int EMBDED_CHANNEL_COLOR = 0xADA9A4;
+	public static final int EMBDED_USER_MESSAGE_COLOR = 0x7AA9A4;
 	public static final int EMBED_USER_COMMANDS = 0x6D4508;
 	
 	public static void sendMessageToBotOwner(String message) {

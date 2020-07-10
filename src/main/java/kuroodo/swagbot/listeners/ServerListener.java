@@ -32,6 +32,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Guild.Ban;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -57,6 +58,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
@@ -288,6 +290,35 @@ public class ServerListener extends ListenerAdapter {
 		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
+	}
+
+	@Override
+	public void onMessageDelete(MessageDeleteEvent event) {
+		super.onMessageDelete(event);
+
+		Message message = GuildManager.getMessageFromCache(event.getMessageIdLong());
+		if (message == null)
+			return;
+
+		Guild guild = event.getGuild();
+		GuildSettings settings = GuildManager.getGuild(guild);
+
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
+				message.getAuthor().getAvatarUrl());
+		eb.setTitle("Message deleted in #" + event.getChannel().getName());
+		eb.setDescription(message.getContentDisplay());
+
+		if (!message.getAttachments().isEmpty()) {
+			eb.addField("Attachments", message.getAttachments().get(0).getFileName(), true);
+		}
+
+		eb.setFooter("Message ID: " + event.getMessageId() + " | " + "Time of event: " + BotUtility.getCurrentDate()
+				+ " EST");
+		eb.setColor(new Color(BotUtility.EMBDED_USER_MESSAGE_COLOR));
+		Logger.sendLogEmbed(settings, eb);
+
+		GuildManager.removeMessageFromCache(message);
 	}
 
 	@Override

@@ -23,10 +23,12 @@ import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
+	private static final MessageCache<Long, Message> MESSAGE_CACHE = new MessageCache<Long, Message>(600, 1, 1000);
 
 	public static void verifyGuildIntegrity(long guildID) {
 		if (containsGuild(guildID)) {
@@ -75,6 +77,36 @@ public class GuildManager {
 		}
 	}
 
+	public static void cacheMessage(Message message) {
+		if (MESSAGE_CACHE.containsKey(message.getIdLong()))
+			return;
+
+		MESSAGE_CACHE.put(message.getIdLong(), message);
+	}
+
+	public static void removeMessageFromCache(Message message) {
+		if (!MESSAGE_CACHE.containsKey(message.getIdLong()))
+			return;
+
+		MESSAGE_CACHE.remove(message.getIdLong());
+	}
+
+	public static String getMessageTextFromCache(Long messageID) {
+		String message = "";
+		if (MESSAGE_CACHE.containsKey(messageID)) {
+			message = MESSAGE_CACHE.get(messageID).getContentDisplay();
+		}
+		return message;
+	}
+
+	public static Message getMessageFromCache(Long messageID) {
+		Message message = null;
+		if (MESSAGE_CACHE.containsKey(messageID)) {
+			message = MESSAGE_CACHE.get(messageID);
+		}
+		return message;
+	}
+
 	public static boolean canMemberBeMuted(Guild guild, Member member) {
 		if (BotUtility.hasPermission(Permission.ADMINISTRATOR, member)) {
 			return false;
@@ -100,7 +132,7 @@ public class GuildManager {
 
 		return true;
 	}
-	
+
 	// Can member be removed from server
 	public static boolean canMemberBeRemoved(Guild guild, Member member) {
 		if (BotUtility.hasPermission(Permission.ADMINISTRATOR, member)) {
