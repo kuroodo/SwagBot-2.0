@@ -41,7 +41,7 @@ public class Init {
 		System.out.println("Hello I am " + BotConfig.BOTNAME + " v" + BotConfig.BOTVERSION);
 	}
 
-	private static void initializeBot() {
+	public static void initializeBot() {
 		// Attempt to get JDA
 		JDA jda = initializeJDA();
 		if (jda == null) {
