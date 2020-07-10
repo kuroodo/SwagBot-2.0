@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.bot.chatcommand;
 
 /**
  * Does nothing. Future implementation can allow to return a message indicating

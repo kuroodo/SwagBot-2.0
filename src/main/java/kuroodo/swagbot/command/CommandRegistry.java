@@ -15,28 +15,31 @@ limitations under the License.
  */
 package kuroodo.swagbot.command;
 
-import kuroodo.swagbot.command.chatcommand.CommandBlank;
-import kuroodo.swagbot.command.chatcommand.config.CommandSetup;
-import kuroodo.swagbot.command.chatcommand.config.CommandSetupHelp;
-import kuroodo.swagbot.command.chatcommand.fun.CommandAvatar;
-import kuroodo.swagbot.command.chatcommand.fun.CommandFlipCoin;
-import kuroodo.swagbot.command.chatcommand.fun.CommandLaser;
-import kuroodo.swagbot.command.chatcommand.fun.CommandMagicBall;
-import kuroodo.swagbot.command.chatcommand.fun.CommandPoke;
-import kuroodo.swagbot.command.chatcommand.fun.CommandRoulette;
-import kuroodo.swagbot.command.chatcommand.fun.CommandSlap;
-import kuroodo.swagbot.command.chatcommand.fun.CommandSpartanKick;
-import kuroodo.swagbot.command.chatcommand.fun.CommandUserInfo;
-import kuroodo.swagbot.command.chatcommand.help.CommandHelp;
-import kuroodo.swagbot.command.chatcommand.lavaplayer.CommandLavaPlayer;
-import kuroodo.swagbot.command.chatcommand.moderation.CommandBan;
-import kuroodo.swagbot.command.chatcommand.moderation.CommandClearChat;
-import kuroodo.swagbot.command.chatcommand.moderation.CommandKick;
-import kuroodo.swagbot.command.chatcommand.moderation.CommandMute;
-import kuroodo.swagbot.command.chatcommand.moderation.CommandUnmute;
+import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
+import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetup;
+import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetupHelp;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandAvatar;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandFlipCoin;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandLaser;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandMagicBall;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandPoke;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandRoulette;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandSlap;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandSpartanKick;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandUserInfo;
+import kuroodo.swagbot.command.bot.chatcommand.help.CommandHelp;
+import kuroodo.swagbot.command.bot.chatcommand.lavaplayer.CommandLavaPlayer;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandBan;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandClearChat;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandKick;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandMute;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandUnmute;
+import kuroodo.swagbot.command.console.CM_Error;
+import kuroodo.swagbot.command.console.CM_Exit;
+import kuroodo.swagbot.utils.CM_Activity;
 
 public class CommandRegistry {
-	public static Command getCommand(String command) {
+	public static BotCommand getCommand(String command) {
 
 		switch (command) {
 		// HELP commands
@@ -93,6 +96,19 @@ public class CommandRegistry {
 		default:
 			// Return empty command
 			return new CommandBlank();
+		}
+	}
+
+	public static ConsoleCommand getConsoleCommand(String command) {
+		switch (command) {
+		case CommandKeys.CONSOLE_COMMAND_EXIT:
+		case CommandKeys.CONSOLE_COMMAND_QUIT:
+		case CommandKeys.CONSOLE_COMMAND_STOP:
+			return new CM_Exit();
+		case CommandKeys.CONSOLE_COMMAND_ACTIVITY:
+			return new CM_Activity();
+		default:
+			return new CM_Error();
 		}
 	}
 

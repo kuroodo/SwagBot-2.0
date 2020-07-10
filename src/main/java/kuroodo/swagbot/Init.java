@@ -19,11 +19,16 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 
+import kuroodo.swagbot.command.CommandRegistry;
+import kuroodo.swagbot.command.ConsoleCommand;
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.json.ConfigReader;
 import kuroodo.swagbot.json.JSONKeys;
+import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 public class Init {
 	public static void main(String[] args) {
@@ -53,7 +58,9 @@ public class Init {
 
 	private static JDA initializeJDA() {
 		try {
-			JDA jda = new JDABuilder(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN)).build().awaitReady();
+			JDA jda = JDABuilder.createDefault(ConfigReader.getConfigValue(JSONKeys.CONFIG_BOT_TOKEN))
+					.enableIntents(GatewayIntent.GUILD_MEMBERS).setMemberCachePolicy(MemberCachePolicy.ALL).build()
+					.awaitReady();
 			System.out.println("JDA build succesful");
 			return jda;
 		} catch (InterruptedException | LoginException e) {
@@ -65,13 +72,22 @@ public class Init {
 		final Thread inputThread = new Thread(new Runnable() {
 
 			public void run() {
+				// Scanner automatically closes on system exit
+				@SuppressWarnings("resource")
 				Scanner scanner = new Scanner(System.in);
+
 				while (true) {
 					String input = scanner.nextLine();
+					if (!input.isEmpty()) {
+						String[] commandParams = BotUtility.splitString(input);
+						String commandName = commandParams[0];
 
-					if (ConsoleInputKeys.isExitKey(input.toLowerCase())) {
-						scanner.close();
-						exitApplication(0);
+						ConsoleCommand command = CommandRegistry.getConsoleCommand(commandName);
+						if (command.isRequiresJDA()) {
+							command.executeCommand(commandParams, SwagBot.getJDA());
+						} else {
+							command.executeCommand(commandParams);
+						}
 					}
 				}
 			}
@@ -98,7 +114,7 @@ public class Init {
 		}
 	}
 
-	private static void exitApplication(int exitCode) {
+	public static void exitApplication(int exitCode) {
 		System.exit(exitCode);
 	}
 }

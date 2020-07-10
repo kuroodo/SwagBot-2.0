@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public abstract class Command {
+public abstract class BotCommand {
 	protected ArrayList<Permission> requiredPermissions = new ArrayList<Permission>();
 	public String commandPrefix = "";
 	

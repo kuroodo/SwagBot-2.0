@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2019 Leandro Gaspar
 
@@ -13,16 +14,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand.fun;
+package kuroodo.swagbot.command.bot.chatcommand.fun;
+
+import java.util.Random;
 
 import kuroodo.swagbot.command.CommandKeys;
-import kuroodo.swagbot.command.chatcommand.ChatCommand;
+import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class CommandLaser extends ChatCommand {
+public class CommandFlipCoin extends ChatCommand {
+	private Random rand;
+
+	public CommandFlipCoin() {
+		rand = new Random();
+	}
 
 	@Override
 	protected void setCommandPermissiosn() {
@@ -37,36 +44,34 @@ public class CommandLaser extends ChatCommand {
 			return;
 		}
 
-		// If empty parameters
-		if (commandParams.length <= 1) {
-			sendEmbed(getCommandInfoAsEmbed());
-			return;
-		}
-
-		Member member = findParamsMember();
-		if (member == null) {
-			sendMessage("Please mention a valid user");
-			return;
-		}
 		// Delete the command message if permissions
 		if (BotUtility.hasPermission(Permission.MESSAGE_MANAGE, BotUtility.getSelfMember(event.getGuild()))) {
 			event.getMessage().delete().queue();
 		}
-		sendMessage(event.getAuthor().getAsMention() + " points a laser at " + member.getAsMention() + "'s eye");
+
+		int sides = 2;
+		rand.setSeed(System.nanoTime());
+		int x = rand.nextInt(sides);
+
+		if (x == 0) {
+			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on tails\n```");
+		} else {
+			sendMessage(event.getAuthor().getAsMention() + "```css\nflips a coin and it lands on heads\n```");
+		}
 	}
 
 	@Override
 	public String commandDescription() {
-		return "Point a laser at someones eye";
+		return "Flip a coin between heads or tails";
 	}
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_LASER + " @user";
+		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_LASER + " @Person#1234";
+		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
 	}
 }

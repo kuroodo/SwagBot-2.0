@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package kuroodo.swagbot.command.chatcommand;
+package kuroodo.swagbot.command.bot.chatcommand;
 
 import java.util.function.Consumer;
 
-import kuroodo.swagbot.command.Command;
+import kuroodo.swagbot.command.BotCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
 import kuroodo.swagbot.utils.BotUtility;
@@ -29,7 +29,7 @@ import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public abstract class ChatCommand extends Command {
+public abstract class ChatCommand extends BotCommand {
 	protected MessageReceivedEvent event;
 	protected String[] commandParams;
 
