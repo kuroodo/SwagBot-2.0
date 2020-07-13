@@ -17,6 +17,7 @@ package kuroodo.swagbot.command;
 
 import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
 import kuroodo.swagbot.command.bot.chatcommand.config.CommandLogSetup;
+import kuroodo.swagbot.command.bot.chatcommand.config.CommandLogSetupHelp;
 import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetup;
 import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetupHelp;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandAvatar;
@@ -89,6 +90,8 @@ public class CommandRegistry {
 			return new CommandSetupHelp();
 		case CommandKeys.COMMAND_LOGSETUP:
 			return new CommandLogSetup();
+		case CommandKeys.COMMAND_LOGSHELP:
+			return new CommandLogSetupHelp();
 
 		// LAVA PLAYER Commands
 		case CommandKeys.COMMAND_PLAY:
