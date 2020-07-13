@@ -57,8 +57,10 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
+import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
@@ -513,6 +515,22 @@ public class ServerListener extends ListenerAdapter {
 		for (Permission perm : event.getNewPermissions()) {
 			eb.addField(perm.getName(), "", false);
 		}
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		Logger.sendLogEmbed(settings, eb);
+	}
+
+	@Override
+	public void onGuildMemberUpdateNickname(GuildMemberUpdateNicknameEvent event) {
+		super.onGuildMemberUpdateNickname(event);
+		Guild guild = event.getGuild();
+		GuildSettings settings = GuildManager.getGuild(guild);
+
+		// Logging
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
+		eb.setDescription("The following USER has changed NICKNAMES");
+		eb.addField("Old nickname", event.getOldNickname(), true);
+		eb.addField("New nickname", event.getNewNickname(), true);
 		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
