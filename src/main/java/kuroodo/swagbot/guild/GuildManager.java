@@ -17,6 +17,7 @@ package kuroodo.swagbot.guild;
 
 import java.util.HashMap;
 
+import kuroodo.swagbot.json.GuildLogSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.utils.BotUtility;
@@ -51,6 +52,14 @@ public class GuildManager {
 			System.err.println("Cannot reload Guild " + guildID + " it does not exist in the map");
 		}
 
+	}
+
+	public static void reloadGuildLogSettings(long guildID) {
+		if (GUILDS.containsKey(guildID)) {
+			GUILDS.get(guildID).logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
+		} else {
+			System.err.println("Cannot reload log settings for guild " + guildID + " it does not exist in the map");
+		}
 	}
 
 	public static void addGuild(long guildID) {

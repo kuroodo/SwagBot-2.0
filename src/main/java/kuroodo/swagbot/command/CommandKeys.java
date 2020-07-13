@@ -41,6 +41,8 @@ public class CommandKeys {
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";
 	public static final String COMMAND_SETUPHELP = "setuphelp";
+	public static final String COMMAND_LOGSETUP = "logs";
+	public static final String COMMAND_LOGSHELP = "logshelp";
 
 	// LAVA PLAYER commands
 	public static final String COMMAND_PLAY = "play";

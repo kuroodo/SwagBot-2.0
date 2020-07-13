@@ -23,7 +23,7 @@ public class JSONKeys {
 
 	// Guild Settings
 	public static final String SETTINGS_PATH = "guildsettings/";
-	public static final String TEMPLATE_NAME = "_TEMPLATE.json";
+	public static final String TEMPLATE_SETTINGS_NAME = "_TEMPLATE.json";
 	public static final String SETTINGS_GUILD_ID = "guildid";
 	public static final String SETTINGS_COMMAND_PREFIX = "commandprefix";
 	public static final String SETTINGS_ENABLE_WELCOME = "enablewelcome";
@@ -39,6 +39,12 @@ public class JSONKeys {
 	public static final String SETTINGS_ROLE_PERMISSION0 = "permission0";
 	public static final String SETTINGS_ROLE_PERMISSION1 = "permission1";
 	public static final String SETTINGS_ROLE_PERMISSION2 = "permission2";
+	
+	// Guild Log Settings
+	public static final String TEMPLATE_LOGSETTINGS_NAME = "_TEMPLATE_logs.json";
+	public static final String LOGSETTINGS_NICKNAME = "nickname";
+	public static final String LOGSETTINGS_MEMBE_ROLES = "memberroles";
+	public static final String LOGSETTINGS_ROLE_EDIT = "roleedits";
 
 	// Magic Ball
 	public static final String MAGICBALL_FILE_NAME = "magicball.json";

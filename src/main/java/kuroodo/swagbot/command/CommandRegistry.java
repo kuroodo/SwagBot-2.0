@@ -16,6 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command;
 
 import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
+import kuroodo.swagbot.command.bot.chatcommand.config.CommandLogSetup;
 import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetup;
 import kuroodo.swagbot.command.bot.chatcommand.config.CommandSetupHelp;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandAvatar;
@@ -86,6 +87,8 @@ public class CommandRegistry {
 			return new CommandSetup();
 		case CommandKeys.COMMAND_SETUPHELP:
 			return new CommandSetupHelp();
+		case CommandKeys.COMMAND_LOGSETUP:
+			return new CommandLogSetup();
 
 		// LAVA PLAYER Commands
 		case CommandKeys.COMMAND_PLAY:
