@@ -68,8 +68,10 @@ public class CommandHelp extends ChatCommand {
 
 		eb.setTitle(commandName);
 		eb.setDescription(command.commandDescription());
-		eb.addField("Usage", command.commandFormat(), false);
-		eb.addField("Example", command.commandUsageExample(), false);
+		if (!command.commandFormat().isEmpty() && !command.commandUsageExample().isEmpty()) {
+			eb.addField("Usage", command.commandFormat(), false);
+			eb.addField("Example", command.commandUsageExample(), false);
+		}
 		return eb;
 	}
 
@@ -80,8 +82,9 @@ public class CommandHelp extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "For general help, `" + commandPrefix + CommandKeys.COMMAND_HELP + "`\nFor help with a specific command: `"
-				+ commandPrefix + CommandKeys.COMMAND_HELP + "` <commandname>";
+		return "For general help, `" + commandPrefix + CommandKeys.COMMAND_HELP
+				+ "`\nFor help with a specific command: `" + commandPrefix + CommandKeys.COMMAND_HELP
+				+ "` <commandname>";
 	}
 
 	@Override
