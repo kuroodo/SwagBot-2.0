@@ -60,7 +60,6 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
-import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
@@ -305,6 +304,9 @@ public class ServerListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
 
+		if (!settings.logSettings.messageDeleteLogging)
+			return;
+
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
 				message.getAuthor().getAvatarUrl());
@@ -420,6 +422,8 @@ public class ServerListener extends ListenerAdapter {
 		super.onGuildMemberRoleAdd(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.memberRoleLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -440,6 +444,8 @@ public class ServerListener extends ListenerAdapter {
 
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.memberRoleLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -490,6 +496,8 @@ public class ServerListener extends ListenerAdapter {
 		super.onRoleUpdateName(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.roleEditLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -524,6 +532,9 @@ public class ServerListener extends ListenerAdapter {
 		super.onGuildMemberUpdateNickname(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.nicknameLogging) {
+			return;
+		}
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
