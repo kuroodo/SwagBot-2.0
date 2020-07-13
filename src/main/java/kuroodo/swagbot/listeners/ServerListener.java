@@ -21,8 +21,11 @@ import java.util.function.Consumer;
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.config.BotConfig;
+import kuroodo.swagbot.guild.GuildLogSettings;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import kuroodo.swagbot.json.GuildLogSettingsReader;
+import kuroodo.swagbot.json.GuildLogSettingsWriter;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.utils.BotUtility;
@@ -88,6 +91,15 @@ public class ServerListener extends ListenerAdapter {
 		} else {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
+		}
+		
+		// If guild log settings file exists
+		if (GuildLogSettingsReader.settingsFileExists(guildID)) {
+			settings.logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
+		} else {
+			settings.logSettings = new GuildLogSettings(guild);
+			System.out.println("Generating new log settings file for guild " + guild.getName() + " ID: " + guildID);
+			GuildLogSettingsWriter.createNewFile(settings.logSettings);
 		}
 
 		GuildManager.addGuild(settings);
