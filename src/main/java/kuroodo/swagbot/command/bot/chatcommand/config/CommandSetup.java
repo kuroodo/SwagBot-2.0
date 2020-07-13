@@ -139,20 +139,17 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableWelcome() {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcome = false;
-			sendMessage(BotUtility.codifyText("Welcome message has been disabled."));
 		} else {
-
 			try {
 				settings.enableWelcome = Boolean.parseBoolean(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcome
-					? "enabled. Don't forget to set a welcome message if you haven't already"
-					: "disabled";
-			sendMessage(BotUtility.codifyText("Welcome message has been " + result));
 		}
+		String result = settings.enableWelcome ? "enabled. Don't forget to set a welcome message if you haven't already"
+				: "disabled";
+		sendMessage(BotUtility.codifyText("Welcome message has been " + result));
 	}
 
 	private void updateWelcomeChannel() {
@@ -203,7 +200,6 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableWelcomeRole() {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcomeRole = false;
-			sendMessage(BotUtility.codifyText("Welcome role has been disabled."));
 		} else {
 			try {
 				settings.enableWelcomeRole = Boolean.parseBoolean(commandParams[2]);
@@ -211,11 +207,11 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcomeRole
-					? "enabled. Don't forget to set a welcome role if you haven't already"
-					: "disabled";
-			sendMessage(BotUtility.codifyText("Welcome role has been " + result));
 		}
+		String result = settings.enableWelcomeRole
+				? "enabled. Don't forget to set a welcome role if you haven't already"
+				: "disabled";
+		sendMessage(BotUtility.codifyText("Welcome role has been " + result));
 	}
 
 	private void updateWelcomeRole() {
@@ -352,7 +348,6 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableSpartankick() {
 		if (commandParams[2].equals("-1")) {
 			settings.spartankick = false;
-			sendMessage(BotUtility.codifyText("Spartankick command has been disabled."));
 		} else {
 
 			try {
@@ -361,10 +356,9 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-
-			String result = settings.spartankick ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
 		}
+		String result = settings.spartankick ? "enabled" : "disabled";
+		sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
 	}
 
 	private void updatePermission0() {
