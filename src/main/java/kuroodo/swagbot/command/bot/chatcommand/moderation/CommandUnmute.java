@@ -85,11 +85,11 @@ public class CommandUnmute extends PunishmentCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_UNMUTE + "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_UNMUTE + " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_UNMUTE + "` @Person#1234";
 	}
 }

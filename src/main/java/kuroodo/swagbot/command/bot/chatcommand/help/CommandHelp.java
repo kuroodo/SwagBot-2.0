@@ -80,12 +80,12 @@ public class CommandHelp extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "For general help, " + commandPrefix + CommandKeys.COMMAND_HELP + "\nFor help with a specific command: "
-				+ commandPrefix + CommandKeys.COMMAND_HELP + "<commandname>";
+		return "For general help, `" + commandPrefix + CommandKeys.COMMAND_HELP + "`\nFor help with a specific command: `"
+				+ commandPrefix + CommandKeys.COMMAND_HELP + "` <commandname>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_HELP + " magicball";
+		return "`" + commandPrefix + CommandKeys.COMMAND_HELP + "` magicball";
 	}
 }

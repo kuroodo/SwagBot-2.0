@@ -61,7 +61,7 @@ public class CommandLogSetupHelp extends ChatCommand {
 	public EmbedBuilder getDescriptionsEmbed(GuildLogSettings settings) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("List of Keys and Values");
-		eb.setDescription("Use " + commandPrefix + CommandKeys.COMMAND_LOGSETUP + "<key> <value> to edit values");
+		eb.setDescription("Use `" + commandPrefix + CommandKeys.COMMAND_LOGSETUP + "`<key> <value> to edit values");
 		eb = getKeyDescriptions(settings, eb);
 
 		return eb;
@@ -102,20 +102,20 @@ public class CommandLogSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Insight on how to set up and configure logging preferences. Use " + commandPrefix
-				+ CommandKeys.COMMAND_LOGSETUP + " to modify these values";
+		return "Insight on how to set up and configure logging preferences. Use `" + commandPrefix
+				+ CommandKeys.COMMAND_LOGSETUP + "` to modify these values";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "To get current key values: " + commandPrefix + CommandKeys.COMMAND_LOGSHELP
-				+ "\nTo get information on a key and it's values: " + commandPrefix + CommandKeys.COMMAND_LOGSHELP
-				+ " keys";
+		return "To get current key values: `" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
+				+ "`\nTo get information on a key and it's values: `" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
+				+ "` keys";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_LOGSHELP + "\n" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
-				+ " keys";
+		return "`" + commandPrefix + CommandKeys.COMMAND_LOGSHELP + "`\n`" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
+				+ "` keys";
 	}
 }

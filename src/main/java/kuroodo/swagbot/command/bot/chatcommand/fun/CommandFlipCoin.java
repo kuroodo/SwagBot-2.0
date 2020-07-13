@@ -67,11 +67,11 @@ public class CommandFlipCoin extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
+		return "`" + commandPrefix + CommandKeys.COMMAND_FLIPCOIN + "`";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_FLIPCOIN;
+		return "`" + commandPrefix + CommandKeys.COMMAND_FLIPCOIN + "`";
 	}
 }

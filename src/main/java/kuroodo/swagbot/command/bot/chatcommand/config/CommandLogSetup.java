@@ -152,30 +152,30 @@ public class CommandLogSetup extends ChatCommand {
 
 	private void sendFormatErrorMessage() {
 		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n")
-				+ BotUtility.quotifyText("Correct format: " + commandPrefix + CommandKeys.COMMAND_LOGSETUP
-						+ "<key> <value> AND ensure that the key AND value are correct. Enter " + commandPrefix
-						+ CommandKeys.COMMAND_LOGSHELP + "for more information"));
+				+ BotUtility.quotifyText("Correct format: `" + commandPrefix + CommandKeys.COMMAND_LOGSETUP
+						+ "`<key> <value> AND ensure that the key AND value are correct. Enter `" + commandPrefix
+						+ CommandKeys.COMMAND_LOGSHELP + "` for more information"));
 	}
 
 	private void sendKeyNotFoundMessage() {
-		sendMessage(BotUtility.quotifyText("Incorrect key entered. Enter " + commandPrefix
-				+ CommandKeys.COMMAND_LOGSHELP + " for more information"));
+		sendMessage(BotUtility.quotifyText("Incorrect key entered. Enter `" + commandPrefix
+				+ CommandKeys.COMMAND_LOGSHELP + "` for more information"));
 	}
 
 	@Override
 	public String commandDescription() {
 		return "Use this command to set up what type of log messages the bot will send to the log channel if a log channel is setup."
-				+ "\nUse " + commandPrefix + CommandKeys.COMMAND_LOGSHELP
-				+ " for more information, and for information about keys and values.";
+				+ "\nUse `" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
+				+ "` for more information, and for information about keys and values.";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "Usage: " + commandPrefix + CommandKeys.COMMAND_LOGSETUP + " <key> <value>";
+		return "Usage: `" + commandPrefix + CommandKeys.COMMAND_LOGSETUP + "` <key> <value>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_LOGSETUP + " messagedelete false";
+		return "`" + commandPrefix + CommandKeys.COMMAND_LOGSETUP + "` messagedelete false";
 	}
 }

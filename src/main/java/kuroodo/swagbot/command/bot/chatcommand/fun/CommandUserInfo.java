@@ -89,13 +89,13 @@ public class CommandUserInfo extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return "To get your information: " + commandPrefix + CommandKeys.COMMAND_USERINFO
-				+ "\nTo get a users information:  " + commandPrefix + CommandKeys.COMMAND_USERINFO + " @user";
+		return "To get your information: `" + commandPrefix + CommandKeys.COMMAND_USERINFO
+				+ "`\nTo get a users information:  `" + commandPrefix + CommandKeys.COMMAND_USERINFO + "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_USERINFO + "\n" + commandPrefix + CommandKeys.COMMAND_USERINFO
-				+ " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_USERINFO + "`\n`" + commandPrefix + CommandKeys.COMMAND_USERINFO
+				+ "` @Person#1234";
 	}
 }

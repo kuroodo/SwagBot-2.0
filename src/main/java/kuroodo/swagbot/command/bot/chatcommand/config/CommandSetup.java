@@ -449,9 +449,9 @@ public class CommandSetup extends ChatCommand {
 
 	private void sendFormatErrorMessage() {
 		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n")
-				+ BotUtility.quotifyText("Correct format: " + commandPrefix + CommandKeys.COMMAND_SETUP
-						+ " <key> <value> AND ensure that the key AND value are correct. Enter " + commandPrefix
-						+ CommandKeys.COMMAND_SETUPHELP + " for more information"));
+				+ BotUtility.quotifyText("Correct format: `" + commandPrefix + CommandKeys.COMMAND_SETUP
+						+ "` <key> <value> AND ensure that the key AND value are correct. Enter `" + commandPrefix
+						+ CommandKeys.COMMAND_SETUPHELP + "` for more information"));
 	}
 
 	private void sendKeyNotFoundMessage() {
@@ -476,17 +476,17 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Use this command to set up your server configuration with the bot.\nUse " + commandPrefix
-				+ CommandKeys.COMMAND_SETUPHELP + " for more information, and for information about keys and values.";
+		return "Use this command to set up your server configuration with the bot.\nUse `" + commandPrefix
+				+ CommandKeys.COMMAND_SETUPHELP + "` for more information, and for information about keys and values.";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "Usage: " + commandPrefix + CommandKeys.COMMAND_SETUP + " <key> <value>";
+		return "Usage: `" + commandPrefix + CommandKeys.COMMAND_SETUP + "` <key> <value>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_SETUP + " mutechannel 110614880465227776";
+		return "`"+ commandPrefix + CommandKeys.COMMAND_SETUP + "` mutechannel 110614880465227776";
 	}
 }

@@ -124,14 +124,14 @@ public class CommandBan extends PunishmentCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_BAN
-				+ " @user <duration DAYS> <reason>(optional)\nEnter 0 for days for a permanent ban";
+		return "`" + commandPrefix + CommandKeys.COMMAND_BAN
+				+ "` @user <duration DAYS> <reason>(optional)\nEnter 0 for days for a permanent ban";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_BAN + " @Person#1234 5 For disturbing the peace\n" + commandPrefix
-				+ CommandKeys.COMMAND_BAN + " @Person#1234 5";
+		return "`" + commandPrefix + CommandKeys.COMMAND_BAN + "` @Person#1234 5 For disturbing the peace\n`" + commandPrefix
+				+ CommandKeys.COMMAND_BAN + "` @Person#1234 5";
 	}
 
 }

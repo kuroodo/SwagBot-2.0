@@ -96,12 +96,12 @@ public class CommandKick extends PunishmentCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_KICK + " @user <reason>(optional)";
+		return "`" + commandPrefix + CommandKeys.COMMAND_KICK + "` @user <reason>(optional)";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_KICK + " @Person#1234 For disturbing the peace\n" + commandPrefix
-				+ CommandKeys.COMMAND_KICK + " @Person#1234";
+		return "`" +  commandPrefix + CommandKeys.COMMAND_KICK + "` @Person#1234 For disturbing the peace\n`" + commandPrefix
+				+ CommandKeys.COMMAND_KICK + "` @Person#1234";
 	}
 }

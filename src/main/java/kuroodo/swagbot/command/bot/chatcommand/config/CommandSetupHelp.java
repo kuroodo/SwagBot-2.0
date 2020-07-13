@@ -77,8 +77,8 @@ public class CommandSetupHelp extends ChatCommand {
 		eb = getCurrentSettings(settings, eb);
 		eb.setDescription(
 				"For information, see the [manual](https://github.com/kuroodo/SwagBot-2.0/blob/master/help.txt)");
-		eb.setFooter("To edit these values, use " + commandPrefix + "setup <key> <value>\n"
-				+ "To get a description of each key and their values, enter: " + commandPrefix + "setuphelp keys");
+		eb.setFooter("To edit these values, use " + commandPrefix + CommandKeys.COMMAND_SETUP + " <key> <value>\n"
+				+ "To get a description of each key and their values, enter: " + commandPrefix + CommandKeys.COMMAND_SETUPHELP + " keys");
 		return eb;
 	}
 
@@ -220,20 +220,20 @@ public class CommandSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Insight on how to set up and configure the bot. Use " + commandPrefix + CommandKeys.COMMAND_SETUP
-				+ " to modify these values";
+		return "Insight on how to set up and configure the bot. Use `" + commandPrefix + CommandKeys.COMMAND_SETUP
+				+ "` to modify these values";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "To get current key values: " + commandPrefix + CommandKeys.COMMAND_SETUPHELP
-				+ "\nTo get information on a key and it's values: " + commandPrefix + CommandKeys.COMMAND_SETUPHELP
-				+ " keys";
+		return "To get current key values: `" + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ "`\nTo get information on a key and it's values: `" + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ "` keys";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_SETUPHELP + "\n" + commandPrefix + CommandKeys.COMMAND_SETUPHELP
-				+ " keys";
+		return "`"+ commandPrefix + CommandKeys.COMMAND_SETUPHELP + "`\n`" + commandPrefix + CommandKeys.COMMAND_SETUPHELP
+				+ "` keys";
 	}
 }
