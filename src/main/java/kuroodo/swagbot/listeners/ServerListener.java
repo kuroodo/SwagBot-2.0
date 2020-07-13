@@ -21,8 +21,11 @@ import java.util.function.Consumer;
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.config.BotConfig;
+import kuroodo.swagbot.guild.GuildLogSettings;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import kuroodo.swagbot.json.GuildLogSettingsReader;
+import kuroodo.swagbot.json.GuildLogSettingsWriter;
 import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.utils.BotUtility;
@@ -60,7 +63,6 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
-import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.api.events.role.update.RoleUpdateNameEvent;
@@ -89,6 +91,15 @@ public class ServerListener extends ListenerAdapter {
 		} else {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
+		}
+		
+		// If guild log settings file exists
+		if (GuildLogSettingsReader.settingsFileExists(guildID)) {
+			settings.logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
+		} else {
+			settings.logSettings = new GuildLogSettings(guild);
+			System.out.println("Generating new log settings file for guild " + guild.getName() + " ID: " + guildID);
+			GuildLogSettingsWriter.createNewFile(settings.logSettings);
 		}
 
 		GuildManager.addGuild(settings);
@@ -305,6 +316,9 @@ public class ServerListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
 
+		if (!settings.logSettings.messageDeleteLogging)
+			return;
+
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
 				message.getAuthor().getAvatarUrl());
@@ -420,6 +434,8 @@ public class ServerListener extends ListenerAdapter {
 		super.onGuildMemberRoleAdd(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.memberRoleLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -440,6 +456,8 @@ public class ServerListener extends ListenerAdapter {
 
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.memberRoleLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -490,6 +508,8 @@ public class ServerListener extends ListenerAdapter {
 		super.onRoleUpdateName(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.roleEditLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
@@ -524,6 +544,9 @@ public class ServerListener extends ListenerAdapter {
 		super.onGuildMemberUpdateNickname(event);
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+		if (!settings.logSettings.nicknameLogging) {
+			return;
+		}
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();

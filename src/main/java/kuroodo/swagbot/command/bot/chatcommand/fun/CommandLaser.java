@@ -62,11 +62,11 @@ public class CommandLaser extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_LASER + " @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_LASER + "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_LASER + " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_LASER + "` @Person#1234";
 	}
 }

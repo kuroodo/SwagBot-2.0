@@ -44,7 +44,7 @@ public class GuildSettingsWriter {
 			String path = JSONKeys.SETTINGS_PATH + guild.guildID + ".json";
 			// If template file is valid
 			if (isTemplateExist()) {
-				File templateFile = new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME);
+				File templateFile = new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_SETTINGS_NAME);
 				// Create a new settings file from template
 				FileUtils.copyFile(templateFile, new File(path));
 				writeSettings(guild);
@@ -123,6 +123,6 @@ public class GuildSettingsWriter {
 	}
 
 	public static boolean isTemplateExist() {
-		return new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_NAME).exists();
+		return new File(JSONKeys.SETTINGS_PATH + JSONKeys.TEMPLATE_SETTINGS_NAME).exists();
 	}
 }

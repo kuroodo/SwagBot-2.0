@@ -146,11 +146,11 @@ public class CommandRoulette extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_ROULETTE;
+		return "`" + commandPrefix + CommandKeys.COMMAND_ROULETTE + "`";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_ROULETTE;
+		return "`" + commandPrefix + CommandKeys.COMMAND_ROULETTE + "`";
 	}
 }

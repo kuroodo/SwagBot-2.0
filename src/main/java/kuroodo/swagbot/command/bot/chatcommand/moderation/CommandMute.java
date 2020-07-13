@@ -165,13 +165,13 @@ public class CommandMute extends PunishmentCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_MUTE
-				+ " @user <duration MINUTES>(enter 0 for permanent) <reason>(optional)";
+		return "`" + commandPrefix + CommandKeys.COMMAND_MUTE
+				+ "1 @user <duration MINUTES>(enter 0 for permanent) <reason>(optional)";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_MUTE + " @Person#1234 5 For disturbing the peace\n" + commandPrefix
-				+ CommandKeys.COMMAND_MUTE + " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_MUTE + "` @Person#1234 5 For disturbing the peace\n`" + commandPrefix
+				+ CommandKeys.COMMAND_MUTE + "` @Person#1234";
 	}
 }

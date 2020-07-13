@@ -61,12 +61,12 @@ public class CommandSlap extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_SLAP + " @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_SLAP + "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_SLAP + " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_SLAP + "` @Person#1234";
 	}
 
 }

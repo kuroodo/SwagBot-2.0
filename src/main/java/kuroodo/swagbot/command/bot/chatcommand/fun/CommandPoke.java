@@ -62,11 +62,11 @@ public class CommandPoke extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_POKE + " @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_POKE + "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_POKE + " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_POKE + "` @Person#1234";
 	}
 }

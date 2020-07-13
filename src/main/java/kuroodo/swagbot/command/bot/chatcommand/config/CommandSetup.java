@@ -75,7 +75,7 @@ public class CommandSetup extends ChatCommand {
 
 		settings = GuildManager.getGuild(event.getGuild());
 		modifyGuildSettings();
-		updateGuildSettings();
+		saveGuildSettings();
 	}
 
 	private void modifyGuildSettings() {
@@ -139,20 +139,17 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableWelcome() {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcome = false;
-			sendMessage(BotUtility.codifyText("Welcome message has been disabled."));
 		} else {
-
 			try {
 				settings.enableWelcome = Boolean.parseBoolean(commandParams[2]);
 			} catch (NumberFormatException | ParseException e) {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcome
-					? "enabled. Don't forget to set a welcome message if you haven't already"
-					: "disabled";
-			sendMessage(BotUtility.codifyText("Welcome message has been " + result));
 		}
+		String result = settings.enableWelcome ? "enabled. Don't forget to set a welcome message if you haven't already"
+				: "disabled";
+		sendMessage(BotUtility.codifyText("Welcome message has been " + result));
 	}
 
 	private void updateWelcomeChannel() {
@@ -203,7 +200,6 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableWelcomeRole() {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcomeRole = false;
-			sendMessage(BotUtility.codifyText("Welcome role has been disabled."));
 		} else {
 			try {
 				settings.enableWelcomeRole = Boolean.parseBoolean(commandParams[2]);
@@ -211,11 +207,11 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-			String result = settings.enableWelcomeRole
-					? "enabled. Don't forget to set a welcome role if you haven't already"
-					: "disabled";
-			sendMessage(BotUtility.codifyText("Welcome role has been " + result));
 		}
+		String result = settings.enableWelcomeRole
+				? "enabled. Don't forget to set a welcome role if you haven't already"
+				: "disabled";
+		sendMessage(BotUtility.codifyText("Welcome role has been " + result));
 	}
 
 	private void updateWelcomeRole() {
@@ -352,7 +348,6 @@ public class CommandSetup extends ChatCommand {
 	private void updateEnableSpartankick() {
 		if (commandParams[2].equals("-1")) {
 			settings.spartankick = false;
-			sendMessage(BotUtility.codifyText("Spartankick command has been disabled."));
 		} else {
 
 			try {
@@ -361,10 +356,9 @@ public class CommandSetup extends ChatCommand {
 				sendFormatErrorMessage();
 				return;
 			}
-
-			String result = settings.spartankick ? "enabled" : "disabled";
-			sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
 		}
+		String result = settings.spartankick ? "enabled" : "disabled";
+		sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
 	}
 
 	private void updatePermission0() {
@@ -448,20 +442,21 @@ public class CommandSetup extends ChatCommand {
 
 	}
 
-	private void updateGuildSettings() {
+	private void saveGuildSettings() {
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.reloadGuildSettings(settings.guildID);
 	}
 
 	private void sendFormatErrorMessage() {
-		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n") + BotUtility.quotifyText("Correct format: "
-				+ commandPrefix + "setup <key> <value> AND ensure that the key AND value are correct. Enter "
-				+ commandPrefix + "setuphelp for more information"));
+		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n")
+				+ BotUtility.quotifyText("Correct format: `" + commandPrefix + CommandKeys.COMMAND_SETUP
+						+ "` <key> <value> AND ensure that the key AND value are correct. Enter `" + commandPrefix
+						+ CommandKeys.COMMAND_SETUPHELP + "` for more information"));
 	}
 
 	private void sendKeyNotFoundMessage() {
-		sendMessage(BotUtility
-				.quotifyText("Incorrect key entered. Enter " + commandPrefix + "setuphelp for more information"));
+		sendMessage(BotUtility.quotifyText("Incorrect key entered. Enter " + commandPrefix
+				+ CommandKeys.COMMAND_SETUPHELP + " for more information"));
 	}
 
 	private void printTextChannelErrorMessage() {
@@ -481,17 +476,17 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Use this command to set up your server configuration with the bot.\nUse " + commandPrefix
-				+ CommandKeys.COMMAND_SETUPHELP + " for more information, and for information about keys and values.";
+		return "Use this command to set up your server configuration with the bot.\nUse `" + commandPrefix
+				+ CommandKeys.COMMAND_SETUPHELP + "` for more information, and for information about keys and values.";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "Usage: " + commandPrefix + CommandKeys.COMMAND_SETUP + " <key> <value>";
+		return "Usage: `" + commandPrefix + CommandKeys.COMMAND_SETUP + "` <key> <value>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_SETUP + " mutechannel 110614880465227776";
+		return "`"+ commandPrefix + CommandKeys.COMMAND_SETUP + "` mutechannel 110614880465227776";
 	}
 }

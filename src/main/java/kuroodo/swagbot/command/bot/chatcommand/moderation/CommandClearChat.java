@@ -183,13 +183,13 @@ public class CommandClearChat extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " <user> <amount>\n" + commandPrefix
-				+ CommandKeys.COMMAND_CLEARCHAT + " <amount>";
+		return "`" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + "` <user> <amount>\n`" + commandPrefix
+				+ CommandKeys.COMMAND_CLEARCHAT + "` <amount>";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_CLEARCHAT + " @Person#1234 25\n" + commandPrefix
-				+ CommandKeys.COMMAND_CLEARCHAT + " 25";
+		return "`" + commandPrefix + CommandKeys.COMMAND_CLEARCHAT + "` @Person#1234 25\n`" + commandPrefix
+				+ CommandKeys.COMMAND_CLEARCHAT + "` 25";
 	}
 }

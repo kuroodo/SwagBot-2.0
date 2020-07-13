@@ -78,14 +78,14 @@ public class CommandAvatar extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
-				+ " @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_AVATAR + "`\n`" + commandPrefix + CommandKeys.COMMAND_AVATAR
+				+ "` @user";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_AVATAR + "\n" + commandPrefix + CommandKeys.COMMAND_AVATAR
-				+ " @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_AVATAR + "`\n`" + commandPrefix + CommandKeys.COMMAND_AVATAR
+				+ "` @Person#1234";
 	}
 
 }

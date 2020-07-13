@@ -115,13 +115,13 @@ public class CommandMagicBall extends ChatCommand {
 
 	@Override
 	public String commandFormat() {
-		return commandPrefix + CommandKeys.COMMAND_MAGICBALL + " QUESTION\n"
+		return "`" + commandPrefix + CommandKeys.COMMAND_MAGICBALL + "` QUESTION\n"
 				+ BotUtility.getSelfUser().getAsMention() + " QUESTION";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_MAGICBALL + " What is the meaning of life?\n"
+		return "`" + commandPrefix + CommandKeys.COMMAND_MAGICBALL + "` What is the meaning of life?\n"
 				+ BotUtility.getSelfUser().getAsMention() + " Will my crush ask me out?";
 	}
 }

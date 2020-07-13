@@ -36,6 +36,8 @@ public class GuildSettings {
 	public long permission1 = 0;
 	public long permission2 = 0;
 
+	public GuildLogSettings logSettings;
+
 	public GuildSettings(Guild guild) {
 		this.guild = guild;
 		guildID = guild.getIdLong();
