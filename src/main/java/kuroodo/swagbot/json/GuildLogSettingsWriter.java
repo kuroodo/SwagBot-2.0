@@ -51,6 +51,7 @@ public class GuildLogSettingsWriter {
 			object.set(JSONKeys.LOGSETTINGS_NICKNAME, Boolean.toString(guild.nicknameLogging));
 			object.set(JSONKeys.LOGSETTINGS_MEMBE_ROLES, Boolean.toString(guild.memberRoleLogging));
 			object.set(JSONKeys.LOGSETTINGS_ROLE_EDIT, Boolean.toString(guild.roleEditLogging));
+			object.set(JSONKeys.LOGSETTINGS_MESSAGE_DELETE, Boolean.toString(guild.messageDeleteLogging));
 	
 
 			// Overwrite original file and paste contents

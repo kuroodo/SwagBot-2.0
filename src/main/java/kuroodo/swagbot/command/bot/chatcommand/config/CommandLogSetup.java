@@ -70,6 +70,9 @@ public class CommandLogSetup extends ChatCommand {
 		case JSONKeys.LOGSETTINGS_ROLE_EDIT:
 			updateRoleEdit();
 			return;
+		case JSONKeys.LOGSETTINGS_MESSAGE_DELETE:
+			updateMessageDelete();
+			return;
 		default:
 			sendKeyNotFoundMessage();
 		}
@@ -123,6 +126,23 @@ public class CommandLogSetup extends ChatCommand {
 
 		String result = settings.memberRoleLogging ? "enabled" : "disabled";
 		sendMessage(BotUtility.codifyText("Member role logging as been " + result));
+	}
+	
+	private void updateMessageDelete() {
+		if (commandParams[2].equals("-1")) {
+			settings.messageDeleteLogging = false;
+		} else {
+
+			try {
+				settings.messageDeleteLogging = Boolean.parseBoolean(commandParams[2]);
+			} catch (NumberFormatException | ParseException e) {
+				sendFormatErrorMessage();
+				return;
+			}
+		}
+
+		String result = settings.messageDeleteLogging ? "enabled" : "disabled";
+		sendMessage(BotUtility.codifyText("Message delete logging as been " + result));
 	}
 
 	private void saveGuildSettings() {

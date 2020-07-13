@@ -45,6 +45,7 @@ public class JSONKeys {
 	public static final String LOGSETTINGS_NICKNAME = "nickname";
 	public static final String LOGSETTINGS_MEMBE_ROLES = "memberroles";
 	public static final String LOGSETTINGS_ROLE_EDIT = "roleedits";
+	public static final String LOGSETTINGS_MESSAGE_DELETE = "messagedelete";
 
 	// Magic Ball
 	public static final String MAGICBALL_FILE_NAME = "magicball.json";

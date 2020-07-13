@@ -25,6 +25,8 @@ public class GuildLogSettingsReader {
 			settings.nicknameLogging = Boolean.parseBoolean(object.get(JSONKeys.LOGSETTINGS_NICKNAME).asString());
 			settings.memberRoleLogging = Boolean.parseBoolean(object.get(JSONKeys.LOGSETTINGS_MEMBE_ROLES).asString());
 			settings.roleEditLogging = Boolean.parseBoolean(object.get(JSONKeys.LOGSETTINGS_ROLE_EDIT).asString());
+			settings.messageDeleteLogging = Boolean
+					.parseBoolean(object.get(JSONKeys.LOGSETTINGS_MESSAGE_DELETE).asString());
 
 			reader.close();
 			return settings;
