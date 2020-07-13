@@ -75,7 +75,7 @@ public class CommandSetup extends ChatCommand {
 
 		settings = GuildManager.getGuild(event.getGuild());
 		modifyGuildSettings();
-		updateGuildSettings();
+		saveGuildSettings();
 	}
 
 	private void modifyGuildSettings() {
@@ -448,7 +448,7 @@ public class CommandSetup extends ChatCommand {
 
 	}
 
-	private void updateGuildSettings() {
+	private void saveGuildSettings() {
 		GuildSettingsWriter.writeSettings(settings);
 		GuildManager.reloadGuildSettings(settings.guildID);
 	}
