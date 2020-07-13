@@ -102,7 +102,8 @@ public class CommandLogSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Insight on how to set up and configure the bot. Use " + commandPrefix + "setup to modify these values";
+		return "Insight on how to set up and configure logging preferences. Use " + commandPrefix
+				+ CommandKeys.COMMAND_LOGSETUP + " to modify these values";
 	}
 
 	@Override

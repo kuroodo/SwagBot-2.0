@@ -127,7 +127,7 @@ public class CommandLogSetup extends ChatCommand {
 		String result = settings.memberRoleLogging ? "enabled" : "disabled";
 		sendMessage(BotUtility.codifyText("Member role logging as been " + result));
 	}
-	
+
 	private void updateMessageDelete() {
 		if (commandParams[2].equals("-1")) {
 			settings.messageDeleteLogging = false;
@@ -158,8 +158,8 @@ public class CommandLogSetup extends ChatCommand {
 	}
 
 	private void sendKeyNotFoundMessage() {
-		sendMessage(BotUtility
-				.quotifyText("Incorrect key entered. Enter " + commandPrefix + "logshelp for more information"));
+		sendMessage(BotUtility.quotifyText("Incorrect key entered. Enter " + commandPrefix
+				+ CommandKeys.COMMAND_LOGSHELP + " for more information"));
 	}
 
 	@Override
@@ -176,6 +176,6 @@ public class CommandLogSetup extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return commandPrefix + CommandKeys.COMMAND_LOGSETUP + " roleedits false";
+		return commandPrefix + CommandKeys.COMMAND_LOGSETUP + " messagedelete false";
 	}
 }

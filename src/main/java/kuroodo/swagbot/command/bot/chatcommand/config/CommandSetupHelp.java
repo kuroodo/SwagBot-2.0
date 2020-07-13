@@ -220,7 +220,8 @@ public class CommandSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Insight on how to set up and configure the bot. Use " + commandPrefix + "setup to modify these values";
+		return "Insight on how to set up and configure the bot. Use " + commandPrefix + CommandKeys.COMMAND_SETUP
+				+ " to modify these values";
 	}
 
 	@Override

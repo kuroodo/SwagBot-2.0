@@ -448,14 +448,15 @@ public class CommandSetup extends ChatCommand {
 	}
 
 	private void sendFormatErrorMessage() {
-		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n") + BotUtility.quotifyText("Correct format: "
-				+ commandPrefix + "setup <key> <value> AND ensure that the key AND value are correct. Enter "
-				+ commandPrefix + "setuphelp for more information"));
+		sendMessage(BotUtility.quotifyText("Parameters incorrect.\n")
+				+ BotUtility.quotifyText("Correct format: " + commandPrefix + CommandKeys.COMMAND_SETUP
+						+ " <key> <value> AND ensure that the key AND value are correct. Enter " + commandPrefix
+						+ CommandKeys.COMMAND_SETUPHELP + " for more information"));
 	}
 
 	private void sendKeyNotFoundMessage() {
-		sendMessage(BotUtility
-				.quotifyText("Incorrect key entered. Enter " + commandPrefix + "setuphelp for more information"));
+		sendMessage(BotUtility.quotifyText("Incorrect key entered. Enter " + commandPrefix
+				+ CommandKeys.COMMAND_SETUPHELP + " for more information"));
 	}
 
 	private void printTextChannelErrorMessage() {
