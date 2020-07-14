@@ -15,7 +15,9 @@ limitations under the License.
  */
 package kuroodo.swagbot.command.bot.chatcommand.fun;
 
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
@@ -23,6 +25,7 @@ import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CommandUserInfo extends ChatCommand {
@@ -59,10 +62,10 @@ public class CommandUserInfo extends ChatCommand {
 
 	private EmbedBuilder makeEmbed(Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
-		String name = member.getUser().getAsTag();
-		String nickname = member.getEffectiveName();
+		// String name = member.getUser().getAsTag();
+		// String nickname = member.getEffectiveName();
 		String avatarURL = member.getUser().getAvatarUrl();
-		String status = member.getOnlineStatus().toString();
+		OffsetDateTime createDate = member.getTimeCreated();
 		String joinDate = member.getTimeJoined().format(DateTimeFormatter.ISO_LOCAL_DATE);
 
 		String boostTime = "Not Boosting";
@@ -70,14 +73,22 @@ public class CommandUserInfo extends ChatCommand {
 			boostTime = member.getTimeBoosted().toString();
 		}
 
+		List<Role> roles = member.getRoles();
+		String roleString = "";
+		for (Role role : roles) {
+			roleString += role.getAsMention() + " ";
+		}
+
 		eb.setColor(BotUtility.EMBED_USER_COMMANDS);
-		eb.setTitle(nickname + "'s info");
-		eb.addField("Username", name, true);
-		eb.addField("Status", status, true);
+		eb.setAuthor(member.getUser().getAsTag(), null, avatarURL);
+		eb.setDescription(member.getAsMention());
 		eb.addField("Joined Server", joinDate, true);
+		eb.addField("Registered", BotUtility.getTimeAsString(createDate), true);
 		eb.addField("Nitro Boost", boostTime, true);
-		eb.addField("Avatar: ", member.getAsMention(), false);
-		eb.setImage(avatarURL);
+		eb.addField("Roles: " + roles.size(), roleString, false);
+		eb.setFooter("User ID: " + member.getIdLong() + " | Use " + commandPrefix + CommandKeys.COMMAND_USERINFO
+				+ " to get your own info! \n| Date of request: " + BotUtility.getCurrentDate() + " EST");
+		eb.setThumbnail(avatarURL);
 
 		return eb;
 	}
@@ -95,7 +106,7 @@ public class CommandUserInfo extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_USERINFO + "`\n`" + commandPrefix + CommandKeys.COMMAND_USERINFO
-				+ "` @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_USERINFO + "`\n`" + commandPrefix
+				+ CommandKeys.COMMAND_USERINFO + "` @Person#1234";
 	}
 }
