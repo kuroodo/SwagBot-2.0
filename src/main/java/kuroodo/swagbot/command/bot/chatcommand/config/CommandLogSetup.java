@@ -1,7 +1,5 @@
 package kuroodo.swagbot.command.bot.chatcommand.config;
 
-import com.eclipsesource.json.ParseException;
-
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.bot.chatcommand.ChatCommand;
@@ -83,9 +81,9 @@ public class CommandLogSetup extends ChatCommand {
 			settings.nicknameLogging = false;
 		} else {
 
-			try {
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.nicknameLogging = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -99,9 +97,9 @@ public class CommandLogSetup extends ChatCommand {
 			settings.memberRoleLogging = false;
 		} else {
 
-			try {
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.memberRoleLogging = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -116,12 +114,13 @@ public class CommandLogSetup extends ChatCommand {
 			settings.roleEditLogging = false;
 		} else {
 
-			try {
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.roleEditLogging = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
+
 		}
 
 		String result = settings.memberRoleLogging ? "enabled" : "disabled";
@@ -133,9 +132,9 @@ public class CommandLogSetup extends ChatCommand {
 			settings.messageDeleteLogging = false;
 		} else {
 
-			try {
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.messageDeleteLogging = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}

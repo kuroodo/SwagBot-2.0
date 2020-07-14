@@ -140,9 +140,10 @@ public class CommandSetup extends ChatCommand {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcome = false;
 		} else {
-			try {
+
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.enableWelcome = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
@@ -201,12 +202,14 @@ public class CommandSetup extends ChatCommand {
 		if (commandParams[2].equals("-1")) {
 			settings.enableWelcomeRole = false;
 		} else {
-			try {
+
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.enableWelcomeRole = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
+
 		}
 		String result = settings.enableWelcomeRole
 				? "enabled. Don't forget to set a welcome role if you haven't already"
@@ -350,12 +353,13 @@ public class CommandSetup extends ChatCommand {
 			settings.spartankick = false;
 		} else {
 
-			try {
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
 				settings.spartankick = Boolean.parseBoolean(commandParams[2]);
-			} catch (NumberFormatException | ParseException e) {
+			} else {
 				sendFormatErrorMessage();
 				return;
 			}
+
 		}
 		String result = settings.spartankick ? "enabled" : "disabled";
 		sendMessage(BotUtility.codifyText("Spartankick command has been " + result + "."));
@@ -487,6 +491,6 @@ public class CommandSetup extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return "`"+ commandPrefix + CommandKeys.COMMAND_SETUP + "` mutechannel 110614880465227776";
+		return "`" + commandPrefix + CommandKeys.COMMAND_SETUP + "` mutechannel 110614880465227776";
 	}
 }
