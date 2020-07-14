@@ -18,8 +18,10 @@ package kuroodo.swagbot.utils;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
@@ -172,12 +174,26 @@ public class BotUtility {
 	public static String getCurrentDate() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
-		return dtf.format(now);
+		TimeZone timeZone = Calendar.getInstance().getTimeZone();
+		String zone = "";
+		for (int i = 0; i < timeZone.getDisplayName().length(); i++) {
+			if (Character.isUpperCase(timeZone.getDisplayName().charAt(i))) {
+				zone += timeZone.getDisplayName().charAt(i);
+			}
+		}
+		return dtf.format(now) + " " + zone;
 	}
 
 	public static String getTimeAsString(OffsetDateTime time) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
-		return time.format(dtf);
+		TimeZone timeZone = Calendar.getInstance().getTimeZone();
+		String zone = "";
+		for (int i = 0; i < timeZone.getDisplayName().length(); i++) {
+			if (Character.isUpperCase(timeZone.getDisplayName().charAt(i))) {
+				zone += timeZone.getDisplayName().charAt(i);
+			}
+		}
+		return time.format(dtf) + " " + zone;
 	}
 
 	// Removes an element by rebuilding the array without that index

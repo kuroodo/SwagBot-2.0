@@ -87,7 +87,7 @@ public class CommandUserInfo extends ChatCommand {
 		eb.addField("Nitro Boost", boostTime, true);
 		eb.addField("Roles: " + roles.size(), roleString, false);
 		eb.setFooter("User ID: " + member.getIdLong() + " | Use " + commandPrefix + CommandKeys.COMMAND_USERINFO
-				+ " to get your own info! \n| Date of request: " + BotUtility.getCurrentDate() + " EST");
+				+ " to get your own info! \n| Date of request: " + BotUtility.getCurrentDate());
 		eb.setThumbnail(avatarURL);
 
 		return eb;
