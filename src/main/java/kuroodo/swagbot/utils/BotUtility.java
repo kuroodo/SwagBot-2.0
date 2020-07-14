@@ -16,6 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.utils;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
@@ -43,7 +44,7 @@ public class BotUtility {
 	public static final int EMBDED_CHANNEL_COLOR = 0xADA9A4;
 	public static final int EMBDED_USER_MESSAGE_COLOR = 0x7AA9A4;
 	public static final int EMBED_USER_COMMANDS = 0x6D4508;
-	
+
 	public static void sendMessageToBotOwner(String message) {
 		try {
 			long ownerID = Long.parseLong(ConfigReader.getConfigValue(JSONKeys.CONIG_BOT_OWNER));
@@ -172,6 +173,11 @@ public class BotUtility {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		return dtf.format(now);
+	}
+
+	public static String getTimeAsString(OffsetDateTime time) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");
+		return time.format(dtf);
 	}
 
 	// Removes an element by rebuilding the array without that index
