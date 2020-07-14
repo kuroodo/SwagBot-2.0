@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.CommandKeys;
+import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.guild.GuildLogSettings;
 import kuroodo.swagbot.guild.GuildManager;
@@ -319,6 +320,12 @@ public class ServerListener extends ListenerAdapter {
 
 		if (!settings.logSettings.messageDeleteLogging)
 			return;
+
+		// If the message being delete is a command
+		if (!(ChatListener.parseGuildCommand(event.getGuild().getIdLong(),
+				message.getContentRaw()).command instanceof CommandBlank)) {
+			return;
+		}
 
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
