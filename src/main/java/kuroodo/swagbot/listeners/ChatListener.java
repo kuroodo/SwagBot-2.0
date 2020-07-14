@@ -50,49 +50,62 @@ public class ChatListener extends ListenerAdapter {
 
 	private void HandleCommandRequest(MessageReceivedEvent event) {
 		if (event.isFromGuild()) {
-			GuildSettings guild = GuildManager.getGuild(event.getGuild().getIdLong());
-
-			String commandName = "";
-			String[] commandParams = BotUtility.splitString(event.getMessage().getContentRaw());
-
-			// If starts with < which is a user mention
-			if (commandParams[0].startsWith("<")) {
-				// For some reason now mentions have an ! in getContentRaw(), so lets remove it
-				commandParams[0] = commandParams[0].replace("!", "");
-			}
-
-			// If starts with command prefix
-			if (commandParams[0].startsWith(guild.commandPrefix)) {
-				commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
-
-				// Else starts with bot mention
-			} else if (commandParams[0].equals((BotUtility.getSelfUser().getAsMention()))) {
-
-				// If entered parameters
-				if (commandParams.length > 1) {
-					commandName = commandParams[1];
-					// Remove bot mention
-					commandParams = BotUtility.removeElement(commandParams, 0);
-
-					// If no valid command is given
-					if (CommandRegistry.getCommand(commandName) instanceof CommandBlank) {
-						// Default to magicball
-						commandName = CommandKeys.COMMAND_MAGICBALL;
-					}
-
-				} else {// If just a blank mention, do magicball
-					commandName = CommandKeys.COMMAND_MAGICBALL;
-				}
-
-			} else {
-				return;
-			}
-
-			BotCommand command = CommandRegistry.getCommand(commandName);
-			command.executeCommand(commandParams, event);
+			ParsedCommand result = parseGuildCommand(event.getGuild().getIdLong(), event.getMessage().getContentRaw());
+			result.command.executeCommand(result.commandParams, event);
 
 		} else if (event.isFromType(ChannelType.PRIVATE)) {
 			// TODO: Private commands
 		}
 	}
+
+	public static ParsedCommand parseGuildCommand(Long guildID, String input) {
+		GuildSettings guild = GuildManager.getGuild(guildID);
+
+		String commandName = "";
+		String[] commandParams = BotUtility.splitString(input);
+
+		// If starts with < which is a user mention
+		if (commandParams[0].startsWith("<")) {
+			// For some reason now mentions have an ! in getContentRaw(), so lets remove it
+			commandParams[0] = commandParams[0].replace("!", "");
+		}
+
+		// If starts with command prefix
+		if (commandParams[0].startsWith(guild.commandPrefix)) {
+			commandName = BotUtility.removePrefix(guild.commandPrefix, commandParams[0]);
+
+			// Else starts with bot mention
+		} else if (commandParams[0].equals((BotUtility.getSelfUser().getAsMention()))) {
+
+			// If entered parameters
+			if (commandParams.length > 1) {
+				commandName = commandParams[1];
+				// Remove bot mention
+				commandParams = BotUtility.removeElement(commandParams, 0);
+
+				// If no valid command is given
+				if (CommandRegistry.getCommand(commandName) instanceof CommandBlank) {
+					// Default to magicball
+					commandName = CommandKeys.COMMAND_MAGICBALL;
+				}
+
+			} else {// If just a blank mention, do magicball
+				commandName = CommandKeys.COMMAND_MAGICBALL;
+			}
+
+		}
+
+		return new ParsedCommand(CommandRegistry.getCommand(commandName), commandParams);
+	}
+
+	public static final class ParsedCommand {
+		public final String commandParams[];
+		public final BotCommand command;
+
+		public ParsedCommand(BotCommand command, String[] commandParams) {
+			this.command = command;
+			this.commandParams = commandParams;
+		}
+	}
+
 }
