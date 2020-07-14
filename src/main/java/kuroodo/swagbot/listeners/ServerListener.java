@@ -92,7 +92,7 @@ public class ServerListener extends ListenerAdapter {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
 		}
-		
+
 		// If guild log settings file exists
 		if (GuildLogSettingsReader.settingsFileExists(guildID)) {
 			settings.logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
@@ -136,7 +136,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + member.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -155,7 +155,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + member.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -173,7 +173,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(user.getName());
 		eb.addField("Tag", user.getAsTag(), true);
 		eb.setImage(user.getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + user.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate() + " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -207,7 +207,8 @@ public class ServerListener extends ListenerAdapter {
 			});
 		} else {
 			eb.setImage(event.getUser().getAvatarUrl());
-			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+			eb.setFooter("User ID: " + event.getUser().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate()
+					+ " EST");
 
 			Logger.sendLogEmbed(settings, eb);
 		}
@@ -446,7 +447,8 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("", role.getName(), false);
 		}
 
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate()
+				+ " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -468,7 +470,8 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("", role.getName(), false);
 		}
 
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate()
+				+ " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -554,7 +557,8 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following USER has changed NICKNAMES");
 		eb.addField("Old nickname", event.getOldNickname(), true);
 		eb.addField("New nickname", event.getNewNickname(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate()
+				+ " EST");
 		Logger.sendLogEmbed(settings, eb);
 	}
 
