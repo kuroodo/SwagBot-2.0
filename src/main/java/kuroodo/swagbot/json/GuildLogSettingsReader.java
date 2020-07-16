@@ -19,21 +19,55 @@ public class GuildLogSettingsReader {
 		GuildLogSettings settings = new GuildLogSettings(guildID);
 		try {
 			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + "_logs.json"));
-			JsonObject object = Json.parse(reader).asObject();
+			JsonObject jsonObject = Json.parse(reader).asObject();
 
-			settings = new GuildLogSettings(guildID);
-			settings.nicknameLogging = Boolean.parseBoolean(object.get(JSONKeys.LOGSETTINGS_NICKNAME).asString());
-			settings.memberRoleLogging = Boolean.parseBoolean(object.get(JSONKeys.LOGSETTINGS_MEMBE_ROLES).asString());
-			settings.messageDeleteLogging = Boolean
-					.parseBoolean(object.get(JSONKeys.LOGSETTINGS_MESSAGE_DELETE).asString());
+			boolean needsWriting = false;
+			// Load log settings by type
+			needsWriting = loadBools(settings, jsonObject);
 
 			reader.close();
+
+			// Restore any objects that were missing or had issues
+			if (needsWriting) {
+				GuildLogSettingsWriter.writeSettings(settings);
+			}
 			return settings;
 		} catch (ParseException | IOException e) {
 			System.err.println("Error retrieving guild or guild LOG settings for guild: " + guildID);
 		}
 
 		return settings;
+	}
+
+	private static boolean loadBools(GuildLogSettings settings, JsonObject jsonObject) {
+		boolean needsWriting = false;
+		if (!isObjectNull(JSONKeys.LOGSETTINGS_NICKNAME, jsonObject)) {
+			settings.nicknameLogging = getBool(JSONKeys.LOGSETTINGS_NICKNAME, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.LOGSETTINGS_MEMBE_ROLES, jsonObject)) {
+			settings.memberRoleLogging = getBool(JSONKeys.LOGSETTINGS_MEMBE_ROLES, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.LOGSETTINGS_MESSAGE_DELETE, jsonObject)) {
+			settings.messageDeleteLogging = getBool(JSONKeys.LOGSETTINGS_MESSAGE_DELETE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		return needsWriting;
+	}
+
+	private static boolean isObjectNull(String key, JsonObject jsonObject) {
+		return jsonObject.get(key) == null;
+	}
+
+	private static boolean getBool(String key, JsonObject jsonObject) {
+		return Boolean.parseBoolean(jsonObject.get(key).asString());
 	}
 
 	public static String getSettingsValue(long guildID, String key) {
