@@ -78,6 +78,9 @@ public class GuildManager {
 		if (GUILDS.containsKey(guild.getIdLong())) {
 			GUILDS.remove(guild.getIdLong());
 		}
+		if (MESSAGE_CACHE.containsKey(guild.getIdLong())) {
+			MESSAGE_CACHE.remove(guild.getIdLong());
+		}
 	}
 
 	public static void removeGuild(long guildID) {

@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
 import kuroodo.swagbot.command.CommandKeys;
+import kuroodo.swagbot.command.bot.chatcommand.CommandBlank;
 import kuroodo.swagbot.config.BotConfig;
 import kuroodo.swagbot.guild.GuildLogSettings;
 import kuroodo.swagbot.guild.GuildManager;
@@ -92,7 +93,7 @@ public class ServerListener extends ListenerAdapter {
 			System.out.println("Generating new Guild file for guild " + guild.getName() + " ID: " + guildID);
 			GuildSettingsWriter.createNewFile(settings);
 		}
-		
+
 		// If guild log settings file exists
 		if (GuildLogSettingsReader.settingsFileExists(guildID)) {
 			settings.logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
@@ -136,7 +137,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + member.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -155,7 +156,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(member.getAsMention());
 		eb.addField("Tag", member.getUser().getAsTag(), true);
 		eb.setImage(member.getUser().getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + member.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -173,7 +174,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription(user.getName());
 		eb.addField("Tag", user.getAsTag(), true);
 		eb.setImage(user.getAvatarUrl());
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + user.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -199,7 +200,7 @@ public class ServerListener extends ListenerAdapter {
 					if (t.getReason() != null) {
 						eb.setDescription("Banned for: " + t.getReason());
 						eb.setImage(user.getAvatarUrl());
-						eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+						eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 
 						Logger.sendLogEmbed(settings, eb);
 					}
@@ -207,7 +208,7 @@ public class ServerListener extends ListenerAdapter {
 			});
 		} else {
 			eb.setImage(event.getUser().getAvatarUrl());
-			eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+			eb.setFooter("User ID: " + event.getUser().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 
 			Logger.sendLogEmbed(settings, eb);
 		}
@@ -254,7 +255,7 @@ public class ServerListener extends ListenerAdapter {
 		}
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -271,7 +272,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", "#" + event.getOldName(), true);
 		eb.addField("New name", "#" + event.getNewName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -286,7 +287,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following TEXT CHANNEL has been DELETED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -301,7 +302,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following TEXT CHANNEL has been CREATED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Channel:", "#" + event.getChannel().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -319,6 +320,12 @@ public class ServerListener extends ListenerAdapter {
 		if (!settings.logSettings.messageDeleteLogging)
 			return;
 
+		// If the message being delete is a command
+		if (!(ChatListener.parseGuildCommand(event.getGuild().getIdLong(),
+				message.getContentRaw()).command instanceof CommandBlank)) {
+			return;
+		}
+
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
 				message.getAuthor().getAvatarUrl());
@@ -329,8 +336,7 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("Attachments", message.getAttachments().get(0).getFileName(), true);
 		}
 
-		eb.setFooter("Message ID: " + event.getMessageId() + " | " + "Time of event: " + BotUtility.getCurrentDate()
-				+ " EST");
+		eb.setFooter("Message ID: " + event.getMessageId() + " | " + "Time of event: " + BotUtility.getCurrentDate());
 		eb.setColor(new Color(BotUtility.EMBDED_USER_MESSAGE_COLOR));
 		Logger.sendLogEmbed(settings, eb);
 
@@ -349,7 +355,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -364,7 +370,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following VOICE CHANNEL has been DELETED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Channel:", event.getChannel().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -379,7 +385,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following VOICE CHANNEL has been CREATED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Channel:", event.getChannel().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -395,7 +401,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -410,7 +416,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following CATEGORY has been DELETED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Category:", event.getCategory().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -425,7 +431,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following CATEGORY has been CREATED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Category:", event.getCategory().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -446,7 +452,7 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("", role.getName(), false);
 		}
 
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -468,7 +474,7 @@ public class ServerListener extends ListenerAdapter {
 			eb.addField("", role.getName(), false);
 		}
 
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -483,7 +489,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
 		eb.setDescription("The following ROLE has been CREATED:");
 		eb.addField("Role:", event.getRole().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 		// C9932E
 	}
@@ -499,7 +505,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
 		eb.setDescription("The following ROLE has been DELETED:");
 		eb.addField("Role:", event.getRole().getName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -517,7 +523,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following ROLE has been RENAMED");
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -535,7 +541,7 @@ public class ServerListener extends ListenerAdapter {
 		for (Permission perm : event.getNewPermissions()) {
 			eb.addField(perm.getName(), "", false);
 		}
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -554,7 +560,7 @@ public class ServerListener extends ListenerAdapter {
 		eb.setDescription("The following USER has changed NICKNAMES");
 		eb.addField("Old nickname", event.getOldNickname(), true);
 		eb.addField("New nickname", event.getNewNickname(), true);
-		eb.setFooter("Time of event: " + BotUtility.getCurrentDate() + " EST");
+		eb.setFooter("User ID: " + event.getMember().getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
