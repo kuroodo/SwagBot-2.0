@@ -37,98 +37,16 @@ public class GuildSettingsReader {
 	public static GuildSettings loadSettingsFile(long guildID) {
 		Reader reader;
 		GuildSettings settings = new GuildSettings(guildID);
-		boolean needsWriting = false;
 		try {
 			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json"));
-			JsonObject jsObject = Json.parse(reader).asObject();
+			JsonObject jsonObject = Json.parse(reader).asObject();
 			settings = new GuildSettings(guildID);
 
-			// booleans
-			if (!isObjectNull(JSONKeys.SETTINGS_ENABLE_WELCOME, jsObject)) {
-				settings.enableWelcome = getBool(JSONKeys.SETTINGS_ENABLE_WELCOME, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE, jsObject)) {
-				settings.enableWelcomeRole = getBool(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_SPARTANKICK, jsObject)) {
-				settings.spartankick = getBool(JSONKeys.SETTINGS_SPARTANKICK, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			// Strings
-			if (!isObjectNull(JSONKeys.SETTINGS_COMMAND_PREFIX, jsObject)) {
-				settings.commandPrefix = getString(JSONKeys.SETTINGS_COMMAND_PREFIX, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_MESSAGE, jsObject)) {
-				settings.welcomeMessage = getString(JSONKeys.SETTINGS_WELCOME_MESSAGE, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			// Longs
-			if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_CHANNEL, jsObject)) {
-				settings.welcomeChannel = getLong(JSONKeys.SETTINGS_WELCOME_CHANNEL, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_ROLE, jsObject)) {
-				settings.welcomeRole = getLong(JSONKeys.SETTINGS_WELCOME_ROLE, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_LOG_CHANNEL, jsObject)) {
-				settings.logChannel = getLong(JSONKeys.SETTINGS_LOG_CHANNEL, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_MUTE_ROLE, jsObject)) {
-				settings.muteRole = getLong(JSONKeys.SETTINGS_MUTE_ROLE, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_MUTE_CHANNEL, jsObject)) {
-				settings.muteChannel = getLong(JSONKeys.SETTINGS_MUTE_CHANNEL, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_MUSIC_CHANNEL, jsObject)) {
-				settings.musicchannel = getLong(JSONKeys.SETTINGS_MUSIC_CHANNEL, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION0, jsObject)) {
-				settings.permission0 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION0, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION1, jsObject)) {
-				settings.permission1 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION1, jsObject);
-			} else {
-				needsWriting = true;
-			}
-
-			if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION2, jsObject)) {
-				settings.permission2 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION2, jsObject);
-			} else {
-				needsWriting = true;
-			}
+			boolean needsWriting = false;
+			// Load each guild setting by type
+			needsWriting = loadBools(settings, jsonObject);
+			needsWriting = loadStrings(settings, jsonObject);
+			needsWriting = loadLongs(settings, jsonObject);
 
 			reader.close();
 
@@ -142,6 +60,105 @@ public class GuildSettingsReader {
 		}
 
 		return settings;
+	}
+
+	private static boolean loadBools(GuildSettings settings, JsonObject jsonObject) {
+		boolean needsWriting = false;
+		if (!isObjectNull(JSONKeys.SETTINGS_ENABLE_WELCOME, jsonObject)) {
+			settings.enableWelcome = getBool(JSONKeys.SETTINGS_ENABLE_WELCOME, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE, jsonObject)) {
+			settings.enableWelcomeRole = getBool(JSONKeys.SETTINGS_ENABLE_WELCOME_ROLE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_SPARTANKICK, jsonObject)) {
+			settings.spartankick = getBool(JSONKeys.SETTINGS_SPARTANKICK, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		return needsWriting;
+	}
+
+	private static boolean loadStrings(GuildSettings settings, JsonObject jsonObject) {
+		boolean needsWriting = false;
+		if (!isObjectNull(JSONKeys.SETTINGS_COMMAND_PREFIX, jsonObject)) {
+			settings.commandPrefix = getString(JSONKeys.SETTINGS_COMMAND_PREFIX, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_MESSAGE, jsonObject)) {
+			settings.welcomeMessage = getString(JSONKeys.SETTINGS_WELCOME_MESSAGE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		return needsWriting;
+	}
+
+	private static boolean loadLongs(GuildSettings settings, JsonObject jsonObject) {
+		boolean needsWriting = false;
+		if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_CHANNEL, jsonObject)) {
+			settings.welcomeChannel = getLong(JSONKeys.SETTINGS_WELCOME_CHANNEL, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_WELCOME_ROLE, jsonObject)) {
+			settings.welcomeRole = getLong(JSONKeys.SETTINGS_WELCOME_ROLE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_LOG_CHANNEL, jsonObject)) {
+			settings.logChannel = getLong(JSONKeys.SETTINGS_LOG_CHANNEL, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_MUTE_ROLE, jsonObject)) {
+			settings.muteRole = getLong(JSONKeys.SETTINGS_MUTE_ROLE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_MUTE_CHANNEL, jsonObject)) {
+			settings.muteChannel = getLong(JSONKeys.SETTINGS_MUTE_CHANNEL, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_MUSIC_CHANNEL, jsonObject)) {
+			settings.musicchannel = getLong(JSONKeys.SETTINGS_MUSIC_CHANNEL, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION0, jsonObject)) {
+			settings.permission0 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION0, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION1, jsonObject)) {
+			settings.permission1 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION1, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		if (!isObjectNull(JSONKeys.SETTINGS_ROLE_PERMISSION2, jsonObject)) {
+			settings.permission2 = getLong(JSONKeys.SETTINGS_ROLE_PERMISSION2, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
+		return needsWriting;
 	}
 
 	private static boolean isObjectNull(String key, JsonObject jsonObject) {
