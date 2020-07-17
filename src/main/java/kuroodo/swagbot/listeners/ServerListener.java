@@ -16,6 +16,8 @@ limitations under the License.
 package kuroodo.swagbot.listeners;
 
 import java.awt.Color;
+import java.time.Instant;
+import java.util.List;
 import java.util.function.Consumer;
 
 import kuroodo.swagbot.SwagBot;
@@ -146,18 +148,42 @@ public class ServerListener extends ListenerAdapter {
 	public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
 		super.onGuildMemberRemove(event);
 		Guild guild = event.getGuild();
-		Member member = event.getMember();
+		User user = event.getUser();
 		GuildSettings settings = GuildManager.getGuild(guild);
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("A USER has LEFT THE SERVER");
 		eb.setColor(new Color(BotUtility.EMBED_CORE_COLOR));
-		eb.setDescription(member.getAsMention());
-		eb.addField("Tag", member.getUser().getAsTag(), true);
-		eb.setImage(member.getUser().getAvatarUrl());
-		eb.setFooter("User ID: " + member.getIdLong() + " | Time of event: " + BotUtility.getCurrentDate());
-		Logger.sendLogEmbed(settings, eb);
+
+		if (BotUtility.hasPermission(Permission.BAN_MEMBERS, BotUtility.getSelfMember(guild))) {
+			guild.retrieveBanList().queue(new Consumer<List<Ban>>() {
+				@Override
+				public void accept(List<Ban> t) {
+					for (Ban ban : t) {
+						if (ban.getUser().getIdLong() == user.getIdLong()) {
+							return;
+						}
+					}
+
+					eb.setDescription(user.getAsMention());
+					eb.addField("Tag", user.getAsTag(), true);
+					eb.setImage(user.getAvatarUrl());
+					eb.setFooter("User ID: " + user.getIdLong());
+					eb.setTimestamp(Instant.now());
+					Logger.sendLogEmbed(settings, eb);
+				}
+
+			});
+		} else {
+			eb.setDescription(user.getAsMention());
+			eb.addField("Tag", user.getAsTag(), true);
+			eb.setImage(user.getAvatarUrl());
+			eb.setFooter("User ID: " + user.getIdLong());
+			eb.setTimestamp(Instant.now());
+			Logger.sendLogEmbed(settings, eb);
+		}
+
 	}
 
 	@Override
