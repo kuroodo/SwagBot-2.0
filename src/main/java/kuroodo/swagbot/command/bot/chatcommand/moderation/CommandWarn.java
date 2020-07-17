@@ -57,6 +57,7 @@ public class CommandWarn extends PunishmentCommand {
 		if (!val.isEmpty()) {
 			try {
 				warnings = Integer.parseInt(val);
+				warnings += 1;
 			} catch (NumberFormatException e) {
 				warnings = 1;
 			}
