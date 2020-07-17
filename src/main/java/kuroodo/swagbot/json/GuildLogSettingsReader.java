@@ -59,6 +59,18 @@ public class GuildLogSettingsReader {
 			needsWriting = true;
 		}
 
+		if (!isObjectNull(JSONKeys.LOGSETTINGS_MEMBERJOIN, jsonObject)) {
+			settings.memberJoinLogging = getBool(JSONKeys.LOGSETTINGS_MEMBERJOIN, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+		
+		if (!isObjectNull(JSONKeys.LOGSETTINGS_MEMBERLEAVE, jsonObject)) {
+			settings.memberLeaveLogging = getBool(JSONKeys.LOGSETTINGS_MEMBERLEAVE, jsonObject);
+		} else {
+			needsWriting = true;
+		}
+
 		return needsWriting;
 	}
 

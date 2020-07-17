@@ -86,6 +86,10 @@ public class CommandLogSetupHelp extends ChatCommand {
 				"Enable logging when a member is given or revoked roles. Accepted values: true or false", false);
 		eb.addField(JSONKeys.LOGSETTINGS_MESSAGE_DELETE,
 				"Enable logging when a message is deleted. Accepted values: true or false", false);
+		eb.addField(JSONKeys.LOGSETTINGS_MEMBERJOIN,
+				"Enable logging when a member joins the server. Accepted values: true or false", false);
+		eb.addField(JSONKeys.LOGSETTINGS_MEMBERLEAVE,
+				"Enable logging when a member leaves the server. Accepted values: true or false", false);
 
 		return eb;
 	}
@@ -95,7 +99,9 @@ public class CommandLogSetupHelp extends ChatCommand {
 		// Enable Welcome Message
 		eb.addField("Nickname logging", "" + settings.nicknameLogging, false);
 		eb.addField("Member rolee logging", "" + settings.memberRoleLogging, false);
-		eb.addField("Message deletee logging", "" + settings.messageDeleteLogging, false);
+		eb.addField("Message delete logging", "" + settings.messageDeleteLogging, false);
+		eb.addField("Member join logging", "" + settings.memberJoinLogging, false);
+		eb.addField("Member leave logging", "" + settings.memberLeaveLogging, false);
 
 		return eb;
 	}
@@ -115,7 +121,7 @@ public class CommandLogSetupHelp extends ChatCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_LOGSHELP + "`\n`" + commandPrefix + CommandKeys.COMMAND_LOGSHELP
-				+ "` keys";
+		return "`" + commandPrefix + CommandKeys.COMMAND_LOGSHELP + "`\n`" + commandPrefix
+				+ CommandKeys.COMMAND_LOGSHELP + "` keys";
 	}
 }

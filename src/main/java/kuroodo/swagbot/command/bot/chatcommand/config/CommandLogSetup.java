@@ -71,6 +71,12 @@ public class CommandLogSetup extends ChatCommand {
 		case JSONKeys.LOGSETTINGS_MESSAGE_DELETE:
 			updateMessageDelete();
 			return;
+		case JSONKeys.LOGSETTINGS_MEMBERJOIN:
+			updateMemberJoin();
+			return;
+		case JSONKeys.LOGSETTINGS_MEMBERLEAVE:
+			updateMemberLeave();
+			return;
 		default:
 			sendKeyNotFoundMessage();
 		}
@@ -142,6 +148,40 @@ public class CommandLogSetup extends ChatCommand {
 
 		String result = settings.messageDeleteLogging ? "enabled" : "disabled";
 		sendMessage(BotUtility.codifyText("Message delete logging as been " + result));
+	}
+
+	private void updateMemberJoin() {
+		if (commandParams[2].equals("-1")) {
+			settings.memberJoinLogging = false;
+		} else {
+
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
+				settings.memberJoinLogging = Boolean.parseBoolean(commandParams[2]);
+			} else {
+				sendFormatErrorMessage();
+				return;
+			}
+		}
+
+		String result = settings.memberJoinLogging ? "enabled" : "disabled";
+		sendMessage(BotUtility.codifyText("Member join logging as been " + result));
+	}
+
+	private void updateMemberLeave() {
+		if (commandParams[2].equals("-1")) {
+			settings.memberLeaveLogging = false;
+		} else {
+
+			if (commandParams[2].toLowerCase().equals("true") || commandParams[2].toLowerCase().equals("false")) {
+				settings.memberLeaveLogging = Boolean.parseBoolean(commandParams[2]);
+			} else {
+				sendFormatErrorMessage();
+				return;
+			}
+		}
+
+		String result = settings.memberLeaveLogging ? "enabled" : "disabled";
+		sendMessage(BotUtility.codifyText("Member leave logging as been " + result));
 	}
 
 	private void saveGuildSettings() {
