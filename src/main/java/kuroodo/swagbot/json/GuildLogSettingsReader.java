@@ -94,7 +94,7 @@ public class GuildLogSettingsReader {
 			JsonObject jsonObject = Json.parse(reader).asObject();
 
 			if (!isObjectNull(key, jsonObject)) {
-				getString(key, jsonObject);
+				retrievedValue = getString(key, jsonObject);
 			}
 
 			reader.close();
