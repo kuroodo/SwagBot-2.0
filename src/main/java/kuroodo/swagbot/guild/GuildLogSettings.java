@@ -10,6 +10,8 @@ public class GuildLogSettings {
 	public boolean memberRoleLogging = true;
 	public boolean roleEditLogging = true;
 	public boolean messageDeleteLogging = true;
+	public boolean memberJoinLogging = true;
+	public boolean memberLeaveLogging = true;
 
 	public GuildLogSettings(Guild guild) {
 		this.guild = guild;
@@ -21,12 +23,15 @@ public class GuildLogSettings {
 	}
 
 	public GuildLogSettings(Guild guild, long guildID, boolean nicknameLogging, boolean memberRoleLogging,
-			boolean roleEditLogging, boolean messageDeleteLogging) {
+			boolean roleEditLogging, boolean messageDeleteLogging, boolean memberJoinLogging,
+			boolean memberLeaveLogging) {
 		this.guild = guild;
 		this.guildID = guildID;
 		this.nicknameLogging = nicknameLogging;
 		this.memberRoleLogging = memberRoleLogging;
 		this.roleEditLogging = roleEditLogging;
 		this.messageDeleteLogging = messageDeleteLogging;
+		this.memberJoinLogging = memberJoinLogging;
+		this.memberLeaveLogging = memberLeaveLogging;
 	}
 }

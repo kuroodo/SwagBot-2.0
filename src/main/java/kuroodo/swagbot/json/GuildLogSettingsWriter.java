@@ -17,7 +17,7 @@ import com.eclipsesource.json.WriterConfig;
 import kuroodo.swagbot.guild.GuildLogSettings;
 
 public class GuildLogSettingsWriter {
-	
+
 	public static void createNewFile(GuildLogSettings guild) {
 		try {
 			String path = JSONKeys.SETTINGS_PATH + guild.guildID + "_logs.json";
@@ -51,7 +51,8 @@ public class GuildLogSettingsWriter {
 			object.set(JSONKeys.LOGSETTINGS_NICKNAME, Boolean.toString(guild.nicknameLogging));
 			object.set(JSONKeys.LOGSETTINGS_MEMBE_ROLES, Boolean.toString(guild.memberRoleLogging));
 			object.set(JSONKeys.LOGSETTINGS_MESSAGE_DELETE, Boolean.toString(guild.messageDeleteLogging));
-	
+			object.set(JSONKeys.LOGSETTINGS_MEMBERJOIN, Boolean.toString(guild.memberJoinLogging));
+			object.set(JSONKeys.LOGSETTINGS_MEMBERLEAVE, Boolean.toString(guild.memberLeaveLogging));
 
 			// Overwrite original file and paste contents
 			FileWriter writer = new FileWriter(settingsFile, false);

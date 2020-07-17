@@ -2,5 +2,7 @@
 	"guildid": "648649788778086401",
 	"nickname": "false",
 	"memberroles": "true",
-	"messagedelete": "true"
+	"messagedelete": "true",
+	"memberjoin": "true",
+	"memberleave": "true"
 }

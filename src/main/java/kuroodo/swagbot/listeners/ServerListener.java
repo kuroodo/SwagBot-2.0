@@ -132,6 +132,10 @@ public class ServerListener extends ListenerAdapter {
 			giveWelcomeRole(guild, settings, member);
 		}
 
+		// Return if member join logging is disabled
+		if (!GuildManager.getGuild(guild).logSettings.memberJoinLogging)
+			return;
+
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(member.getUser().getAsTag(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
@@ -150,6 +154,10 @@ public class ServerListener extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		User user = event.getUser();
 		GuildSettings settings = GuildManager.getGuild(guild);
+
+		// Return if member leave logging is disabled
+		if (!GuildManager.getGuild(guild).logSettings.memberLeaveLogging)
+			return;
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
