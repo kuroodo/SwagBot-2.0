@@ -270,9 +270,9 @@ public class ServerListener extends ListenerAdapter {
 		EmbedBuilder eb = new EmbedBuilder();
 
 		if (event.getNewValue()) {
-			eb.setDescription("A TEXT CHANNEL is now NSFW:\n" + event.getChannel().getAsMention());
+			eb.setDescription(event.getChannel().getAsMention() + " is now NSFW");
 		} else {
-			eb.setDescription("A TEXT CHANNEL is NO LONGER NSFW:\n" + event.getChannel().getAsMention());
+			eb.setDescription(event.getChannel().getAsMention() + " is no longer NSFW");
 		}
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getChannel().getIdLong());
@@ -289,7 +289,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A TEXT CHANNEL has been RENAMED");
+		eb.setDescription("The channel " + event.getChannel().getAsMention() + " has been RENAMED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("New name", event.getChannel().getAsMention(), true);
 		eb.addField("Old name", "#" + event.getOldName(), true);
@@ -306,7 +306,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A TEXT CHANNEL has been DELETED:\n#" + event.getChannel().getName());
+		eb.setDescription("The text channel `#" + event.getChannel().getName() + "` has been DELETED:\n");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getChannel().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -321,7 +321,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A TEXT CHANNEL has been CREATED:\n" + event.getChannel().getAsMention());
+		eb.setDescription("The Text Channel " + event.getChannel().getAsMention() + " has been CREATED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getChannel().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -351,7 +351,7 @@ public class ServerListener extends ListenerAdapter {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setAuthor(message.getAuthor().getAsTag(), message.getAuthor().getAvatarUrl(),
 				message.getAuthor().getAvatarUrl());
-		eb.setTitle("Message deleted in #" + event.getChannel().getName());
+		eb.setTitle("Message deleted in " + event.getTextChannel().getAsMention());
 		eb.setDescription(message.getContentDisplay());
 
 		if (!message.getAttachments().isEmpty()) {
@@ -374,7 +374,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A VOICE CHANNEL has been RENAMED");
+		eb.setDescription("Voice Channel `" + event.getChannel().getName() + "` has been RENAMED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
@@ -391,7 +391,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A VOICE CHANNEL has been DELETED:\n" + event.getChannel().getName());
+		eb.setDescription("Voice Channel `" + event.getChannel().getName() + "` has been DELETED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getChannel().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -406,7 +406,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A VOICE CHANNEL has been CREATED:\n" + event.getChannel().getName());
+		eb.setDescription("Voice Channel `" + event.getChannel().getName() + "` has been CREATED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getChannel().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -421,7 +421,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A CATEGORY has been RENAMED:");
+		eb.setDescription("The category `" + event.getCategory().getName() + "` has been RENAMED:");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.addField("Old name", event.getOldName(), true);
 		eb.addField("New name", event.getNewName(), true);
@@ -438,7 +438,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A CATEGORY has been DELETED:\n" + event.getCategory().getName());
+		eb.setDescription("Category `" + event.getCategory().getName() + "` has been DELETED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getCategory().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -453,7 +453,7 @@ public class ServerListener extends ListenerAdapter {
 
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setDescription("A CATEGORY has been CREATED:\n" + event.getCategory().getName());
+		eb.setDescription("Category `" + event.getCategory().getName() + "` has been CREATED");
 		eb.setColor(new Color(BotUtility.EMBDED_CHANNEL_COLOR));
 		eb.setFooter("ID: " + event.getCategory().getIdLong());
 		eb.setTimestamp(Instant.now());
@@ -519,7 +519,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
-		eb.setDescription("A ROLE has been CREATED:\n" + event.getRole().getAsMention());
+		eb.setDescription("The Role " + event.getRole().getAsMention() + " has been CREATED");
 		eb.setFooter("Role ID: " + event.getRole().getIdLong());
 		eb.setTimestamp(Instant.now());
 		Logger.sendLogEmbed(settings, eb);
@@ -535,7 +535,7 @@ public class ServerListener extends ListenerAdapter {
 		// Logging
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setColor(new Color(BotUtility.EMBED_ROLE_COLOR));
-		eb.setDescription("A ROLE has been DELETED:\n" + event.getRole().getName());
+		eb.setDescription("The role `" + event.getRole().getName() + "` has been DELETED");
 		eb.setFooter("Role ID: " + event.getRole().getIdLong());
 		eb.setTimestamp(Instant.now());
 		Logger.sendLogEmbed(settings, eb);
