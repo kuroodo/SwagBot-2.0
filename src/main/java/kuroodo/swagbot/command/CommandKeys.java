@@ -27,6 +27,8 @@ public class CommandKeys {
 	public static final String COMMAND_UNMUTE = "unmute";
 	public static final String COMMAND_CLEARCHAT = "clearchat";
 	public static final String COMMAND_VOICEKICK = "voicekick";
+	public static final String COMMAND_WARN = "warn";
+	public static final String COMMAND_WARNS = "warns";
 
 	// FUN commands
 	public static final String COMMAND_FLIPCOIN = "flipcoin";
