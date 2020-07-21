@@ -98,7 +98,8 @@ public class CommandWarn extends PunishmentCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Give a member a warning, and track it";
+		return "Give a member a warning, and track it. To see amount of warnings, use `" + commandPrefix
+				+ CommandKeys.COMMAND_WARNCOUNT + "`";
 	}
 
 	@Override

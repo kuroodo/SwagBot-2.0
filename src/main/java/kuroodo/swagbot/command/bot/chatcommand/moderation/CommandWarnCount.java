@@ -66,7 +66,8 @@ public class CommandWarnCount extends PunishmentCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Get the number of times a user has been warned. To clear warnings, use !clearwarns";
+		return "Get the number of times a user has been warned. To clear warnings, use `" + commandPrefix
+				+ CommandKeys.COMMAND_CLEARWARNS + "`";
 	}
 
 	@Override
