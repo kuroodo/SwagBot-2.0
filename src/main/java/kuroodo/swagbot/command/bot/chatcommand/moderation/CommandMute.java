@@ -52,9 +52,13 @@ public class CommandMute extends PunishmentCommand {
 		if (GuildManager.canMemberBeRemoved(event.getGuild(), member)) {
 			GuildSettings settings = GuildManager.getGuild(event.getGuild());
 			Role muteRole = settings.guild.getRoleById(settings.muteRole);
-			if (muteRole == null)
+			if (muteRole == null) {
+				sendMessage(BotUtility.codifyText("Error: mute role is not set up. Use " + commandPrefix
+						+ CommandKeys.COMMAND_SETUPHELP + " for more information."));
 				return;
+			}
 			if (member.getRoles().contains(muteRole)) {
+				sendMessage(BotUtility.quotifyText(member.getUser().getAsTag() + " is already muted"));
 				return;
 			}
 

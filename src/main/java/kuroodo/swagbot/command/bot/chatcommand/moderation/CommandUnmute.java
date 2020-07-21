@@ -63,6 +63,9 @@ public class CommandUnmute extends PunishmentCommand {
 					sendHierarchyErrorMessage();
 				}
 			}
+		} else {
+			sendMessage(BotUtility.codifyText("Error: mute role is not set up. Use " + commandPrefix
+					+ CommandKeys.COMMAND_SETUPHELP + " for more information."));
 		}
 	}
 
