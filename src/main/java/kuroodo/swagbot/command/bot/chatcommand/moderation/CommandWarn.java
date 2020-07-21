@@ -16,6 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.bot.chatcommand.moderation;
 
 import java.awt.Color;
+import java.time.Instant;
 
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.bot.chatcommand.PunishmentCommand;
@@ -72,19 +73,26 @@ public class CommandWarn extends PunishmentCommand {
 	}
 
 	private void sendWarnMessage(Member member, String reason, int warnings) {
-		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was warned for" + reason)
-				+ "\n this is warning number #" + warnings);
+		String reasonString = reason.isEmpty() ? "" : " **for:** " + reason;
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was warned") + reasonString + "\n`(Warned "
+				+ warnings + " times)`");
 	}
 
 	private void logWarn(GuildSettings settings, String reason, int warnings, Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 
-		eb.setTitle("A user has been WARNED");
+		eb.setAuthor(member.getUser().getAsTag(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
 		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
-		eb.addField("Warned User:", member.getAsMention(), true);
+		eb.setDescription(member.getAsMention() + " has been WARNED");
 		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
-		eb.addField("Reason:", reason, false);
+		if (!reason.isEmpty()) {
+			eb.addField("Reason:", reason, true);
+		} else {
+			eb.addField("Reason:", "No reason given", true);
+		}
 		eb.addField("Total warns:", warnings + "", false);
+		eb.setFooter("User ID: " + member.getIdLong());
+		eb.setTimestamp(Instant.now());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -95,7 +103,7 @@ public class CommandWarn extends PunishmentCommand {
 
 	@Override
 	public String commandFormat() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_WARN + "1 @user <reason>(optional)";
+		return "`" + commandPrefix + CommandKeys.COMMAND_WARN + "` @user <reason>(optional)";
 	}
 
 	@Override
