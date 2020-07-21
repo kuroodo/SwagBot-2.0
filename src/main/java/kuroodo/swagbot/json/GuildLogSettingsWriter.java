@@ -28,7 +28,7 @@ public class GuildLogSettingsWriter {
 				FileUtils.copyFile(templateFile, new File(path));
 				writeSettings(guild);
 			} else {
-				System.err.println("***************\nERROR: TEMPLATE FILE DOES NOT EXIST\n***************");
+				System.err.println("***************\nERROR: LOGS TEMPLATE FILE DOES NOT EXIST\n***************");
 			}
 
 		} catch (IOException e) {

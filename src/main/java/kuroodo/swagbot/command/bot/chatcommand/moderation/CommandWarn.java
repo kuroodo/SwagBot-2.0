@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Leandro Gaspar
+ * Copyright 2020 Leandro Gaspar
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,19 +22,18 @@ import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.bot.chatcommand.PunishmentCommand;
 import kuroodo.swagbot.guild.GuildManager;
 import kuroodo.swagbot.guild.GuildSettings;
+import kuroodo.swagbot.json.GuildMetaReader;
+import kuroodo.swagbot.json.GuildMetaWriter;
 import kuroodo.swagbot.utils.BotUtility;
 import kuroodo.swagbot.utils.Logger;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.exceptions.HierarchyException;
 
-public class CommandUnmute extends PunishmentCommand {
+public class CommandWarn extends PunishmentCommand {
+
 	@Override
 	protected void setCommandPermissiosn() {
-		requiredPermissions.add(Permission.MANAGE_ROLES);
 		isPermission0 = true;
 		isPermission1 = true;
 		isPermission2 = true;
@@ -46,40 +45,52 @@ public class CommandUnmute extends PunishmentCommand {
 		if (!canExecute)
 			return;
 
-		performUnmute(member);
-	}
+		String reason = getReason(2);
+		long guildID = event.getGuild().getIdLong();
 
-	private void performUnmute(Member member) {
-		GuildSettings settings = GuildManager.getGuild(event.getGuild());
-		Role muterole = settings.guild.getRoleById(settings.muteRole);
+		if (!GuildMetaReader.metaFileExists(guildID)) {
+			GuildMetaWriter.createNewFile(guildID);
+		}
 
-		if (muterole != null) {
-			if (member.getRoles().contains(muterole)) {
-				try {
-					settings.guild.removeRoleFromMember(member, muterole).queue();
-					logUnmute(settings, member);
-					sendUnmuteMessage(member);
-				} catch (HierarchyException e) {
-					sendHierarchyErrorMessage();
-				}
+		String val = GuildMetaReader.getValue(guildID, member.getIdLong() + "_warns");
+		int warnings = 0;
+
+		if (!val.isEmpty()) {
+			try {
+				warnings = Integer.parseInt(val);
+				warnings += 1;
+			} catch (NumberFormatException e) {
+				warnings = 1;
 			}
 		} else {
-			sendMessage(BotUtility.codifyText("Error: mute role is not set up. Use " + commandPrefix
-					+ CommandKeys.COMMAND_SETUPHELP + " for more information."));
+			warnings = 1;
 		}
+
+		GuildMetaWriter.writeVal(guildID, member.getIdLong() + "_warns", warnings + "");
+		sendWarnMessage(member, reason, warnings);
+		logWarn(GuildManager.getGuild(event.getGuild()), reason, warnings, member);
+
 	}
 
-	private void sendUnmuteMessage(Member member) {
-		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was unmuted"));
+	private void sendWarnMessage(Member member, String reason, int warnings) {
+		String reasonString = reason.isEmpty() ? "" : " **for:** " + reason;
+		sendMessage(BotUtility.boldifyText(member.getUser().getAsTag() + " was warned") + reasonString + "\n`(Warned "
+				+ warnings + " times)`");
 	}
 
-	private void logUnmute(GuildSettings settings, Member member) {
+	private void logWarn(GuildSettings settings, String reason, int warnings, Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
+
 		eb.setAuthor(member.getUser().getAsTag(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
 		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
-		eb.setTitle("USER has been UNMUTED");
-		eb.setDescription(member.getUser().getAsMention());
+		eb.setDescription(member.getAsMention() + " has been WARNED");
 		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
+		if (!reason.isEmpty()) {
+			eb.addField("Reason:", reason, true);
+		} else {
+			eb.addField("Reason:", "No reason given", true);
+		}
+		eb.addField("Total warns:", warnings + "", false);
 		eb.setFooter("User ID: " + member.getIdLong());
 		eb.setTimestamp(Instant.now());
 		Logger.sendLogEmbed(settings, eb);
@@ -87,16 +98,18 @@ public class CommandUnmute extends PunishmentCommand {
 
 	@Override
 	public String commandDescription() {
-		return "Remove the mute role from a member with the mute role";
+		return "Give a member a warning, and track it. To see amount of warnings, use `" + commandPrefix
+				+ CommandKeys.COMMAND_WARNCOUNT + "`";
 	}
 
 	@Override
 	public String commandFormat() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_UNMUTE + "` @user";
+		return "`" + commandPrefix + CommandKeys.COMMAND_WARN + "` @user <reason>(optional)";
 	}
 
 	@Override
 	public String commandUsageExample() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_UNMUTE + "` @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_WARN + "` @Person#1234 For disturbing the peace\n`"
+				+ commandPrefix + CommandKeys.COMMAND_WARN + "` @Person#1234";
 	}
 }

@@ -16,6 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.bot.chatcommand.moderation;
 
 import java.awt.Color;
+import java.time.Instant;
 
 import kuroodo.swagbot.command.CommandKeys;
 import kuroodo.swagbot.command.bot.chatcommand.PunishmentCommand;
@@ -43,7 +44,6 @@ public class CommandBan extends PunishmentCommand {
 		super.executeCommand(commandParams, event);
 		if (!canExecute)
 			return;
-
 		if (GuildManager.canMemberBeRemoved(event.getGuild(), member)) {
 			performBan(member);
 		} else {
@@ -56,6 +56,7 @@ public class CommandBan extends PunishmentCommand {
 		GuildSettings settings = GuildManager.getGuild(event.getGuild());
 		String reason = getReason(3);
 		int days = getDuration();
+
 		if (days == -1) {
 			sendMessage(BotUtility
 					.codifyText("ERROR: Ban duration is incorrect. Please enter a NUMBER of DAYS or 0 for permanent"));
@@ -88,17 +89,24 @@ public class CommandBan extends PunishmentCommand {
 	private void logBan(GuildSettings settings, int days, String reason, Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 
-		eb.setTitle("A user has been BANNED");
+		eb.setAuthor(member.getUser().getAsTag(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
 		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
-		eb.addField("Banned User:", member.getAsMention(), true);
+		eb.setTitle("USER has been BANNED");
+		eb.setDescription(member.getUser().getAsMention());
 		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
-		eb.addField("Reason:", reason, false);
+		if (!reason.isEmpty()) {
+			eb.addField("Reason:", reason, true);
+		} else {
+			eb.addField("Reason:", "No reason given", true);
+		}
 
 		if (days > 0) {
 			eb.addField("Duration (days):", "" + days, false);
 		} else {
 			eb.addField("Duration (days):", "PERMANENT", false);
 		}
+		eb.setFooter("User ID: " + member.getIdLong());
+		eb.setTimestamp(Instant.now());
 
 		Logger.sendLogEmbed(settings, eb);
 	}
@@ -130,8 +138,8 @@ public class CommandBan extends PunishmentCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_BAN + "` @Person#1234 5 For disturbing the peace\n`" + commandPrefix
-				+ CommandKeys.COMMAND_BAN + "` @Person#1234 5";
+		return "`" + commandPrefix + CommandKeys.COMMAND_BAN + "` @Person#1234 5 For disturbing the peace\n`"
+				+ commandPrefix + CommandKeys.COMMAND_BAN + "` @Person#1234 5";
 	}
 
 }

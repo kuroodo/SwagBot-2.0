@@ -64,7 +64,7 @@ public class GuildLogSettingsReader {
 		} else {
 			needsWriting = true;
 		}
-		
+
 		if (!isObjectNull(JSONKeys.LOGSETTINGS_MEMBERLEAVE, jsonObject)) {
 			settings.memberLeaveLogging = getBool(JSONKeys.LOGSETTINGS_MEMBERLEAVE, jsonObject);
 		} else {
@@ -82,19 +82,26 @@ public class GuildLogSettingsReader {
 		return Boolean.parseBoolean(jsonObject.get(key).asString());
 	}
 
-	public static String getSettingsValue(long guildID, String key) {
-		String retrievedValue = "";
+	private static String getString(String key, JsonObject jsonObject) {
+		return jsonObject.get(key).asString();
+	}
 
+	public static String getLogsValue(long guildID, String key) {
 		Reader reader;
+		String retrievedValue = "";
 		try {
 			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + "_logs.json"));
-			JsonObject object = Json.parse(reader).asObject();
+			JsonObject jsonObject = Json.parse(reader).asObject();
 
-			retrievedValue = object.get(key).asString();
+			if (!isObjectNull(key, jsonObject)) {
+				retrievedValue = getString(key, jsonObject);
+			}
+
 			reader.close();
-		} catch (IOException e) {
-			System.err.println("ERROR: Could not get key: " + key + "\nEnsure that the key or the file " + guildID
-					+ "_logs.json" + " exist");
+
+			return retrievedValue;
+		} catch (ParseException | IOException e) {
+			System.err.println("Error retrieving key, " + key + " for guild, " + guildID);
 		}
 
 		return retrievedValue;

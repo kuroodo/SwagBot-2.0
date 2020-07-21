@@ -178,18 +178,21 @@ public class GuildSettingsReader {
 	}
 
 	public static String getSettingsValue(long guildID, String key) {
-		String retrievedValue = "";
-
 		Reader reader;
+		String retrievedValue = "";
 		try {
 			reader = new BufferedReader(new FileReader(JSONKeys.SETTINGS_PATH + guildID + ".json"));
-			JsonObject object = Json.parse(reader).asObject();
+			JsonObject jsonObject = Json.parse(reader).asObject();
 
-			retrievedValue = object.get(key).asString();
+			if (!isObjectNull(key, jsonObject)) {
+				retrievedValue = getString(key, jsonObject);
+			}
+
 			reader.close();
-		} catch (IOException e) {
-			System.err.println("ERROR: Could not get key: " + key + "\nEnsure that the key or the file " + guildID
-					+ ".json" + " exist");
+
+			return retrievedValue;
+		} catch (ParseException | IOException e) {
+			System.err.println("Error retrieving key, " + key + " for guild, " + guildID);
 		}
 
 		return retrievedValue;

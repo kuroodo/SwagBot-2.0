@@ -39,7 +39,7 @@ public class JSONKeys {
 	public static final String SETTINGS_ROLE_PERMISSION0 = "permission0";
 	public static final String SETTINGS_ROLE_PERMISSION1 = "permission1";
 	public static final String SETTINGS_ROLE_PERMISSION2 = "permission2";
-	
+
 	// Guild Log Settings
 	public static final String TEMPLATE_LOGSETTINGS_NAME = "_TEMPLATE_logs.json";
 	public static final String LOGSETTINGS_NICKNAME = "nickname";
@@ -48,6 +48,9 @@ public class JSONKeys {
 	public static final String LOGSETTINGS_MESSAGE_DELETE = "messagedelete";
 	public static final String LOGSETTINGS_MEMBERJOIN = "memberjoin";
 	public static final String LOGSETTINGS_MEMBERLEAVE = "memberleave";
+
+	// META
+	public static final String TEMPLATE_META_NAME = "_TEMPLATE_meta.json";
 
 	// Magic Ball
 	public static final String MAGICBALL_FILE_NAME = "magicball.json";
