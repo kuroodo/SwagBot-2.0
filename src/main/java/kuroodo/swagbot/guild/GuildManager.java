@@ -48,6 +48,7 @@ public class GuildManager {
 	public static void reloadGuildSettings(long guildID) {
 		if (GUILDS.containsKey(guildID)) {
 			GUILDS.replace(guildID, GuildSettingsReader.loadSettingsFile(guildID));
+			GUILDS.get(guildID).logSettings = GuildLogSettingsReader.loadSettingsFile(guildID);
 		} else {
 			System.err.println("Cannot reload Guild " + guildID + " it does not exist in the map");
 		}
