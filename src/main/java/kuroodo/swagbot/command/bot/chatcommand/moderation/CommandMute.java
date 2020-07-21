@@ -16,6 +16,7 @@ limitations under the License.
 package kuroodo.swagbot.command.bot.chatcommand.moderation;
 
 import java.awt.Color;
+import java.time.Instant;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -111,17 +112,24 @@ public class CommandMute extends PunishmentCommand {
 	private void logMute(GuildSettings settings, long duration, String reason, Member member) {
 		EmbedBuilder eb = new EmbedBuilder();
 
-		eb.setTitle("A user has been MUTED");
+		eb.setAuthor(member.getUser().getAsTag(), member.getUser().getAvatarUrl(), member.getUser().getAvatarUrl());
 		eb.setColor(new Color(BotUtility.EMBED_ALERT_COLOR));
-		eb.addField("Muted User:", member.getAsMention(), true);
+		eb.setTitle("USER has been MUTED");
+		eb.setDescription(member.getUser().getAsMention());
 		eb.addField("Invoked by:", event.getAuthor().getAsMention(), true);
-		eb.addField("Reason:", reason, false);
+		if (!reason.isEmpty()) {
+			eb.addField("Reason:", reason, true);
+		} else {
+			eb.addField("Reason:", "No reason given", true);
+		}
 
 		if (duration > 0) {
 			eb.addField("Duration (minutes):", "" + duration, false);
 		} else {
 			eb.addField("Duration (minutes):", "PERMANENT", false);
 		}
+		eb.setFooter("User ID: " + member.getIdLong());
+		eb.setTimestamp(Instant.now());
 		Logger.sendLogEmbed(settings, eb);
 	}
 
@@ -171,7 +179,7 @@ public class CommandMute extends PunishmentCommand {
 
 	@Override
 	public String commandUsageExample() {
-		return "`" + commandPrefix + CommandKeys.COMMAND_MUTE + "` @Person#1234 5 For disturbing the peace\n`" + commandPrefix
-				+ CommandKeys.COMMAND_MUTE + "` @Person#1234";
+		return "`" + commandPrefix + CommandKeys.COMMAND_MUTE + "` @Person#1234 5 For disturbing the peace\n`"
+				+ commandPrefix + CommandKeys.COMMAND_MUTE + "` @Person#1234";
 	}
 }
