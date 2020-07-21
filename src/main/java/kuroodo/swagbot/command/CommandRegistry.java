@@ -33,6 +33,7 @@ import kuroodo.swagbot.command.bot.chatcommand.help.CommandHelp;
 import kuroodo.swagbot.command.bot.chatcommand.lavaplayer.CommandLavaPlayer;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandBan;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandClearChat;
+import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandClearWarns;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandKick;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandMute;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandUnmute;
@@ -71,6 +72,8 @@ public class CommandRegistry {
 			return new CommandWarn();
 		case CommandKeys.COMMAND_WARNCOUNT:
 			return new CommandWarnCount();
+		case CommandKeys.COMMAND_CLEARWARNS:
+			return new CommandClearWarns();
 
 		// FUN commands
 		case CommandKeys.COMMAND_FLIPCOIN:

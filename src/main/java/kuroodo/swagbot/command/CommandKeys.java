@@ -29,6 +29,7 @@ public class CommandKeys {
 	public static final String COMMAND_VOICEKICK = "voicekick";
 	public static final String COMMAND_WARN = "warn";
 	public static final String COMMAND_WARNCOUNT = "warncount";
+	public static final String COMMAND_CLEARWARNS = "clearwarns";
 
 	// FUN commands
 	public static final String COMMAND_FLIPCOIN = "flipcoin";
@@ -55,14 +56,14 @@ public class CommandKeys {
 	public static final String COMMAND_STOP = "stop";
 	public static final String COMMAND_SKIP = "skip";
 	public static final String COMMAND_TRACKINFO = "trackinfo";
-	
+
 	// Console Commands
 	public static final String CONSOLE_COMMAND_EXIT = "exit";
 	public static final String CONSOLE_COMMAND_QUIT = "quit";
 	public static final String CONSOLE_COMMAND_STOP = "stop";
 	public static final String CONSOLE_COMMAND_LOGOFF = "logoff";
 	public static final String CONSOLE_COMMAND_LOGIN = "login";
-	
+
 	public static final String CONSOLE_COMMAND_ACTIVITY = "setactivity";
 	public static final String CONSOLE_COMMAND_SERVERCOUNT = "servercount";
 }
