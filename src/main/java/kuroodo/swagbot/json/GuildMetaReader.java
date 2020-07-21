@@ -44,7 +44,6 @@ public class GuildMetaReader {
 			}
 
 			reader.close();
-			System.out.println("eee");
 			return retrievedValue;
 		} catch (ParseException | IOException e) {
 			System.err.println("Error retrieving key, " + key + " for guild, " + guildID);
