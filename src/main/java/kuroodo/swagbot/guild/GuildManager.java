@@ -91,16 +91,10 @@ public class GuildManager {
 	}
 
 	public static void cacheMessage(Message message) {
-		if (MESSAGE_CACHE.containsKey(message.getIdLong()))
-			return;
-
 		MESSAGE_CACHE.put(message.getIdLong(), message);
 	}
 
 	public static void removeMessageFromCache(Message message) {
-		if (!MESSAGE_CACHE.containsKey(message.getIdLong()))
-			return;
-
 		MESSAGE_CACHE.remove(message.getIdLong());
 	}
 
@@ -113,10 +107,8 @@ public class GuildManager {
 	}
 
 	public static Message getMessageFromCache(Long messageID) {
-		Message message = null;
-		if (MESSAGE_CACHE.containsKey(messageID)) {
-			message = MESSAGE_CACHE.get(messageID);
-		}
+		Message message = MESSAGE_CACHE.get(messageID);
+
 		return message;
 	}
 
