@@ -340,12 +340,14 @@ public class ServerListener extends ListenerAdapter {
 	public void onMessageDelete(MessageDeleteEvent event) {
 		super.onMessageDelete(event);
 
-		Message message = GuildManager.getMessageFromCache(event.getMessageIdLong());
+		Message message = GuildManager.getMessageFromMessageCache(event.getMessageIdLong());
 		if (message == null)
 			return;
 
 		Guild guild = event.getGuild();
 		GuildSettings settings = GuildManager.getGuild(guild);
+
+		GuildManager.cacheMessage(message, true);
 
 		if (!settings.logSettings.messageDeleteLogging)
 			return;

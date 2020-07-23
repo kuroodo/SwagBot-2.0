@@ -29,7 +29,11 @@ import net.dv8tion.jda.api.entities.Role;
 
 public class GuildManager {
 	private static final HashMap<Long, GuildSettings> GUILDS = new HashMap<Long, GuildSettings>();
+	// MessageID, Message
 	private static final MessageCache<Long, Message> MESSAGE_CACHE = new MessageCache<Long, Message>(600, 1, 1000);
+	// ChannelID, Message
+	private static final MessageCache<Long, Message> DELETED_MESSAGE_CACHE = new MessageCache<Long, Message>(300, 1,
+			1000);
 
 	public static void verifyGuildIntegrity(long guildID) {
 		if (containsGuild(guildID)) {
@@ -90,15 +94,20 @@ public class GuildManager {
 		}
 	}
 
-	public static void cacheMessage(Message message) {
+	public static void cacheMessage(Message message, boolean is_deleted_cache) {
+		if (is_deleted_cache) {
+			DELETED_MESSAGE_CACHE.put(message.getTextChannel().getIdLong(), message);
+		}
+
 		MESSAGE_CACHE.put(message.getIdLong(), message);
+
 	}
 
 	public static void removeMessageFromCache(Message message) {
 		MESSAGE_CACHE.remove(message.getIdLong());
 	}
 
-	public static String getMessageTextFromCache(Long messageID) {
+	public static String getMessageTextFromMessageCache(Long messageID) {
 		String message = "";
 		if (MESSAGE_CACHE.containsKey(messageID)) {
 			message = MESSAGE_CACHE.get(messageID).getContentDisplay();
@@ -106,10 +115,12 @@ public class GuildManager {
 		return message;
 	}
 
-	public static Message getMessageFromCache(Long messageID) {
-		Message message = MESSAGE_CACHE.get(messageID);
+	public static Message getMessageFromMessageCache(Long messageID) {
+		return MESSAGE_CACHE.get(messageID);
+	}
 
-		return message;
+	public static Message getMessageFromDeletedCache(Long channelID) {
+		return DELETED_MESSAGE_CACHE.get(channelID);
 	}
 
 	public static boolean canMemberBeMuted(Guild guild, Member member) {

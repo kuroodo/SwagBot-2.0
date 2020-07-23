@@ -39,7 +39,7 @@ public class ChatListener extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 		super.onMessageReceived(event);
-		GuildManager.cacheMessage(event.getMessage());
+		GuildManager.cacheMessage(event.getMessage(), false);
 
 		if (event.getAuthor().isFake() || event.getAuthor().isBot()) {
 			return;
