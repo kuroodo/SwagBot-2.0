@@ -41,6 +41,7 @@ public class CommandKeys {
 	public static final String COMMAND_ROULETTE = "roulette";
 	public static final String COMMAND_SPARTANKICK = "spartankick";
 	public static final String COMMAND_MAGICBALL = "magicball";
+	public static final String COMMAND_SNIPE = "snipe";
 
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";

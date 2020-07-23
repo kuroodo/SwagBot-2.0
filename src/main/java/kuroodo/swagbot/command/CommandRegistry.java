@@ -27,6 +27,7 @@ import kuroodo.swagbot.command.bot.chatcommand.fun.CommandMagicBall;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandPoke;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandRoulette;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandSlap;
+import kuroodo.swagbot.command.bot.chatcommand.fun.CommandSnipe;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandSpartanKick;
 import kuroodo.swagbot.command.bot.chatcommand.fun.CommandUserInfo;
 import kuroodo.swagbot.command.bot.chatcommand.help.CommandHelp;
@@ -94,6 +95,8 @@ public class CommandRegistry {
 			return new CommandSpartanKick();
 		case CommandKeys.COMMAND_MAGICBALL:
 			return new CommandMagicBall();
+		case CommandKeys.COMMAND_SNIPE:
+			return new CommandSnipe();
 
 		// CONFIG commands
 		case CommandKeys.COMMAND_SETUP:
