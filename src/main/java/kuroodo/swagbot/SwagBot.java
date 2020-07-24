@@ -26,6 +26,7 @@ import kuroodo.swagbot.json.GuildSettingsReader;
 import kuroodo.swagbot.json.GuildSettingsWriter;
 import kuroodo.swagbot.lavaplayer.AudioPlayer;
 import kuroodo.swagbot.listeners.ChatListener;
+import kuroodo.swagbot.listeners.ReactListener;
 import kuroodo.swagbot.listeners.ServerListener;
 import kuroodo.swagbot.utils.BotUtility;
 import net.dv8tion.jda.api.JDA;
@@ -42,6 +43,7 @@ public class SwagBot {
 
 		config.addEventListener(new ChatListener());
 		config.addEventListener(new ServerListener());
+		config.addEventListener(new ReactListener());
 		config.addEventListener(new AudioPlayer());
 	}
 
