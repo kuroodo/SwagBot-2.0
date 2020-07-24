@@ -41,6 +41,7 @@ import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandUnmute;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandVoiceKick;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandWarn;
 import kuroodo.swagbot.command.bot.chatcommand.moderation.CommandWarnCount;
+import kuroodo.swagbot.command.bot.chatcommand.reaction.CommandPoll;
 import kuroodo.swagbot.command.console.CM_Activity;
 import kuroodo.swagbot.command.console.CM_Error;
 import kuroodo.swagbot.command.console.CM_Exit;
@@ -97,6 +98,10 @@ public class CommandRegistry {
 			return new CommandMagicBall();
 		case CommandKeys.COMMAND_SNIPE:
 			return new CommandSnipe();
+
+		// Reaction commands
+		case CommandKeys.COMMAND_POLL:
+			return new CommandPoll();
 
 		// CONFIG commands
 		case CommandKeys.COMMAND_SETUP:

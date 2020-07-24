@@ -43,6 +43,9 @@ public class CommandKeys {
 	public static final String COMMAND_MAGICBALL = "magicball";
 	public static final String COMMAND_SNIPE = "snipe";
 
+	// REACTION commands
+	public static final String COMMAND_POLL = "poll";
+
 	// CONFIG commands
 	public static final String COMMAND_SETUP = "setup";
 	public static final String COMMAND_SETUPHELP = "setuphelp";
