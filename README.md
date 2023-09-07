@@ -1,18 +1,7 @@
-# SwagBot-2.0
-A Discord bot made with JDA.
+Since Github has decided that they will be forcing 2FA onto accounts and locking people out of them if they don't set it up, I have moved my repositories to GitLab.
 
-This project is [SwagBot](https://github.com/kuroodo/SwagBot) rebuilt from the ground up, and with support for multiple guilds!
-This project is a learning process; feel free to learn with me!
+Microsoft has ruined Github and what it stood for.
 
-At the moment the project still needs to undergo testing/tuning and is slightly incomplete compared to the original.
-Some things that need working on are consistent error/feedback messages, inconsistencies throughout the code, exception handling, and better documentation.
+I highly recommend GitLab to other users, and the repository migration process is quick and straightforward.
 
-Planned features include more fun commands, more moderation commands, polls, using reactions for behaviors such as giving roles, and games.
-
----
-# Tools and Dependencies used in project
-[JDA-4.0.0_46 (Java Discord API](https://github.com/DV8FromTheWorld/JDA)
-
-[Minimal-Json](https://github.com/ralfstx/minimal-json)
-
-[Lavaplayer](https://github.com/sedmelluq/lavaplayer)
+[View this repository via GitLab](https://gitlab.com/public-projects203535/SwagBot-2-0)
